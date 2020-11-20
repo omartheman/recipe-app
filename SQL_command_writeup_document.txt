@@ -1,0 +1,22 @@
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysqldump -u root -p recipe_app_test > "c:\Users\HP EliteBook 8470p\Documents\Coding\recipe-app\database files\recipe_app_test.sql"
+
+===============================
+
+INSERT INTO recipes (item, cook, img, description) VALUES
+	('Dumplings',
+	'Omar', 
+	'https://images.unsplash.com/photo-1496116218417-1a781b1c416c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80',
+	'Pasture-raised chicken dumplings in a rice shell.');
+
+================
+
+CREATE TABLE recipes
+(
+	id 	 	INT unsigned NOT NULL AUTO_INCREMENT,
+	name 		VARCHAR(150) NOT NULL,
+	cook		 VARCHAR(150) NOT NULL,
+	date		 DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	img		 VARCHAR(300) NOT NULL, 
+	description 	VARCHAR(500) NOT NULL,
+	PRIMARY KEY 	(id)
+);
