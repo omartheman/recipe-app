@@ -39,16 +39,15 @@ app.post('/recipeapp_server/post', function(req, res){
   console.log('req.body.item: ', req.body.item)
   console.log(req.body.cook)
   var sql = `UPDATE recipes SET 
+    item = '${req.body.item}',
     cook = '${req.body.cook}',
     img = '${req.body.img}',
     description = '${req.body.description}' 
-    WHERE item = 'Dumplings' `;
-
+    WHERE id = '2' `;
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log(result.affectedRows + " record(s) updated");
   });
-  
   con.query("SELECT * FROM recipes", function (err, result, fields) {
     if (err) throw err;
     sqlResult = result;

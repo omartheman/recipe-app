@@ -7,6 +7,10 @@ class App extends Component {
     super(props);
     this.state = {
       recipes: [],
+      item: '',
+      cook: '',
+      img: '',
+      description: ''
     }
     this.handleClick = this.handleClick.bind(this);
   }
@@ -21,15 +25,19 @@ class App extends Component {
     }) 
   }
   handleClick(){
+    const {item, cook, description, img} = this.state;
+    this.setState({
+      item, cook, description, img})
     axios.post('http://localhost:4000/recipeapp_server/post',     
       {
-        item: 'Cheeseburger', 
-        cook: 'Fred', 
-        img: 'https://images.unsplash.com/photo-1603508102981-f44b20e0c124?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80',
-        description: 'A really tasty cheeseburger'
+        item: item, 
+        cook: cook, 
+        img: img,
+        description: description
       }
     )
     .then(response => {console.log('axios response',response)})
+    .then(this.setState({item, cook, description, img}), ()=>{console.log('new state is ', this.state)})
     .then(
       axios.get("http://localhost:4000/recipeapp_server/")
       .then(response => { 
@@ -41,10 +49,15 @@ class App extends Component {
       })
     )
   }
+  handleFormChange(){
+
+  }
   render() { 
+    console.log('state',this.state)
     const {recipes} = this.state;
-    let item, cook, date, img, description;
+    let {item, cook, date, img, description} = this.state;
     if (recipes.length > 0) {
+
       item = recipes[0].item
       cook = recipes[0].cook
       date = recipes[0].date
@@ -54,6 +67,40 @@ class App extends Component {
     return ( 
       <div> 
         <h2>Recipe App</h2>
+        <form>
+          <label>Item</label>
+          <input 
+            type="text" 
+            id="item"
+            onChange={(e) => {
+              this.setState({[e.target.id]: e.target.value})
+            }} 
+          /><br/>
+          <label>Cook</label>
+          <input 
+            type="text" 
+            id="cook"
+            onChange={(e) => {
+              this.setState({[e.target.id]: e.target.value})
+            }} 
+          /><br/>
+          <label>description</label>
+          <input 
+            type="text" 
+            id="description"
+            onChange={(e) => {
+              this.setState({[e.target.id]: e.target.value})
+            }} 
+          /><br/>
+          <label>img</label>
+          <input 
+            type="text" 
+            id="img"
+            onChange={(e) => {
+              this.setState({[e.target.id]: e.target.value})
+            }} 
+          /><br/>
+        </form>
         <button onClick={this.handleClick}>Post</button>
         <span>Page Content Goes Here</span> 
         <h3>Recipe 1</h3>
