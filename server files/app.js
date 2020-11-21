@@ -36,9 +36,14 @@ app.get('/recipeapp_server', (req, res) => {
 
 app.post('/recipeapp_server/post', function(req, res){
   console.log('Post recieved. req.body: ', req.body);
-  res.send('POST request to the homepage')
-  
-  var sql = "UPDATE recipes SET cook = 'This one is the duba' WHERE item = 'Dumplings'";
+  console.log('req.body.item: ', req.body.item)
+  console.log(req.body.cook)
+  var sql = `UPDATE recipes SET 
+    cook = '${req.body.cook}',
+    img = '${req.body.img}',
+    description = '${req.body.description}' 
+    WHERE item = 'Dumplings' `;
+
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log(result.affectedRows + " record(s) updated");
