@@ -8,9 +8,10 @@ class App extends Component {
     this.state = {
       recipes: [],
     }
+    this.handleClick = this.handleClick.bind(this);
   }
   componentDidMount() { 
-    axios.get("https://brittanyjewellneal.com/recipeapp_server/") 
+    axios.get("http://localhost:4000/recipeapp_server/") 
     .then(response => { 
       console.log(response.data[0]);
       this.setState({recipes: response.data}); 
@@ -19,7 +20,20 @@ class App extends Component {
       console.log(error) 
     }) 
   } 
- 
+  handleClick(){
+    console.log('handleclick')
+    fetch('http://localhost:4000/recipeapp_server/post', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        firstParam: 'yourValue',
+        secondParam: 'yourOtherValue',
+      })
+    })
+  }
   render() { 
     const {recipes} = this.state;
     let item, cook, date, img, description;
@@ -33,12 +47,13 @@ class App extends Component {
     return ( 
       <div> 
         <h2>Recipe App</h2>
+        <button onClick={this.handleClick}>Post</button>
         <span>Page Content Goes Here</span> 
         <h3>Recipe 1</h3>
         <div>Item: {item}</div>
         <div>Cook: {cook}</div>
         <div>Date: {date}</div>
-        <div>Picture: <img src={img} style={{width:'200px'}}/></div>
+        <div>Picture: <img alt='' src={img} style={{width:'200px'}}/></div>
         <div>Description: {description}</div>
       </div> 
     ) 

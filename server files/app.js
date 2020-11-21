@@ -1,30 +1,57 @@
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
 let mysql = require('mysql');
 let sqlResult;
 var cors = require("cors");
 
-let connection = mysql.createConnection({
+let con = mysql.createConnection({
+  // host: 'localhost', 
+  // user: 'britxbtx_omar2',
+  // password: '3yeDroplets!',
+  // database: 'britxbtx_recipe_app_test'
+
   host: 'localhost', 
-  user: 'britxbtx_omar2',
+  user: 'root',
   password: '3yeDroplets!',
-  database: 'britxbtx_recipe_app_test'
+  database: 'recipe_app_test'
 });
 
-connection.query("SELECT * FROM recipes", function (err, result, fields) {
-  if (err) throw err;
-  sqlResult = result;
-  console.log(sqlResult);
-});
+
 
 app.use(express.static(__dirname + '../..'));
 app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-app.get('/recipeapp_server', (req, res) => {
-  console.log('im going to right place')
-  res.send(sqlResult);
+con.query("SELECT * FROM recipes", function (err, result, fields) {
+  if (err) throw err;
+  sqlResult = result;
 });
 
-app.listen(process.env.PORT || 3000 || 27016 || 27015 || 27017, process.env.IP, function(){
-  console.log('Server is running on port 3000');
+app.get('/recipeapp_server', (req, res) => {
+  res.send(sqlResult);
+  // console.log(sqlResult);
+});
+
+app.post('/recipeapp_server/post', function(req, res){
+  console.log('Post recieved. req.body: ', req.body);
+  res.send('POST request to the homepage')
+  
+  var sql = "UPDATE recipes SET cook = 'This one is the duba' WHERE item = 'Dumplings'";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log(result.affectedRows + " record(s) updated");
+  });
+  
+  con.query("SELECT * FROM recipes", function (err, result, fields) {
+    if (err) throw err;
+    sqlResult = result;
+  });
+})
+
+const port = process.env.PORT || 4000 || 27016 || 27015 || 27017;
+
+app.listen(port, process.env.IP, function(){
+  console.log(`Server is running on port ${port}`);
 });
