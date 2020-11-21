@@ -5,36 +5,29 @@ let mysql = require('mysql');
 let sqlResult;
 var cors = require("cors");
 
-const loginLocal = {
-  host: 'localhost', 
-  user: 'root',
-  password: '3yeDroplets!',
-  database: 'recipe_app_test'
-}
-
-const loginBritt = {
+let con = mysql.createConnection({
   host: 'localhost', 
   user: 'britxbtx_omar2',
   password: '3yeDroplets!',
   database: 'britxbtx_recipe_app_test'
-}
 
-/*
-let con = mysql.createConnection(loginLocal);
-*/
-let con = mysql.createConnection(loginBritt);
+  // host: 'localhost', 
+  // user: 'root',
+  // password: '3yeDroplets!',
+  // database: 'recipe_app_test'
+});
 
 app.use(express.static(__dirname + '../..'));
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+con.query("SELECT * FROM recipes", function (err, result, fields) {
+  if (err) throw err;
+  sqlResult = result;
+});
 
 app.get('/recipeapp_server', (req, res) => {
-  con.query("SELECT * FROM recipes", function (err, result, fields) {
-    if (err) throw err;
-    sqlResult = result;
-  });
   res.send(sqlResult);
   // console.log(sqlResult);
 });

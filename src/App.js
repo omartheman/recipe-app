@@ -2,6 +2,11 @@ import './App.css';
 import React, {Component} from 'react';
 import axios from 'axios';
 
+const url =
+"https://brittanyjewellneal.com/recipeapp_server";
+/*
+"http://localhost:4000/recipeapp_server/";
+*/
 class App extends Component {
   constructor(props){
     super(props);
@@ -15,7 +20,7 @@ class App extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
   componentDidMount() { 
-    axios.get("http://localhost:4000/recipeapp_server/") 
+    axios.get(url) 
     .then(response => { 
       console.log(response.data[0]);
       this.setState({recipes: response.data}); 
@@ -28,7 +33,7 @@ class App extends Component {
     const {item, cook, description, img} = this.state;
     this.setState({
       item, cook, description, img})
-    axios.post('http://localhost:4000/recipeapp_server/post',     
+    axios.post(url,     
       {
         item: item, 
         cook: cook, 
@@ -37,11 +42,10 @@ class App extends Component {
       }
     )
     .then(response => {console.log('axios response',response)})
-    .then(this.setState({item, cook, description, img}), ()=>{console.log('new state is ', this.state)})
+    .then(this.setState({item, cook, description, img}))
     .then(
-      axios.get("http://localhost:4000/recipeapp_server/")
+      axios.get(url)
       .then(response => { 
-        console.log('response from onclick', response.data[0]);
         this.setState({recipes: response.data}); 
       })
       .catch(error => { 
@@ -53,7 +57,6 @@ class App extends Component {
 
   }
   render() { 
-    console.log('state',this.state)
     const {recipes} = this.state;
     let {item, cook, date, img, description} = this.state;
     if (recipes.length > 0) {
