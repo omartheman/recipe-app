@@ -1,6 +1,9 @@
 import './App.css';
 import React, {Component} from 'react';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
+import Switch from './Switch';
+
 axios.defaults.headers.common['Cache-Control'] = 'no-cache';
 const url =
 "https://brittanyjewellneal.com/recipeapp_server";
@@ -8,14 +11,14 @@ const url =
 "http://localhost:4000/recipeapp_server/";
 */
 
-const App = () => {
-  
-}
+const App = () => (
+  <div>
+    <Link to="/">HOME</Link>
+    <Link to="/about">ABOUT</Link>
+    <Link to="/recipe-upload">Recipe Upload</Link>
 
-class App extends Component {
-  render(){
-
-  }
-}
+    <Switch/>
+  </div>
+)
 
 export default App;
