@@ -1,12 +1,16 @@
 import './App.css';
 import React, {Component} from 'react';
 import axios from 'axios';
+import NavbarContainer from './NavbarContainer';
+
+
 axios.defaults.headers.common['Cache-Control'] = 'no-cache';
 const url =
 "https://brittanyjewellneal.com/recipeapp_server";
 /*
 "http://localhost:4000/recipeapp_server/";
 */
+
 class RecipeUpload extends Component {
   constructor(props){
     super(props);
@@ -69,6 +73,7 @@ class RecipeUpload extends Component {
     }
     return ( 
       <div> 
+        <NavbarContainer/>
         <h2>Recipe App</h2>
         <form autocomplete="off">
           <label>Item</label>
