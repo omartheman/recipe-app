@@ -19,10 +19,10 @@ const loginBritt = {
   database: 'britxbtx_recipe_app_test'
 }
 
-/*
 let con = mysql.createConnection(loginLocal);
-*/
+/*
 let con = mysql.createConnection(loginBritt);
+*/
 
 app.use(express.static(__dirname + '../..'));
 app.use(cors());
@@ -59,7 +59,7 @@ app.post('/recipeapp_server', function(req, res){
     if (err) throw err;
     sqlResult = result;
   });
-})
+});
 
 const port = process.env.PORT || 4000 || 27016 || 27015 || 27017;
 

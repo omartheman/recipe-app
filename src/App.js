@@ -1,7 +1,7 @@
 import './App.css';
 import React, {Component} from 'react';
 import axios from 'axios';
-
+axios.defaults.headers.common['Cache-Control'] = 'no-cache';
 const url =
 "https://brittanyjewellneal.com/recipeapp_server";
 /*
@@ -70,7 +70,7 @@ class App extends Component {
     return ( 
       <div> 
         <h2>Recipe App</h2>
-        <form>
+        <form autocomplete="off">
           <label>Item</label>
           <input 
             type="text" 
