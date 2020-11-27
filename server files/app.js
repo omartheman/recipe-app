@@ -20,38 +20,63 @@ const loginBritt = {
 }
 
 let connection = mysql.createConnection(loginLocal);
+let corsOrigin = 'http://localhost:3000';
+
 /*
 let connection = mysql.createConnection(loginBritt);
+let corsOrigin = 'https://brittanyjewellneal.com/recipeapp';
 */
 
 app.use(express.static(__dirname + '../..'));
-app.use(cors());
+app.use(cors({
+  origin:[corsOrigin],
+  methods:['GET','POST'],
+  credentials: true }));// enable set cookie
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
 app.use(session({
   secret: '2dfl3350v907s',
   resave: true,
-  saveUninitialized: true
+  saveUninitialized: true,
+  cookie: {
+    secure: false,
+  }
 }));
 
-app.post('/recipeapp_server/auth', function(request, response) {
-  console.log('Got a POST request to auth')
-  const username = request.body.username;
-  const password = request.body.password;
+app.get('/recipeapp_server/auth', function(req, res){
+  console.log('req.session in get', req.session)
+  
+  if (req.session.loggedin) {
+    res.send(req.session.username);
+  } else {
+    res.send('Please login to view this page!');
+  }
+  res.end();
+}); 
+
+app.post('/recipeapp_server/auth', function(req, res) {
+  console.log('req.body in post: ', req.body)
+  const username = req.body.username;
+  const password = req.body.password;
   if (username && password) {
-    connection.query('SELECT * FROM accounts WHERE username = test AND password = test', [username, password], function(error, results, fields) {
+    connection.query(`SELECT * FROM accounts WHERE username = ? AND password = ?`, [username, password], function(error, results, fields) {
       if (results.length > 0) {
-        request.session.loggedin = true;
-        request.session.username = username; 
-        response.redirect('/home');
+        console.log('results in app.post', results);
+        req.session.loggedin = true;
+        req.session.username = username; 
+        req.session.page_views++;
+        console.log('req.session in post: ', req.session);
+        res.redirect('/recipe_server/auth');
       } else {
-        response.send('Incorrect Username and/or Password!');
+        res.send('Incorrect Username and/or Password!');
+        req.session.page_views = 1; 
       }
-      response.end();
+      res.end();
     });
   } else {
-    response.send('Please enter Username and Password!');
-    response.end();
+    res.send('Please enter Username and Password!');
+    res.end();
   }
 });
 
@@ -61,14 +86,10 @@ app.get('/recipeapp_server', (req, res) => {
     sqlResult = result;
   });
   res.send(sqlResult);
-  // console.log(sqlResult);
 });
 
 app.post('/recipeapp_server', function(req, res){
   res.send('Got a POST request');
-  console.log('Post recieved. req.body: ', req.body);
-  console.log('req.body.item: ', req.body.item)
-  console.log(req.body.cook)
   var sql = `UPDATE recipes SET 
     item = '${req.body.item}',
     cook = '${req.body.cook}',

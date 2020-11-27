@@ -71,7 +71,7 @@ class RecipeUpload extends Component {
       <div> 
         <Navbar/>
         <h2>Recipe App</h2>
-        <form autocomplete="off">
+        <form autoComplete="off">
           <label>Item</label>
           <input 
             type="text" 

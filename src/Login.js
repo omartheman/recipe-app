@@ -7,15 +7,18 @@ axios.defaults.headers.common['Cache-Control'] = 'no-cache';
 const url =
 "http://localhost:4000/recipeapp_server/";
 /*
-"https://brittanyjewellneal.com/recipeapp_server";
+"https://brittanyjewellneal.com/recipeapp_server/";
 */
+const urlAuth = `${url}auth`;
+axios.defaults.withCredentials = true;
 
 class Login extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      loggedInUser: '',
     }
     this.handleClick = this.handleClick.bind(this);
   }
@@ -27,22 +30,59 @@ class Login extends React.Component {
     .catch(error => { 
       console.log(error) 
     }) 
+    
+    // .then( 
+    //   axios.get(urlAuth) 
+    //   .then(response => { 
+    //     console.log(response);
+    //   }) 
+    //   .catch(error => { 
+    //     console.log(error) 
+    //   })
+    // )
   }
   handleClick(){
+    console.log('yup')
     const {username, password} = this.state;
-    axios.post(`${url}auth`,     
+     
+    // axios.get(urlAuth) 
+    // .then(response => { 
+    //   console.log(response);
+    // }) 
+    // .catch(error => { 
+    //   console.log(error) 
+    // })
+
+
+
+    axios.post(urlAuth,     
       {
         username: username, 
         password: password 
       }
     )
-    .then(response => {console.log('axios response', response)})
+    .then(response => {
+      console.log('axios response', response)
+    })
+    .catch(error => {
+      console.log(error)
+    })
+    .then( 
+      axios.get(urlAuth) 
+      .then(res => { 
+        console.log(res);
+        this.setState({loggedInUser: res.data})
+      }) 
+      .catch(error => { 
+        console.log(error) 
+      })
+    )
   }
-  componentDidUpdate(){console.log(this.state)}
   render(){
     return(
       <>
         <Navbar/>
+        <div>Welcome back {this.state.loggedInUser}</div>
         <Container>
           <Form action="auth" method="POST">
             <Form.Label>Username</Form.Label>
