@@ -70,7 +70,6 @@ class RecipeUpload extends Component {
     }
     return ( 
       <div> 
-        <Login/>
         <Navbar/>
         <h2>Recipe App</h2>
         <form autocomplete="off">
