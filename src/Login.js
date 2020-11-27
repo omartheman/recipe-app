@@ -5,9 +5,9 @@ import axios from 'axios';
 
 axios.defaults.headers.common['Cache-Control'] = 'no-cache';
 const url =
-"http://localhost:4000/recipeapp_server/";
-/*
 "https://brittanyjewellneal.com/recipeapp_server/";
+/*
+"http://localhost:4000/recipeapp_server/";
 */
 const urlAuth = `${url}auth`;
 axios.defaults.withCredentials = true;

@@ -23,8 +23,8 @@ let connection = mysql.createConnection(loginBritt);
 let corsOrigin = 'https://brittanyjewellneal.com/recipeapp';
 
 /*
-let corsOrigin = 'http://localhost:3000';
 let connection = mysql.createConnection(loginLocal);
+let corsOrigin = 'http://localhost:3000';
 */
 
 app.use(express.static(__dirname + '../..'));
@@ -46,10 +46,17 @@ app.use(session({
 
 app.get('/recipeapp_server/auth', function(req, res){
   console.log('req.session in get', req.session)
+  
   if (req.session.loggedin) {
     res.send(req.session.username);
   } else {
-    res.send('Please login to view this page!');
+    connection.query("SELECT * FROM recipes", function (err, result) {
+      if (err) throw err;
+      sqlResult = result;
+    });
+    res.send(sqlResult);
+
+    // res.send('Please login to view this page!');
   }
   res.end();
 }); 
