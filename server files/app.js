@@ -20,11 +20,11 @@ const loginBritt = {
 }
 
 
-let connection = mysql.createConnection(loginBritt);
-let corsOrigin = 'https://brittanyjewellneal.com/recipeapp';
-/*
 let connection = mysql.createConnection(loginLocal);
 let corsOrigin = 'http://localhost:3000';
+/*
+let connection = mysql.createConnection(loginBritt);
+let corsOrigin = 'https://brittanyjewellneal.com/recipeapp';
 */
 
 app.use(express.static(__dirname + '../..'));
@@ -44,6 +44,28 @@ app.use(session({
   }
 }));
 
+// ===============================================================
+// ATTEMPT TO LINK REACT ROUTER AND EXPRESS APP
+
+const path = require('path');
+// Serve the static files from the React app
+app.use(express.static(path.join(__dirname, '../build')));
+
+// An api endpoint that returns a short list of items
+app.get('/api/getList', (req,res) => {
+    var list = ["item1", "item2", "item3"];
+    res.json(list);
+    console.log('Sent list of items');
+});
+
+// Handles any requests that don't match the ones above
+app.get('*', (req,res) =>{
+    res.sendFile(path.join(__dirname+'/../build/index.html'));
+});
+
+// ===============================================================
+
+/*
 app.get('/recipeapp-server/auth', function(req, res){
   console.log('req.session in get', req.session)
   if (req.session.loggedin) {
@@ -104,6 +126,7 @@ app.post('/recipeapp-server', function(req, res){
     sqlResult = result;
   });
 });
+*/
 
 const port = process.env.PORT || 4000 || 27016 || 27015 || 27017;
 
