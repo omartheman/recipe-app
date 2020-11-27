@@ -29,10 +29,14 @@ app.use(express.static(__dirname + '../..'));
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
+app.use(session({
+  secret: '2dfl3350v907s',
+  resave: true,
+  saveUninitialized: true
+}));
 
 app.get('/recipeapp_server', (req, res) => {
-  con.query("SELECT * FROM recipes", function (err, result, fields) {
+  con.query("SELECT * FROM recipes", function (err, result) {
     if (err) throw err;
     sqlResult = result;
   });
@@ -41,7 +45,6 @@ app.get('/recipeapp_server', (req, res) => {
 });
 
 app.post('/recipeapp_server', function(req, res){
-// app.post('/recipeapp_server/post', function(req, res){
   res.send('Got a POST request');
   console.log('Post recieved. req.body: ', req.body);
   console.log('req.body.item: ', req.body.item)
@@ -56,7 +59,7 @@ app.post('/recipeapp_server', function(req, res){
     if (err) throw err;
     console.log(result.affectedRows + " record(s) updated");
   });
-  con.query("SELECT * FROM recipes", function (err, result, fields) {
+  con.query("SELECT * FROM recipes", function (err, result) {
     if (err) throw err;
     sqlResult = result;
   });
