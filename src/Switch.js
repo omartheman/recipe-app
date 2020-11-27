@@ -9,9 +9,8 @@ const About = () => (<div>ABOUT</div>);
 
 const SwitchDemo = () => (
   <Switch>
-    <Route path="/recipe-upload" component={RecipeUpload}/>
-    <Route path="/about" component={About} />
-    <Route path="/" component={Home} />
+    <Route path="/recipeapp/recipe-upload" component={RecipeUpload}/>
+    <Route path="/recipeapp" component={Home} />
   </Switch>
 )
 
