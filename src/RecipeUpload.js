@@ -2,7 +2,6 @@ import './App.css';
 import React, {Component} from 'react';
 import axios from 'axios';
 import Navbar from './Navbar';
-import Login from './Login';
 
 axios.defaults.headers.common['Cache-Control'] = 'no-cache';
 const url =

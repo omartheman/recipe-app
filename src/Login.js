@@ -11,6 +11,14 @@ const url =
 */
 
 class Login extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      username: '',
+      password: ''
+    }
+    this.handleClick = this.handleClick.bind(this);
+  }
   componentDidMount() { 
     axios.get(url) 
     .then(response => { 
@@ -20,6 +28,17 @@ class Login extends React.Component {
       console.log(error) 
     }) 
   }
+  handleClick(){
+    const {username, password} = this.state;
+    axios.post(`${url}auth`,     
+      {
+        username: username, 
+        password: password 
+      }
+    )
+    .then(response => {console.log('axios response', response)})
+  }
+  componentDidUpdate(){console.log(this.state)}
   render(){
     return(
       <>
@@ -27,12 +46,31 @@ class Login extends React.Component {
         <Container>
           <Form action="auth" method="POST">
             <Form.Label>Username</Form.Label>
-            <Form.Control type="text" placeholder="Enter username" required/>
+            <Form.Control 
+              type="text" 
+              placeholder="Enter username" 
+              required
+              id="username"
+              onChange={(e) => {
+                this.setState({[e.target.id]: e.target.value})
+              }} 
+            />
           </Form>
           <Form.Group controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
-            <Form.Control type="password" placeholder="Give me password!" required/>
-            <Button variant="primary" type="submit">
+            <Form.Control 
+              type="password" 
+              placeholder="Give me password!" 
+              required
+              onChange={(e) => {
+                this.setState({[e.target.type]: e.target.value})
+              }} 
+            />
+            <Button 
+              variant="primary" 
+              type="submit"
+              onClick={this.handleClick}
+            >
               Submit
             </Button>
           </Form.Group>

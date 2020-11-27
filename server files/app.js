@@ -19,9 +19,9 @@ const loginBritt = {
   database: 'britxbtx_recipe_app_test'
 }
 
-let con = mysql.createConnection(loginLocal);
+let connection = mysql.createConnection(loginLocal);
 /*
-let con = mysql.createConnection(loginBritt);
+let connection = mysql.createConnection(loginBritt);
 */
 
 app.use(express.static(__dirname + '../..'));
@@ -34,7 +34,8 @@ app.use(session({
   saveUninitialized: true
 }));
 
-app.post('/auth', function(request, response) {
+app.post('/recipeapp_server/auth', function(request, response) {
+  console.log('Got a POST request to auth')
   const username = request.body.username;
   const password = request.body.password;
   if (username && password) {
@@ -55,7 +56,7 @@ app.post('/auth', function(request, response) {
 });
 
 app.get('/recipeapp_server', (req, res) => {
-  con.query("SELECT * FROM recipes", function (err, result) {
+  connection.query("SELECT * FROM recipes", function (err, result) {
     if (err) throw err;
     sqlResult = result;
   });
@@ -74,11 +75,11 @@ app.post('/recipeapp_server', function(req, res){
     img = '${req.body.img}',
     description = '${req.body.description}' 
     WHERE id = '2' `;
-  con.query(sql, function (err, result) {
+  connection.query(sql, function (err, result) {
     if (err) throw err;
     console.log(result.affectedRows + " record(s) updated");
   });
-  con.query("SELECT * FROM recipes", function (err, result) {
+  connection.query("SELECT * FROM recipes", function (err, result) {
     if (err) throw err;
     sqlResult = result;
   });

@@ -1,6 +1,5 @@
 import React from 'react';
 import './HomeMainCont.css';
-import FeaturedRecipe from './FeaturedRecipe';
 
 const HomeMainCont = () => (
   <main className="container">
