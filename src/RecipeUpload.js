@@ -57,9 +57,6 @@ class RecipeUpload extends Component {
       })
     )
   }
-  handleFormChange(){
-
-  }
   render() { 
     const {recipes} = this.state;
     let {item, cook, date, img, description} = this.state;

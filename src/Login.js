@@ -8,13 +8,13 @@ class Login extends React.Component {
       <>
         <Navbar/>
         <Container>
-          <Form>
+          <Form action="auth" method="POST">
             <Form.Label>Username</Form.Label>
-            <Form.Control type="text" placeholder="Enter username" />
+            <Form.Control type="text" placeholder="Enter username" required/>
           </Form>
           <Form.Group controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
-            <Form.Control type="password" placeholder="Give me password!" />
+            <Form.Control type="password" placeholder="Give me password!" required/>
             <Button variant="primary" type="submit">
               Submit
             </Button>

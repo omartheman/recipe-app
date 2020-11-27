@@ -3,7 +3,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const cors = require("cors");
-
+const session = require('express-session');
 
 let sqlResult;
 const loginLocal = {
@@ -12,7 +12,6 @@ const loginLocal = {
   password: '3yeDroplets!',
   database: 'recipe_app_test'
 }
-
 const loginBritt = {
   host: 'localhost', 
   user: 'britxbtx_omar2',
@@ -34,6 +33,26 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }));
+
+app.post('/auth', function(request, response) {
+  const username = request.body.username;
+  const password = request.body.password;
+  if (username && password) {
+    connection.query('SELECT * FROM accounts WHERE username = test AND password = test', [username, password], function(error, results, fields) {
+      if (results.length > 0) {
+        request.session.loggedin = true;
+        request.session.username = username; 
+        response.redirect('/home');
+      } else {
+        response.send('Incorrect Username and/or Password!');
+      }
+      response.end();
+    });
+  } else {
+    response.send('Please enter Username and Password!');
+    response.end();
+  }
+});
 
 app.get('/recipeapp_server', (req, res) => {
   con.query("SELECT * FROM recipes", function (err, result) {
