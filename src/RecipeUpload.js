@@ -5,9 +5,9 @@ import Navbar from './Navbar';
 
 axios.defaults.headers.common['Cache-Control'] = 'no-cache';
 const url =
-"https://brittanyjewellneal.com/recipeapp_server";
+"https://brittanyjewellneal.com/recipeapp-server";
 /*
-"http://localhost:4000/recipeapp_server/";
+"http://localhost:4000/recipeapp-server/";
 */
 
 class RecipeUpload extends Component {

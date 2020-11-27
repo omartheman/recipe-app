@@ -5,9 +5,9 @@ import axios from 'axios';
 
 axios.defaults.headers.common['Cache-Control'] = 'no-cache';
 const url =
-"https://brittanyjewellneal.com/recipeapp_server/";
+"https://brittanyjewellneal.com/recipeapp-server/";
 /*
-"http://localhost:4000/recipeapp_server/";
+"http://localhost:4000/recipeapp-server/";
 */
 const urlAuth = `${url}auth`;
 axios.defaults.withCredentials = true;
@@ -44,16 +44,6 @@ class Login extends React.Component {
   handleClick(){
     console.log('yup')
     const {username, password} = this.state;
-     
-    // axios.get(urlAuth) 
-    // .then(response => { 
-    //   console.log(response);
-    // }) 
-    // .catch(error => { 
-    //   console.log(error) 
-    // })
-
-
 
     axios.post(urlAuth,     
       {
@@ -62,7 +52,7 @@ class Login extends React.Component {
       }
     )
     .then(response => {
-      console.log('axios response', response)
+      console.log('axios response: ', response)
     })
     .catch(error => {
       console.log(error)
