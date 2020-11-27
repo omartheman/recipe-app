@@ -1,6 +1,6 @@
 import React from 'react';
 import HomeMainCont from './HomeMainCont';
-import NavbarContainer from './Navigation/Navbar';
+import NavbarContainer from './Navbar';
 import {Container, Row, Col} from 'react-bootstrap';
 import FeaturedRecipe from './FeaturedRecipe';
 

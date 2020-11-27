@@ -1,7 +1,7 @@
 import './App.css';
 import React, {Component} from 'react';
 import axios from 'axios';
-import NavbarContainer from './Navigation/Navbar';
+import NavbarContainer from './Navbar';
 
 
 axios.defaults.headers.common['Cache-Control'] = 'no-cache';

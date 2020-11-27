@@ -8,8 +8,8 @@ import Login from './Login';
 const App = () => (
   <Switch>
     <Route path="/recipeapp/recipe-upload" component={RecipeUpload}/>
-    <Route path="/recipeapp" component={Home} />
     <Route path="/recipeapp/login" component={Login} />
+    <Route path="/recipeapp" component={Home} />
   </Switch>
 )
 

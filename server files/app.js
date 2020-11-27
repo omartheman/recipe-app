@@ -1,10 +1,11 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-let mysql = require('mysql');
-let sqlResult;
-var cors = require("cors");
+const mysql = require('mysql');
+const cors = require("cors");
 
+
+let sqlResult;
 const loginLocal = {
   host: 'localhost', 
   user: 'root',
