@@ -2,13 +2,10 @@ import React from 'react';
 import Navbar from './Navbar';
 import {Container, Form, Button} from 'react-bootstrap';
 import axios from 'axios';
+import global_url_variable from './global_url_variable';
 
+const url = global_url_variable;
 axios.defaults.headers.common['Cache-Control'] = 'no-cache';
-const url =
-"http://localhost:4000/recipeapp/recipeapp-server/";
-/*
-"https://brittanyjewellneal.com/recipeapp/recipeapp-server/";
-*/
 axios.defaults.withCredentials = true;
 
 class Login extends React.Component {

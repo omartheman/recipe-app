@@ -5,14 +5,11 @@ import RecipeUpload from './RecipeUpload';
 import Home from './Home';
 import Login from './Login';
 import axios from 'axios';
+import global_url_variable from './global_url_variable';
 
-axios.defaults.headers.common['Cache-Control'] = 'no-cache';
-const url =
-"http://localhost:4000/recipeapp/recipeapp-server/";
-/*
-"https://brittanyjewellneal.com/recipeapp/recipeapp-server/";
-*/
+const url = global_url_variable;
 const urlAuth = `${url}auth`;
+axios.defaults.headers.common['Cache-Control'] = 'no-cache';
 axios.defaults.withCredentials = true;
 
 class App extends React.Component{

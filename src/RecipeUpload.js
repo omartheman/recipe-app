@@ -2,13 +2,10 @@ import './App.css';
 import React, {Component} from 'react';
 import axios from 'axios';
 import Navbar from './Navbar';
+import global_url_variable from './global_url_variable';
 
+const url = global_url_variable;
 axios.defaults.headers.common['Cache-Control'] = 'no-cache';
-const url =
-"https://brittanyjewellneal.com/recipeapp/recipeapp-server";
-/*
-"http://localhost:4000/recipeapp-server/";
-*/
 
 class RecipeUpload extends Component {
   constructor(props){
