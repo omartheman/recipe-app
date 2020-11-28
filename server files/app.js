@@ -51,9 +51,7 @@ app.get(`${serverRoute}/auth`, function(req, res){
   console.log('req.session in get', req.session)
   if (req.session.loggedin) {
     res.send(req.session.username);
-  } else {
-    res.send('Please login to view this page!');
-  }
+  } 
   res.end();
 }); 
 
