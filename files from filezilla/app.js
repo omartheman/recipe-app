@@ -19,9 +19,9 @@ const loginBritt = {
   database: 'britxbtx_recipe_app_test'
 }
 
+
 let connection = mysql.createConnection(loginBritt);
 let corsOrigin = 'https://brittanyjewellneal.com/recipeapp';
-
 /*
 let connection = mysql.createConnection(loginLocal);
 let corsOrigin = 'http://localhost:3000';
@@ -44,24 +44,17 @@ app.use(session({
   }
 }));
 
-app.get('/recipeapp_server/auth', function(req, res){
+app.get('/recipeapp-server/auth', function(req, res){
   console.log('req.session in get', req.session)
-  
   if (req.session.loggedin) {
     res.send(req.session.username);
   } else {
-    connection.query("SELECT * FROM recipes", function (err, result) {
-      if (err) throw err;
-      sqlResult = result;
-    });
-    res.send(sqlResult);
-
-    // res.send('Please login to view this page!');
+    res.send('Please login to view this page!');
   }
   res.end();
 }); 
 
-app.post('/recipeapp_server/auth', function(req, res) {
+app.post('/recipeapp-server/auth', function(req, res) {
   console.log('req.body in post: ', req.body)
   const username = req.body.username;
   const password = req.body.password;
@@ -86,7 +79,7 @@ app.post('/recipeapp_server/auth', function(req, res) {
   }
 });
 
-app.get('/recipeapp_server', (req, res) => {
+app.get('/recipeapp/recipeapp-server', (req, res) => {
   connection.query("SELECT * FROM recipes", function (err, result) {
     if (err) throw err;
     sqlResult = result;
@@ -94,7 +87,7 @@ app.get('/recipeapp_server', (req, res) => {
   res.send(sqlResult);
 });
 
-app.post('/recipeapp_server', function(req, res){
+app.post('/recipeapp/recipeapp-server', function(req, res){
   res.send('Got a POST request');
   var sql = `UPDATE recipes SET 
     item = '${req.body.item}',
@@ -112,8 +105,20 @@ app.post('/recipeapp_server', function(req, res){
   });
 });
 
-const port = process.env.PORT || 4000 || 27016 || 27015 || 27017;
+// ===============================================================
+// ATTEMPT TO LINK REACT ROUTER AND EXPRESS APP
+const path = require('path');
+// Serve the static files from the React app
+app.use(express.static(path.join(__dirname, '../recipeapp')));
 
+// Handles any requests that don't match the ones above
+app.get('/recipeapp*', (req,res) =>{
+    res.sendFile(path.join(__dirname+'/../recipeapp/index.html'));
+});
+// ===============================================================
+
+const port = process.env.PORT || 4000 || 27016 || 27015 || 27017;
+ 
 app.listen(port, process.env.IP, function(){
   console.log(`Server is running on port ${port}`);
 });

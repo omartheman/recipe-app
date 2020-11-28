@@ -44,28 +44,6 @@ app.use(session({
   }
 }));
 
-// ===============================================================
-// ATTEMPT TO LINK REACT ROUTER AND EXPRESS APP
-
-const path = require('path');
-// Serve the static files from the React app
-app.use(express.static(path.join(__dirname, '../build')));
-
-// An api endpoint that returns a short list of items
-app.get('/api/getList', (req,res) => {
-    var list = ["item1", "item2", "item3"];
-    res.json(list);
-    console.log('Sent list of items');
-});
-
-// Handles any requests that don't match the ones above
-app.get('/recipeapp*', (req,res) =>{
-    res.sendFile(path.join(__dirname+'/../build/index.html'));
-});
-
-// ===============================================================
-
-/*
 app.get('/recipeapp-server/auth', function(req, res){
   console.log('req.session in get', req.session)
   if (req.session.loggedin) {
@@ -101,7 +79,7 @@ app.post('/recipeapp-server/auth', function(req, res) {
   }
 });
 
-app.get('/recipeapp-server', (req, res) => {
+app.get('/recipeapp/recipeapp-server', (req, res) => {
   connection.query("SELECT * FROM recipes", function (err, result) {
     if (err) throw err;
     sqlResult = result;
@@ -109,7 +87,7 @@ app.get('/recipeapp-server', (req, res) => {
   res.send(sqlResult);
 });
 
-app.post('/recipeapp-server', function(req, res){
+app.post('/recipeapp/recipeapp-server', function(req, res){
   res.send('Got a POST request');
   var sql = `UPDATE recipes SET 
     item = '${req.body.item}',
@@ -126,10 +104,21 @@ app.post('/recipeapp-server', function(req, res){
     sqlResult = result;
   });
 });
-*/
+
+// ===============================================================
+// ATTEMPT TO LINK REACT ROUTER AND EXPRESS APP
+const path = require('path');
+// Serve the static files from the React app
+app.use(express.static(path.join(__dirname, '../recipeapp')));
+
+// Handles any requests that don't match the ones above
+app.get('/recipeapp*', (req,res) =>{
+    res.sendFile(path.join(__dirname+'/../recipeapp/index.html'));
+});
+// ===============================================================
 
 const port = process.env.PORT || 4000 || 27016 || 27015 || 27017;
-
+ 
 app.listen(port, process.env.IP, function(){
   console.log(`Server is running on port ${port}`);
 });
