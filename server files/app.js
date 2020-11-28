@@ -41,10 +41,13 @@ app.use(session({
   saveUninitialized: true,
   cookie: {
     secure: false,
+    maxAge: 8*60*60*1000 //make session last 8 hours
   }
 }));
 
-app.get('/recipeapp-server/auth', function(req, res){
+const serverRoute = '/recipeapp-server';
+
+app.get(`${serverRoute}/auth`, function(req, res){
   console.log('req.session in get', req.session)
   if (req.session.loggedin) {
     res.send(req.session.username);
@@ -54,7 +57,7 @@ app.get('/recipeapp-server/auth', function(req, res){
   res.end();
 }); 
 
-app.post('/recipeapp-server/auth', function(req, res) {
+app.post(`${serverRoute}/auth`, function(req, res) {
   console.log('req.body in post: ', req.body)
   const username = req.body.username;
   const password = req.body.password;
@@ -79,7 +82,7 @@ app.post('/recipeapp-server/auth', function(req, res) {
   }
 });
 
-app.get('/recipeapp-server', (req, res) => {
+app.get(`${serverRoute}`, (req, res) => {
   connection.query("SELECT * FROM recipes", function (err, result) {
     if (err) throw err;
     sqlResult = result;
@@ -87,7 +90,7 @@ app.get('/recipeapp-server', (req, res) => {
   res.send(sqlResult);
 });
 
-app.post('/recipeapp-server', function(req, res){
+app.post(`${serverRoute}`, function(req, res){
   res.send('Got a POST request');
   var sql = `UPDATE recipes SET 
     item = '${req.body.item}',
@@ -95,7 +98,8 @@ app.post('/recipeapp-server', function(req, res){
     img = '${req.body.img}',
     description = '${req.body.description}' 
     WHERE id = '2' `;
-  connection.query(sql, function (err, result) {
+  connection.query(sql, 
+    function (err, result) {
     if (err) throw err;
     console.log(result.affectedRows + " record(s) updated");
   });
@@ -104,7 +108,6 @@ app.post('/recipeapp-server', function(req, res){
     sqlResult = result;
   });
 });
-
 // ===============================================================
 // ATTEMPT TO LINK REACT ROUTER AND EXPRESS APP
 const path = require('path');
@@ -116,7 +119,6 @@ app.get('/recipeapp*', (req,res) =>{
     res.sendFile(path.join(__dirname+'/../recipeapp/index.html'));
 });
 // ===============================================================
-
 const port = process.env.PORT || 4000 || 27016 || 27015 || 27017;
  
 app.listen(port, process.env.IP, function(){
