@@ -5,4 +5,4 @@ const url =
 "http://localhost:4000/recipeapp/recipeapp-server/";
 */
 
-export default url;
+module.exports.global_url_variable = url;

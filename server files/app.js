@@ -6,26 +6,30 @@ const cors = require("cors");
 const session = require('express-session');
 
 let sqlResult;
-const loginLocal = {
-  host: 'localhost', 
-  user: 'root',
-  password: '3yeDroplets!',
-  database: 'recipe_app_test'
-}
-const loginBritt = {
-  host: 'localhost', 
-  user: 'britxbtx_omar2',
-  password: '3yeDroplets!',
-  database: 'britxbtx_recipe_app_test'
-}
+const global_url_file = require('../src/global_url_variable_server');
+console.log(global_url_file.global_url_variable);
+const url = global_url_file.global_url_variable;
+const serverRoute = '/recipeapp/recipeapp-server';
 
-
-let connection = mysql.createConnection(loginLocal);
-let corsOrigin = 'http://localhost:3000';
-/*
-let connection = mysql.createConnection(loginBritt);
-let corsOrigin = 'https://brittanyjewellneal.com/recipeapp';
-*/
+let corsOrigin;
+let connection;
+if (url === "https://brittanyjewellneal.com/recipeapp/recipeapp-server/") {
+  connection = mysql.createConnection({
+    host: 'localhost', 
+    user: 'britxbtx_omar2',
+    password: '3yeDroplets!',
+    database: 'britxbtx_recipe_app_test'
+  });
+  corsOrigin = 'https://brittanyjewellneal.com/recipeapp';
+} else if (url === "http://localhost:4000/recipeapp/recipeapp-server/"){
+  connection = mysql.createConnection({
+    host: 'localhost', 
+    user: 'root',
+    password: '3yeDroplets!',
+    database: 'recipe_app_test'
+  });
+  corsOrigin = 'http://localhost:3000';
+}
 
 app.use(express.static(__dirname + '../..'));
 app.use(cors({
@@ -45,7 +49,6 @@ app.use(session({
   }
 }));
 
-const serverRoute = '/recipeapp/recipeapp-server';
 
 app.get(`${serverRoute}/auth`, function(req, res){
   console.log('req.session in get', req.session)
