@@ -5,7 +5,7 @@ import axios from 'axios';
 
 axios.defaults.headers.common['Cache-Control'] = 'no-cache';
 const url =
-"https://brittanyjewellneal.com/recipeapp-server/";
+"https://brittanyjewellneal.com/recipeapp/recipeapp-server/";
 /*
 "http://localhost:4000/recipeapp-server/";
 */
