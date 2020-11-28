@@ -20,11 +20,11 @@ const loginBritt = {
 }
 
 
-let connection = mysql.createConnection(loginBritt);
-let corsOrigin = 'https://brittanyjewellneal.com/recipeapp';
-/*
 let connection = mysql.createConnection(loginLocal);
 let corsOrigin = 'http://localhost:3000';
+/*
+let connection = mysql.createConnection(loginBritt);
+let corsOrigin = 'https://brittanyjewellneal.com/recipeapp';
 */
 
 app.use(express.static(__dirname + '../..'));
@@ -69,7 +69,7 @@ app.post(`${serverRoute}/auth`, function(req, res) {
         req.session.username = username; 
         req.session.page_views++;
         console.log('req.session in post: ', req.session);
-        res.redirect('/recipe_server/auth');
+        res.redirect('/recipeapp-server/auth');
       } else {
         res.send('Incorrect Username and/or Password!');
         req.session.page_views = 1; 
