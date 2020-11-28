@@ -5,23 +5,13 @@ import axios from 'axios';
 
 axios.defaults.headers.common['Cache-Control'] = 'no-cache';
 const url =
-"https://brittanyjewellneal.com/recipeapp/recipeapp-server/";
+"http://localhost:4000/recipeapp/recipeapp-server/";
 /*
-"http://localhost:4000/recipeapp-server/";
+"https://brittanyjewellneal.com/recipeapp/recipeapp-server/";
 */
-const urlAuth = `${url}auth`;
 axios.defaults.withCredentials = true;
 
 class Login extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      username: '',
-      password: '',
-      loggedInUser: '',
-    }
-    this.handleClick = this.handleClick.bind(this);
-  }
   componentDidMount() { 
     axios.get(url) 
     .then(response => { 
@@ -31,40 +21,16 @@ class Login extends React.Component {
       console.log(error) 
     }) 
   }
-  handleClick(e){
-    e.preventDefault();
-    const {username, password} = this.state;
-
-    axios.post(urlAuth,     
-      {
-        username: username, 
-        password: password 
-      }
-    )
-    .then(response => {
-      console.log('axios response: ', response)
-    })
-    .catch(error => {
-      console.log(error)
-    })
-    .then( 
-      axios.get(urlAuth) 
-      .then(res => { 
-        console.log(res);
-        this.setState({loggedInUser: res.data})
-      }) 
-      .catch(error => { 
-        console.log(error) 
-      })
-    )
-  }
   render(){
+    const {loginSubmit, loggedInUser, onLoginFormChange} = this.props;
     return(
       <>
-        <Navbar/>
-        <div>Welcome back {this.state.loggedInUser}</div>
+        <Navbar 
+          loggedInUser={loggedInUser}
+        />
+        <div>Welcome back {loggedInUser}</div>
         <Container>
-          <Form action="auth" onSubmit={(e) => {this.handleClick(e)}}>
+          <Form action="auth" onSubmit={(e) => {loginSubmit(e)}}>
             <Form.Label>Username</Form.Label>
             <Form.Control 
               type="text" 
@@ -72,24 +38,24 @@ class Login extends React.Component {
               required
               id="username"
               onChange={(e) => {
-                this.setState({[e.target.id]: e.target.value})
+                onLoginFormChange({[e.target.id]: e.target.value}, 'username');
               }} 
             />
           </Form>
-          <Form.Group controlId="formBasicPassword" onKeyDown={(e) => {if (e.keyCode === 13) {this.handleClick(e)}}}>
+          <Form.Group controlId="formBasicPassword" onKeyDown={(e) => {if (e.keyCode === 13) {loginSubmit(e)}}}>
             <Form.Label>Password</Form.Label>
             <Form.Control 
               type="password" 
               placeholder="Give me password!" 
               required
               onChange={(e) => {
-                this.setState({[e.target.type]: e.target.value})
+                onLoginFormChange({[e.target.type]: e.target.value}, 'password');
               }} 
             />
             <Button 
               variant="primary" 
               type="submit"
-              onClick={this.handleClick}
+              onClick={loginSubmit}
             >
               Submit
             </Button>

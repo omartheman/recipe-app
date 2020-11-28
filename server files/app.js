@@ -20,11 +20,11 @@ const loginBritt = {
 }
 
 
-let connection = mysql.createConnection(loginBritt);
-let corsOrigin = 'https://brittanyjewellneal.com/recipeapp';
-/*
 let connection = mysql.createConnection(loginLocal);
 let corsOrigin = 'http://localhost:3000';
+/*
+let connection = mysql.createConnection(loginBritt);
+let corsOrigin = 'https://brittanyjewellneal.com/recipeapp';
 */
 
 app.use(express.static(__dirname + '../..'));

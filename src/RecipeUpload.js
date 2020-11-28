@@ -68,8 +68,10 @@ class RecipeUpload extends Component {
       description = recipes[0].description
     }
     return ( 
-      <div> 
-        <Navbar/>
+      <> 
+        <Navbar 
+          loggedInUser={this.props.loggedInUser}
+        />
         <h2>Recipe App</h2>
         <form autoComplete="off">
           <label>Item</label>
@@ -113,7 +115,7 @@ class RecipeUpload extends Component {
         <div>Date: {date}</div>
         <div>Picture: <img alt='' src={img} style={{width:'200px'}}/></div>
         <div>Description: {description}</div>
-      </div> 
+      </> 
     ) 
   } 
 }
