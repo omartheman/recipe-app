@@ -30,19 +30,9 @@ class Login extends React.Component {
     .catch(error => { 
       console.log(error) 
     }) 
-    
-    // .then( 
-    //   axios.get(urlAuth) 
-    //   .then(response => { 
-    //     console.log(response);
-    //   }) 
-    //   .catch(error => { 
-    //     console.log(error) 
-    //   })
-    // )
   }
-  handleClick(){
-    console.log('yup')
+  handleClick(e){
+    e.preventDefault();
     const {username, password} = this.state;
 
     axios.post(urlAuth,     
@@ -74,7 +64,7 @@ class Login extends React.Component {
         <Navbar/>
         <div>Welcome back {this.state.loggedInUser}</div>
         <Container>
-          <Form action="auth" method="POST">
+          <Form action="auth" onSubmit={(e) => {this.handleClick(e)}}>
             <Form.Label>Username</Form.Label>
             <Form.Control 
               type="text" 
@@ -86,7 +76,7 @@ class Login extends React.Component {
               }} 
             />
           </Form>
-          <Form.Group controlId="formBasicPassword">
+          <Form.Group controlId="formBasicPassword" onKeyDown={(e) => {if (e.keyCode === 13) {this.handleClick(e)}}}>
             <Form.Label>Password</Form.Label>
             <Form.Control 
               type="password" 

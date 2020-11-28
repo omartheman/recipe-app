@@ -79,7 +79,7 @@ app.post('/recipeapp-server/auth', function(req, res) {
   }
 });
 
-app.get('/recipeapp/recipeapp-server', (req, res) => {
+app.get('/recipeapp-server', (req, res) => {
   connection.query("SELECT * FROM recipes", function (err, result) {
     if (err) throw err;
     sqlResult = result;
@@ -87,7 +87,7 @@ app.get('/recipeapp/recipeapp-server', (req, res) => {
   res.send(sqlResult);
 });
 
-app.post('/recipeapp/recipeapp-server', function(req, res){
+app.post('/recipeapp-server', function(req, res){
   res.send('Got a POST request');
   var sql = `UPDATE recipes SET 
     item = '${req.body.item}',
