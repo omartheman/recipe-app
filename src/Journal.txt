@@ -1,0 +1,5 @@
+Right now I'm trying to get React to work with express, so that express is sending Routes to React. 
+
+The way it's currently set up is that the React app is running on the server, and It's using the express server just to get information about login and from the database. 
+
+I want to use React with express so that I can set page url's in the browser, or refresh the page, and React will send me back to the React app. 

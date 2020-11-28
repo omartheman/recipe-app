@@ -20,11 +20,11 @@ const loginBritt = {
 }
 
 
-let connection = mysql.createConnection(loginLocal);
-let corsOrigin = 'http://localhost:3000';
-/*
 let connection = mysql.createConnection(loginBritt);
 let corsOrigin = 'https://brittanyjewellneal.com/recipeapp';
+/*
+let connection = mysql.createConnection(loginLocal);
+let corsOrigin = 'http://localhost:3000';
 */
 
 app.use(express.static(__dirname + '../..'));
@@ -59,7 +59,7 @@ app.get('/api/getList', (req,res) => {
 });
 
 // Handles any requests that don't match the ones above
-app.get('*', (req,res) =>{
+app.get('/recipeapp*', (req,res) =>{
     res.sendFile(path.join(__dirname+'/../build/index.html'));
 });
 
