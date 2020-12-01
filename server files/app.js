@@ -8,9 +8,9 @@ const serverRoute = '/recipeapp/recipeapp-server';
 let sqlResult;
 
 const mode =
-"developmentOmar";
-/*
 "productionBritt";
+/*
+"developmentOmar";
 */
 
 let corsOrigin;
