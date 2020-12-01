@@ -6,9 +6,11 @@ const cors = require("cors");
 const session = require('express-session');
 
 let sqlResult;
-const global_url_file = require('../src/global_url_variable_server');
-console.log(global_url_file.global_url_variable);
-const url = global_url_file.global_url_variable;
+// const global_url_file = require('../src/global_url_variable_server');
+// console.log(global_url_file.global_url_variable);
+// global_url_file.global_url_variable;
+const url = 
+"https://brittanyjewellneal.com/recipeapp/recipeapp-server";
 const serverRoute = '/recipeapp/recipeapp-server';
 
 let corsOrigin;

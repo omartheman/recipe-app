@@ -36,7 +36,7 @@ class Login extends React.Component {
               id="username"
               onChange={(e) => {
                 onLoginFormChange({[e.target.id]: e.target.value}, 'username');
-              }} 
+              }}
             />
           </Form>
           <Form.Group controlId="formBasicPassword" onKeyDown={(e) => {if (e.keyCode === 13) {loginSubmit(e)}}}>
