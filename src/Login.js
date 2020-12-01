@@ -27,7 +27,7 @@ class Login extends React.Component {
         />
         <div>Welcome back {loggedInUser}</div>
         <Container>
-          <Form action="auth" onSubmit={(e) => {loginSubmit(e)}}>
+          <Form action="auth" onSubmit={loginSubmit}>
             <Form.Label>Username</Form.Label>
             <Form.Control 
               type="text" 

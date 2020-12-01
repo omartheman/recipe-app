@@ -6,16 +6,15 @@ const cors = require("cors");
 const session = require('express-session');
 
 let sqlResult;
-// const global_url_file = require('../src/global_url_variable_server');
-// console.log(global_url_file.global_url_variable);
-// global_url_file.global_url_variable;
-const url = 
-"https://brittanyjewellneal.com/recipeapp/recipeapp-server";
+const global_url_file = require('../src/global_url_variable_server');
+console.log(global_url_file.mode);
+const mode = global_url_file.mode ||
+"developmentOmar";
 const serverRoute = '/recipeapp/recipeapp-server';
 
 let corsOrigin;
 let connection;
-if (url === "https://brittanyjewellneal.com/recipeapp/recipeapp-server/") {
+if (mode === "productionBritt") {
   connection = mysql.createConnection({
     host: 'localhost', 
     user: 'britxbtx_omar2',
@@ -23,7 +22,7 @@ if (url === "https://brittanyjewellneal.com/recipeapp/recipeapp-server/") {
     database: 'britxbtx_recipe_app_test'
   });
   corsOrigin = 'https://brittanyjewellneal.com/recipeapp';
-} else if (url === "http://localhost:4000/recipeapp/recipeapp-server/"){
+} else {
   connection = mysql.createConnection({
     host: 'localhost', 
     user: 'root',
