@@ -4,13 +4,14 @@ const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const cors = require("cors");
 const session = require('express-session');
-
-let sqlResult;
-const global_url_file = require('../src/global_url_variable_server');
-console.log(global_url_file.mode);
-const mode = global_url_file.mode ||
-"developmentOmar";
 const serverRoute = '/recipeapp/recipeapp-server';
+let sqlResult;
+
+const mode =
+"developmentOmar";
+/*
+"productionBritt";
+*/
 
 let corsOrigin;
 let connection;
@@ -22,7 +23,7 @@ if (mode === "productionBritt") {
     database: 'britxbtx_recipe_app_test'
   });
   corsOrigin = 'https://brittanyjewellneal.com/recipeapp';
-} else {
+} else if (mode === "developmentOmar") {
   connection = mysql.createConnection({
     host: 'localhost', 
     user: 'root',
