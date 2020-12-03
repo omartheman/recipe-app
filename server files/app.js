@@ -7,10 +7,13 @@ const session = require('express-session');
 const serverRoute = '/recipeapp/recipeapp-server';
 let sqlResult;
 
+// 3 Dec
+//Create a logout route
+
 const mode =
-"productionBritt";
-/*
 "developmentOmar";
+/*
+"productionBritt";
 */
 
 let corsOrigin;
@@ -51,6 +54,11 @@ app.use(session({
   }
 }));
 
+app.get(`${serverRoute}/logout`, function(req, res){
+  console.log('logout get request works')
+  req.session.loggedin = false;
+  res.send('logged out')
+})
 
 app.get(`${serverRoute}/auth`, function(req, res){
   console.log('req.session in get', req.session)
@@ -113,14 +121,14 @@ app.post(`${serverRoute}`, function(req, res){
   });
 });
 // ===============================================================
-// ATTEMPT TO LINK REACT ROUTER AND EXPRESS APP
+// LINK REACT ROUTER AND EXPRESS APP
 const path = require('path');
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, '../recipeapp')));
 
 // Handles any requests that don't match the ones above
-app.get('/recipeapp*', (req,res) =>{
-    res.sendFile(path.join(__dirname+'/../recipeapp/index.html'));
+app.get('/recipeapp*', (req, res) =>{
+    res.sendFile(path.join(__dirname + '/../recipeapp/index.html'));
 });
 // ===============================================================
 const port = process.env.PORT || 4000 || 27016 || 27015 || 27017;
