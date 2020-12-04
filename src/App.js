@@ -65,7 +65,7 @@ class App extends React.Component{
   handleLogout(){
     this.setState({loggedInUser: null})
   }
-  handleCreateAcc(){
+  handleCreateAcc(e){
     console.log('handlecreateacc working')
   }
   render(){

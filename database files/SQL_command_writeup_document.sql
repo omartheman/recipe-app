@@ -1,3 +1,17 @@
+--delete test rows from accounts
+
+DELETE from accounts WHERE id BETWEEN 2 AND 6;
+
+==========================
+
+--Add columns to 'accounts'
+
+ALTER TABLE accounts
+ADD COLUMN firstName varChar(20) FIRST,
+ADD COLUMN lastName varChar(20) AFTER firstName;
+
+=========================
+
 //create login
 
 CREATE TABLE IF NOT EXISTS `accounts` (

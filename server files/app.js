@@ -54,10 +54,32 @@ app.use(session({
   }
 }));
 
+app.post(`${serverRoute}/create-account`, (req, res) => {
+  console.log('Create account post working.')
+  res.send('Got a POST request to create account.');
+  var sql = `INSERT INTO accounts (firstName, lastName, email, username, password)
+    VALUES(
+      '${req.body.firstName}', 
+      '${req.body.lastName}',
+      '${req.body.email}',
+      '${req.body.username}',
+      '${req.body.password}'
+  )`;
+  connection.query(sql, 
+    function (err, result) {
+    if (err) throw err;
+    console.log(result);
+    console.log(result.affectedRows + " record(s) updated");
+  });
+  connection.query("SELECT * FROM recipes", function (err, result) {
+    if (err) throw err;
+    sqlResult = result;
+  });
+})
+
 app.get(`${serverRoute}/logout`, function(req, res){
-  console.log('logout get request works')
   req.session.loggedin = false;
-  res.send('logged out')
+  res.send('Logged out.')
 })
 
 app.get(`${serverRoute}/auth`, function(req, res){
@@ -103,7 +125,7 @@ app.get(`${serverRoute}`, (req, res) => {
 });
 
 app.post(`${serverRoute}`, function(req, res){
-  res.send('Got a POST request');
+  res.send('Got a POST request to update recipes.');
   var sql = `UPDATE recipes SET 
     item = '${req.body.item}',
     cook = '${req.body.cook}',
