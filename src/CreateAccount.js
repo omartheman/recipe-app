@@ -8,27 +8,18 @@ const url = global_url_variable;
 axios.defaults.headers.common['Cache-Control'] = 'no-cache';
 axios.defaults.withCredentials = true;
 
-class Login extends React.Component {
-  componentDidMount() { 
-    axios.get(url) 
-    .then(response => { 
-      console.log(response.data[0]);
-    }) 
-    .catch(error => { 
-      console.log(error) 
-    }) 
-  }
+class CreateAccount extends React.Component{
   render(){
-    const {loginSubmit, loggedInUser, onLoginFormChange, onLogout} = this.props;
+    const {loggedInUser, onLogout, onLoginFormChange, createAccSubmit} = this.props;
     return(
       <>
-        <Navbar 
+        <Navbar
           loggedInUser={loggedInUser}
           onLogout={onLogout}
         />
-        <div>Welcome back {loggedInUser}</div>
+        <div>Create Account</div>
         <Container>
-          <Form action="auth" onSubmit={loginSubmit}>
+          <Form action="auth" onSubmit={createAccSubmit}>
             <Form.Label>Username</Form.Label>
             <Form.Control 
               type="text" 
@@ -40,7 +31,7 @@ class Login extends React.Component {
               }}
             />
           </Form>
-          <Form.Group controlId="formBasicPassword" onKeyDown={(e) => {if (e.keyCode === 13) {loginSubmit(e)}}}>
+          <Form.Group controlId="formBasicPassword" onKeyDown={(e) => {if (e.keyCode === 13) {}}}>
             <Form.Label>Password</Form.Label>
             <Form.Control 
               type="password" 
@@ -53,15 +44,15 @@ class Login extends React.Component {
             <Button 
               variant="primary" 
               type="submit"
-              onClick={loginSubmit}
+              onClick={createAccSubmit}
             >
               Submit
             </Button>
           </Form.Group>
         </Container>
       </>
-    );
+    )
   }
 }
 
-export default Login;
+export default CreateAccount;

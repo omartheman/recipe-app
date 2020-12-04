@@ -56,6 +56,7 @@ class RecipeUpload extends Component {
   render() { 
     const {recipes} = this.state;
     let {item, cook, date, img, description} = this.state;
+    const {loggedInUser, onLogout} = this.props;
     if (recipes.length > 0) {
 
       item = recipes[0].item
@@ -67,7 +68,8 @@ class RecipeUpload extends Component {
     return ( 
       <> 
         <Navbar 
-          loggedInUser={this.props.loggedInUser}
+          loggedInUser={loggedInUser}
+          onLogout={onLogout}
         />
         <h2>Recipe App</h2>
         <form autoComplete="off">

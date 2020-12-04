@@ -1,3 +1,11 @@
+=========================
+
+(3 Dec 2020 Thu)
+
+Right now I'm going to create a way to create a new account on the recipe app. I need to figure out how to upload the new user data to the database. I'm going to start by just uploading the username and login. 
+
+==========================
+
 Right now I'm trying to get React to work with express, so that express is sending Routes to React. 
 
 The way it's currently set up is that the React app is running on the server, and It's using the express server just to get information about login and from the database. 

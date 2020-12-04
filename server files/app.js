@@ -50,7 +50,7 @@ app.use(session({
   saveUninitialized: true,
   cookie: {
     secure: false,
-    maxAge: 8*60*60*1000 //make session last 8 hours
+    // maxAge: 8*60*60*1000 //make session last 8 hours
   }
 }));
 

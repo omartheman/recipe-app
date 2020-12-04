@@ -6,11 +6,12 @@ import FeaturedRecipe from './FeaturedRecipe';
 
 class Home extends React.Component {
   render(){
-    const {loggedInUser} = this.props;
+    const {loggedInUser, onLogout} = this.props;
     return(
       <div>
         <Navbar 
           loggedInUser={loggedInUser}
+          onLogout={onLogout}
         />
         <Container>
           <Row>

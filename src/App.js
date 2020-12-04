@@ -5,12 +5,15 @@ import RecipeUpload from './RecipeUpload';
 import Home from './Home';
 import Login from './Login';
 import axios from 'axios';
+import CreateAccount from './CreateAccount';
 import global_url_variable from './global_url_variable';
 
 const url = global_url_variable;
 const urlAuth = `${url}auth`;
 axios.defaults.headers.common['Cache-Control'] = 'no-cache';
 axios.defaults.withCredentials = true;
+
+//find where Login data posts
 
 class App extends React.Component{
   constructor(props){
@@ -22,6 +25,8 @@ class App extends React.Component{
     }
     this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
     this.handleLoginFormChange = this.handleLoginFormChange.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
+    this.handleCreateAcc = this.handleCreateAcc.bind(this);
   }
   componentDidMount(){
     axios.get(urlAuth) 
@@ -57,6 +62,12 @@ class App extends React.Component{
       this.setState(eTargetAttrVal);
     }
   }
+  handleLogout(){
+    this.setState({loggedInUser: null})
+  }
+  handleCreateAcc(){
+    console.log('handlecreateacc working')
+  }
   render(){
     console.log(this.state);
     const {username, password, loggedInUser} = this.state;
@@ -65,6 +76,7 @@ class App extends React.Component{
         <Route path="/recipeapp/recipe-upload" render={() => (
           <RecipeUpload
             loggedInUser={loggedInUser}
+            onLogout={this.handleLogout}
           />
         )} />
         <Route path="/recipeapp/login" render={() => (
@@ -72,13 +84,23 @@ class App extends React.Component{
             loginSubmit={this.handleLoginSubmit}
             onLoginFormChange={this.handleLoginFormChange}
             loggedInUser={loggedInUser}
+            onLogout={this.handleLogout}
             username={username}
             password={password}
+          />
+        )} />
+        <Route path="/recipeapp/create-account" render={() => (
+          <CreateAccount
+            loggedInUser={loggedInUser}
+            onLogout={this.handleLogout}
+            onLoginFormChange={this.handleLoginFormChange}
+            createAccSubmit={this.handleCreateAcc}
           />
         )} />
         <Route path="/recipeapp" render={() => (
           <Home
             loggedInUser={loggedInUser}
+            onLogout={this.handleLogout}
           />
         )} />
       </Switch>
