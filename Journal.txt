@@ -6,6 +6,11 @@
 
 Right now I'm going to create a way to create a new account on the recipe app. I need to figure out how to upload the new user data to the database. I'm going to start by just uploading the username and login. 
 
+Create account route complete. Now need to make it so:
+  1. When you create an account, you are logged in and taken to a new page.
+      a. Change loggedInUser state in App.
+      b. In your Post route, create a new session with the username and login (or maybe just send the user to the login route?) 
+
 ==========================
 
 Right now I'm trying to get React to work with express, so that express is sending Routes to React. 

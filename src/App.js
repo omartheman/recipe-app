@@ -26,7 +26,7 @@ class App extends React.Component{
     this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
     this.handleLoginFormChange = this.handleLoginFormChange.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
-    this.handleCreateAcc = this.handleCreateAcc.bind(this);
+    this.handleNewLoggedInUser = this.handleNewLoggedInUser.bind(this);
   }
   componentDidMount(){
     axios.get(urlAuth) 
@@ -34,6 +34,10 @@ class App extends React.Component{
       console.log(res);
       this.setState({loggedInUser: res.data})
     }).catch(error => {console.log(error)})
+  }
+  handleNewLoggedInUser(newLoggedInUser){
+    console.log('new logged in user: ',newLoggedInUser)
+    this.setState({loggedInUser: newLoggedInUser})
   }
   handleLoginSubmit(e){
     e.preventDefault();
@@ -65,9 +69,6 @@ class App extends React.Component{
   handleLogout(){
     this.setState({loggedInUser: null})
   }
-  handleCreateAcc(e){
-    console.log('handlecreateacc working')
-  }
   render(){
     console.log(this.state);
     const {username, password, loggedInUser} = this.state;
@@ -94,7 +95,7 @@ class App extends React.Component{
             loggedInUser={loggedInUser}
             onLogout={this.handleLogout}
             onLoginFormChange={this.handleLoginFormChange}
-            createAccSubmit={this.handleCreateAcc}
+            setNewLoggedInUser={this.handleNewLoggedInUser}
           />
         )} />
         <Route path="/recipeapp" render={() => (

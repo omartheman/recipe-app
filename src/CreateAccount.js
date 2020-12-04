@@ -40,14 +40,32 @@ class CreateAccount extends React.Component{
     .then(response => {
       console.log('axios response: ', response)
     }).catch(error => {console.log(error)})
-    .then(
-      axios.get(urlAuth) 
-      .then(res => { 
-        console.log(res);
-        this.setState({loggedInUser: res.data})
+    .then(response => {
+      const {username, password} = this.state;
+      axios.post(urlAuth,     
+        {
+          username: username, 
+          password: password 
+        }
+      )
+      .then(response => {
+        this.props.setNewLoggedInUser(username);
+        console.log('axios response: ', response)
       }).catch(error => {console.log(error)})
+      .then( 
+        axios.get(urlAuth) 
+        .then(res => { 
+          console.log(res);
+          this.setState({loggedInUser: res.data})
+        }).catch(error => {console.log(error)})
+      )
+      }
     )
+
+    //==============================
+
   }
+
   handleCreateAccFormChange(eTargetAttrVal, item){
     if (item === 'username'){
       this.setState(eTargetAttrVal);
