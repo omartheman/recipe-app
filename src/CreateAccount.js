@@ -82,8 +82,8 @@ class CreateAccount extends React.Component{
           loggedInUser={loggedInUser}
           onLogout={onLogout}
         />
-        <div>Create Account</div>
         <Container className="create-account-form-container">
+          <h1>Create Account</h1>
           <Form action="auth" onSubmit={this.handleCreateAccSubmit}>
             <Form.Label>First Name</Form.Label>
             <Form.Control 

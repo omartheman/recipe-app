@@ -1,4 +1,10 @@
+=========================
 
+(4 Dec Fri)
+
+My next step is to create a profile page for the user. After I create an MVP for the profile page, I will create a recipe upload page. 
+
+Actually, I will create a recipe upload page first, because this takes priority in the MVP. If I have a way to uplaod recipes, then Britt can start uploading right away. 
 
 =========================
 

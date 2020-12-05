@@ -5,8 +5,14 @@ import Navbar from './Navbar';
 import global_url_variable from './global_url_variable';
 
 const url = global_url_variable;
+
 axios.defaults.headers.common['Cache-Control'] = 'no-cache';
 
+/*
+-Create a connection between the logged in user and recipeupload. 
+-Use loggedInUser from App state to determie where to post data from database.
+-Create "recipes" table in database. 
+*/
 class RecipeUpload extends Component {
   constructor(props){
     super(props);
