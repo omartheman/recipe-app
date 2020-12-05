@@ -121,14 +121,14 @@ app.get(`${serverRoute}`, (req, res) => {
 app.post(`${serverRoute}recipe-upload`, (req, res) => {
   //Check to see that user is logged in. 
   res.send('Got a POST request to upload recipe.');
-  console.log('req.session.username: ',req.session.uesrname)
-  
+  console.log('req.session.username: ',req.session.username)
+
   var sql = `INSERT INTO recipes (item, cook, img, description)
   VALUES (
     '${req.body.item}',
     '${req.body.cook}',
     '${req.body.img}',
-    '${req.body.description}',
+    '${req.body.description}'
   );`;
   connection.query(sql, 
     function (err, result) {
@@ -136,13 +136,13 @@ app.post(`${serverRoute}recipe-upload`, (req, res) => {
     console.log(result.affectedRows + " record(s) updated");
   });
 
-
   //Retrieve id from new recipe.
   const sqlGetId = `
-  SELECT id FROM recipes WHERE item='${req.body.item}' AND cook='${req.body.cook}';
-  `;
+  SELECT id FROM recipes WHERE item='${req.body.item}' AND cook='${req.body.cook}' AND description='${req.body.description}';`;
+  console.log(sqlGetId);
   connection.query(sqlGetId, function (err, result) {
     if (err) throw err;
+    console.log(result);
     const id = result[0].id;
     let item = req.body.item;
     function updateRecipeName(item)
@@ -152,20 +152,23 @@ app.post(`${serverRoute}recipe-upload`, (req, res) => {
       return item;
     }
     item = updateRecipeName(item);
-  
-    //Create table for recipe ingredients. 
-    const sqlCreateIngredTable = `
+    const sqlCreateIngredientsTable = `
       CREATE TABLE recipe${id}_${item} (
         id INT NOT NULL AUTO_INCREMENT,
         ingredient varchar(50) NOT NULL,
         amount varchar(50) NOT NULL,
         PRIMARY KEY (ID) 
-      );
-    `;
-    connection.query(sqlCreateIngredTable, (err, result) => {
+    );`;
+    connection.query(sqlCreateIngredientsTable, (err, result) => {
       if (err) throw err; 
       console.log(result);
-    })
+    });
+    const sql2 = `
+    INSERT INTO recipe${id}_${item} (ingredient, amount) VALUES ('egg yolk', 2);`;
+    connection.query(sql2, (err, result) => {
+      if (err) throw err; 
+      console.log(result);
+    });
   });
 });
 

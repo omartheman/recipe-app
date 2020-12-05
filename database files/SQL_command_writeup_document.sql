@@ -1,3 +1,15 @@
+DROP TABLE  recipe10_peas,
+recipe13_peas,
+recipe14_peas4            ,
+ recipe16_baba_ganoush     ,
+ recipe3_tomato_sauce      ,
+ recipe4_mashed_potatoes   ,
+ recipe5_peas_and_carrots , 
+ recipe9_peas;
+
+
+=========================
+
 --Select id from newly created recipe 
 
 SELECT id FROM recipes WHERE item=${item} AND cook=${cook} AND date=${item};
@@ -22,6 +34,7 @@ DELETE from accounts WHERE id BETWEEN 2 AND 6;
 
 ALTER TABLE accounts
 ADD COLUMN firstName varChar(20) FIRST,
+
 ADD COLUMN lastName varChar(20) AFTER firstName;
 
 =========================

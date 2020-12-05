@@ -39,7 +39,7 @@ class RecipeUpload extends Component {
     const {item, cook, description, img} = this.state;
     this.setState({
       item, cook, description, img})
-    axios.post(url,     
+    axios.post(urlRecipeUpload,     
       {
         item: item, 
         cook: cook, 

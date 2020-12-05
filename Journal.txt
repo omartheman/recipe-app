@@ -6,6 +6,10 @@ My next step is to create a profile page for the user. After I create an MVP for
 
 Actually, I will create a recipe upload page first, because this takes priority in the MVP. If I have a way to uplaod recipes, then Britt can start uploading right away. 
 
+Still need to add username column to recipes. This will let me keep track of whose recipe it is, and display that on the homepage. 
+
+Database doesn't create new table right now if the item name already exists. 
+
 =========================
 
 (3 Dec 2020 Thu)
