@@ -5,7 +5,7 @@ import Navbar from './Navbar';
 import global_url_variable from './global_url_variable';
 
 const url = global_url_variable;
-
+const urlRecipeUpload = `${url}recipe-upload`;
 axios.defaults.headers.common['Cache-Control'] = 'no-cache';
 
 /*

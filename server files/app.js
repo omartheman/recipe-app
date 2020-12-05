@@ -4,8 +4,7 @@ const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const cors = require("cors");
 const session = require('express-session');
-const serverRoute = '/recipeapp/recipeapp-server';
-let sqlResult;
+const serverRoute = '/recipeapp/recipeapp-server/';
 
 // 3 Dec
 //Create a logout route
@@ -54,7 +53,7 @@ app.use(session({
   }
 }));
 
-app.post(`${serverRoute}/create-account`, (req, res) => {
+app.post(`${serverRoute}create-account`, (req, res) => {
   console.log('Create account post working.')
   res.send('Got a POST request to create account.');
   var sql = `INSERT INTO accounts (firstName, lastName, email, username, password)
@@ -71,18 +70,14 @@ app.post(`${serverRoute}/create-account`, (req, res) => {
     console.log(result);
     console.log(result.affectedRows + " record(s) updated");
   });
-  connection.query("SELECT * FROM recipes", function (err, result) {
-    if (err) throw err;
-    sqlResult = result;
-  });
 })
 
-app.get(`${serverRoute}/logout`, function(req, res){
+app.get(`${serverRoute}logout`, function(req, res){
   req.session.loggedin = false;
   res.send('Logged out.')
 })
 
-app.get(`${serverRoute}/auth`, function(req, res){
+app.get(`${serverRoute}auth`, function(req, res){
   console.log('req.session in get', req.session)
   if (req.session.loggedin) {
     res.send(req.session.username);
@@ -90,7 +85,7 @@ app.get(`${serverRoute}/auth`, function(req, res){
   res.end();
 }); 
 
-app.post(`${serverRoute}/auth`, function(req, res) {
+app.post(`${serverRoute}auth`, function(req, res) {
   console.log('req.body in post: ', req.body)
   const username = req.body.username;
   const password = req.body.password;
@@ -119,9 +114,59 @@ app.post(`${serverRoute}/auth`, function(req, res) {
 app.get(`${serverRoute}`, (req, res) => {
   connection.query("SELECT * FROM recipes", function (err, result) {
     if (err) throw err;
-    sqlResult = result;
+    res.send(result);
   });
-  res.send(sqlResult);
+});
+
+app.post(`${serverRoute}recipe-upload`, (req, res) => {
+  //Check to see that user is logged in. 
+  res.send('Got a POST request to upload recipe.');
+  console.log('req.session.username: ',req.session.uesrname)
+  
+  var sql = `INSERT INTO recipes (item, cook, img, description)
+  VALUES (
+    '${req.body.item}',
+    '${req.body.cook}',
+    '${req.body.img}',
+    '${req.body.description}',
+  );`;
+  connection.query(sql, 
+    function (err, result) {
+    if (err) throw err;
+    console.log(result.affectedRows + " record(s) updated");
+  });
+
+
+  //Retrieve id from new recipe.
+  const sqlGetId = `
+  SELECT id FROM recipes WHERE item='${req.body.item}' AND cook='${req.body.cook}';
+  `;
+  connection.query(sqlGetId, function (err, result) {
+    if (err) throw err;
+    const id = result[0].id;
+    let item = req.body.item;
+    function updateRecipeName(item)
+    {
+      item=item.replace(/ /g,"_");
+      console.log('New item name: ',item);
+      return item;
+    }
+    item = updateRecipeName(item);
+  
+    //Create table for recipe ingredients. 
+    const sqlCreateIngredTable = `
+      CREATE TABLE recipe${id}_${item} (
+        id INT NOT NULL AUTO_INCREMENT,
+        ingredient varchar(50) NOT NULL,
+        amount varchar(50) NOT NULL,
+        PRIMARY KEY (ID) 
+      );
+    `;
+    connection.query(sqlCreateIngredTable, (err, result) => {
+      if (err) throw err; 
+      console.log(result);
+    })
+  });
 });
 
 app.post(`${serverRoute}`, function(req, res){
@@ -137,10 +182,7 @@ app.post(`${serverRoute}`, function(req, res){
     if (err) throw err;
     console.log(result.affectedRows + " record(s) updated");
   });
-  connection.query("SELECT * FROM recipes", function (err, result) {
-    if (err) throw err;
-    sqlResult = result;
-  });
+  
 });
 // ===============================================================
 // LINK REACT ROUTER AND EXPRESS APP

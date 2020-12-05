@@ -1,3 +1,17 @@
+--Select id from newly created recipe 
+
+SELECT id FROM recipes WHERE item=${item} AND cook=${cook} AND date=${item};
+
+--Create new table for each recipe.
+
+CREATE TABLE recipe${id}_${item} (
+	id int(11) NOT NULL,
+	ingredient varchar(50) NOT NULL,
+	amount varchar(50) NOT NULL,
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+=====================================
 --delete test rows from accounts
 
 DELETE from accounts WHERE id BETWEEN 2 AND 6;
