@@ -6,9 +6,6 @@ const cors = require("cors");
 const session = require('express-session');
 const serverRoute = '/recipeapp/recipeapp-server/';
 
-// 3 Dec
-//Create a logout route
-
 const mode =
 "developmentOmar";
 /*
@@ -123,12 +120,13 @@ app.post(`${serverRoute}recipe-upload`, (req, res) => {
   res.send('Got a POST request to upload recipe.');
   console.log('req.session.username: ',req.session.username)
 
-  var sql = `INSERT INTO recipes (item, cook, img, description)
+  var sql = `INSERT INTO recipes (item, cook, img, description, user)
   VALUES (
     '${req.body.item}',
     '${req.body.cook}',
     '${req.body.img}',
-    '${req.body.description}'
+    '${req.body.description}',
+    '${req.session.username}'
   );`;
   connection.query(sql, 
     function (err, result) {
@@ -136,6 +134,7 @@ app.post(`${serverRoute}recipe-upload`, (req, res) => {
     console.log(result.affectedRows + " record(s) updated");
   });
 
+  // *******CREATE TABLE FOR RECIPE INGREDIENTS********
   //Retrieve id from new recipe.
   const sqlGetId = `
   SELECT id FROM recipes WHERE item='${req.body.item}' AND cook='${req.body.cook}' AND description='${req.body.description}';`;
@@ -187,6 +186,8 @@ app.post(`${serverRoute}`, function(req, res){
   });
   
 });
+
+
 // ===============================================================
 // LINK REACT ROUTER AND EXPRESS APP
 const path = require('path');
@@ -200,6 +201,7 @@ app.get('/recipeapp*', (req, res) =>{
 // ===============================================================
 const port = process.env.PORT || 4000 || 27016 || 27015 || 27017;
  
+
 app.listen(port, process.env.IP, function(){
   console.log(`Server is running on port ${port}`);
 });

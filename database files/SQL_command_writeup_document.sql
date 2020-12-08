@@ -27,6 +27,7 @@ CREATE TABLE recipe${id}_${item} (
 --delete test rows from accounts
 
 DELETE from accounts WHERE id BETWEEN 2 AND 6;
+DELETE from recipes WHERE id BETWEEN 3 AND 20;
 
 ==========================
 

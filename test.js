@@ -1,7 +1,12 @@
-
-let id;
-const fun = () => { 
-  id = 5;
+const state = {
+  ingredients: [0, 1]
 }
-fun()
-console.log(id);
+
+let {ingredients} = state;
+// ingredients[0] = 5;
+const ingredientsContent = [...ingredients];
+ingredientsContent[0] = 5;
+ingredients = ingredientsContent;
+
+console.log('changed ing',ingredients);
+console.log('final state',state);

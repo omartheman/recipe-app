@@ -1,3 +1,11 @@
+========================
+
+(5 Dec Sat)
+
+- Now that we can upload a new recipe, the next step is to add frontend fields for ingredients and amounts. 
+- We need to add a username column to the 'recipe' table
+- finally, we will connect the current user to the upload function
+
 =========================
 
 (4 Dec Fri)
