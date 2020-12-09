@@ -6,23 +6,19 @@ import global_url_variable from './global_url_variable';
 
 const url = global_url_variable;
 const urlMyRecipes = `${url}myrecipes`;
+const urlAuth = `${url}auth`;
+
 axios.defaults.headers.common['Cache-Control'] = 'no-cache';
 
 class MyRecipes extends React.Component {
   componentDidMount() { 
-    axios.get(urlMyRecipes, {
-      params: {
-        user: this.props.loggedInUser
-      }
-    }) 
-    .then(response => { 
-      console.log(response.data[0]);
-      this.setState({recipes: response.data}); 
-    }) 
-    .catch(error => { 
-      console.log(error) 
-    }) 
+    axios.get(urlMyRecipes)
+    .then(res => {
+      console.log('res', res)
+
+    });
   }
+  
   render(){
     return(
       <>

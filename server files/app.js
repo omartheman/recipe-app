@@ -51,13 +51,14 @@ app.use(session({
 }));
 
 app.get(`${serverRoute}myrecipes`, (req, res) => {
-  console.log(`Got a GET request to ${serverRoute}myrecipes`);
-  console.log('req.body.user: ', req.body.user);
+  console.log('myrecipes req.session.username', req.session.username)
   const sqlGetUserRecipes = `
-    SELECT * FROM recipes WHERE user = '${username}';
+    SELECT * FROM recipes WHERE user = '${req.session.username}';
   `;
-  connection.query("SELECT * FROM recipes", function (err, result) {
+  connection.query(sqlGetUserRecipes, function (err, result) {
     if (err) throw err;
+    console.log('result sql myrecipes',result)
+    res.send(result);
   });  
 });
 

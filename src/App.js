@@ -75,7 +75,6 @@ class App extends React.Component{
     const {username, password, loggedInUser} = this.state;
     return(
       <Switch>
-
         <Route path="/recipeapp/myrecipes" render={() => (
           <MyRecipes
             loggedInUser={loggedInUser}
