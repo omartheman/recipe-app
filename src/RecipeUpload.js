@@ -67,19 +67,31 @@ class RecipeUpload extends Component {
     )
   }
   addIngredient(){
-    const {ingredients} = this.state;
+    const {ingredients, amounts} = this.state;
     //create new ingredient with unique key?
     //Ingredient doesn't need key, it can just use index of array. 
     this.setState({
-      ingredients: [...ingredients, '']
-    }, () => {console.log(this.state.ingredients)});
+      ingredients: [...ingredients, ''],
+      amounts: [...amounts, '']
+    }, () => {console.log(this.state)});
+  }
+  removeIngredient(ingNum){
+    console.log(ingNum)
+    let {ingredients, amounts} = this.state;
+    //remove respective index from each.
+    const ingredientsContent = [...ingredients];
+    const amountsContent = [...amounts]; 
+    ingredientsContent.splice(ingNum, 1);
+    amountsContent.splice(ingNum, 1);
+    ingredients = ingredientsContent;
+    amounts = amountsContent;
+    this.setState({ingredients, amounts})
   }
   render() { 
     const {recipes} = this.state;
     let {item, cook, date, img, description, ingredients} = this.state;
     const {loggedInUser, onLogout} = this.props;
     if (recipes.length > 0) {
-
       item = recipes[0].item
       cook = recipes[0].cook
       date = recipes[0].date
@@ -89,12 +101,12 @@ class RecipeUpload extends Component {
     //Render a new field for each ingredient. 
     const ingredientFields = ingredients.map((ing, index) => {
       return(
-
           <ListGroup.Item variant="info" key={index} className="ingredient-amount-container">
             <div>
               <Form.Label>Ingredient #{index + 1}</Form.Label>
               <Form.Control  
                 type="text" 
+                value={this.state.ingredients[index]}
                 ingredientnumber={index}
                 onChange={(e) => {
                   const ingNum = Number(e.target.attributes.getNamedItem('ingredientnumber').value);
@@ -104,12 +116,13 @@ class RecipeUpload extends Component {
                   ingredients = ingredientsContent;
                   this.setState({ingredients}, ()=>{console.log(this.state.ingredients)})
                 }}
-              />
+                />
             </div>
             
             <div>
               <Form.Label>Amount</Form.Label>
               <Form.Control  
+                value={this.state.amounts[index]}
                 type="text" 
                 amountnumber={index}
                 onChange={(e) => {
@@ -122,6 +135,13 @@ class RecipeUpload extends Component {
                 }}
               />
             </div>
+            <Button 
+              className="ingredient-button-remove" 
+              variant="danger"
+              onClick={() => {this.removeIngredient(index)}}
+            >
+              X
+            </Button>
           </ListGroup.Item>
       );
     })
@@ -133,9 +153,10 @@ class RecipeUpload extends Component {
           onLogout={onLogout}
         />
         <Container>
-          <h2>Recipe App</h2>
+          <h1>Recipe Upload</h1>
+          <h2>Recipe Information</h2>
           <Form autoComplete="off">
-            <Form.Label>Item</Form.Label>
+            <Form.Label>Name of Recipe</Form.Label>
             <Form.Control 
               type="text" 
               id="item"
@@ -153,8 +174,11 @@ class RecipeUpload extends Component {
             />
             <Form.Label>Description</Form.Label>
             <Form.Control 
+              as="textarea"
+              rows={3}
               type="text" 
               id="description"
+              placeholder="Tell us a little about your awesome recipe."
               onChange={(e) => {
                 this.setState({[e.target.id]: e.target.value})
               }} 
@@ -167,12 +191,13 @@ class RecipeUpload extends Component {
                 this.setState({[e.target.id]: e.target.value})
               }}
             />
-            <Button className="add-ingredient-button" onClick={this.addIngredient}>Add Ingredient</Button>
+            <h2>Ingredients</h2>
+            <Button className="ingredient-button-add" onClick={this.addIngredient}>Add Ingredient</Button>
             <ListGroup>
               {ingredientFields}
             </ListGroup>
           </Form>
-          <Button onClick={this.handleClick}>Post</Button>
+          <Button variant="success" onClick={this.handleClick}>Post Your New Recipe!</Button>
           <h3>Recipe 1</h3>
           <div>Item: {item}</div>
           <div>Cook: {cook}</div>

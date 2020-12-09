@@ -1,5 +1,13 @@
-.add-ingredient-button {
+h1 {
+  text-align: center;
+}
+.ingredient-button-add {
   margin-bottom: 10px;
+}
+.ingredient-button-remove {
+  border-radius: 1000px !important;
+  margin-left: 15px !important;
+  height: fit-content;
 }
 .form-control {
   margin-bottom: 15px;
@@ -7,6 +15,7 @@
 .ingredient-amount-container {
  display: flex !important;
  justify-content: space-between; 
+ align-items: center;
  margin-bottom: 10px;
 }
 .ingredient-amount-container > div {
