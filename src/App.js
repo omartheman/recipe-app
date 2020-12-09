@@ -4,6 +4,7 @@ import {Switch, Route} from 'react-router';
 import RecipeUpload from './RecipeUpload';
 import Home from './Home';
 import Login from './Login';
+import MyRecipes from './MyRecipes';
 import axios from 'axios';
 import CreateAccount from './CreateAccount';
 import global_url_variable from './global_url_variable';
@@ -74,6 +75,13 @@ class App extends React.Component{
     const {username, password, loggedInUser} = this.state;
     return(
       <Switch>
+
+        <Route path="/recipeapp/myrecipes" render={() => (
+          <MyRecipes
+            loggedInUser={loggedInUser}
+            onLogout={this.handleLogout}
+          />
+        )} />
         <Route path="/recipeapp/recipe-upload" render={() => (
           <RecipeUpload
             loggedInUser={loggedInUser}

@@ -50,6 +50,17 @@ app.use(session({
   }
 }));
 
+app.get(`${serverRoute}myrecipes`, (req, res) => {
+  console.log(`Got a GET request to ${serverRoute}myrecipes`);
+  console.log('req.body.user: ', req.body.user);
+  const sqlGetUserRecipes = `
+    SELECT * FROM recipes WHERE user = '${username}';
+  `;
+  connection.query("SELECT * FROM recipes", function (err, result) {
+    if (err) throw err;
+  });  
+});
+
 app.post(`${serverRoute}create-account`, (req, res) => {
   console.log('Create account post working.')
   res.send('Got a POST request to create account.');
@@ -75,7 +86,6 @@ app.get(`${serverRoute}logout`, function(req, res){
 })
 
 app.get(`${serverRoute}auth`, function(req, res){
-  console.log('req.session in get', req.session)
   if (req.session.loggedin) {
     res.send(req.session.username);
   } 
@@ -93,9 +103,8 @@ app.post(`${serverRoute}auth`, function(req, res) {
         req.session.loggedin = true;
         req.session.username = username; 
         req.session.page_views++;
-        console.log('req.session in post: ', req.session);
-        res.redirect(`${serverRoute}/auth`);
-        console.log('session cookiee', req.session.cookie)
+        console.log('Logged in user from app.post: ', username);
+        // res.redirect(`${serverRoute}/auth`);
       } else {
         res.send('Incorrect Username and/or Password!');
         req.session.page_views = 1; 
@@ -109,9 +118,9 @@ app.post(`${serverRoute}auth`, function(req, res) {
 });
 
 app.get(`${serverRoute}`, (req, res) => {
+  console.log(`Got a GET request to ${serverRoute};`);
   connection.query("SELECT * FROM recipes", function (err, result) {
     if (err) throw err;
-    res.send(result);
   });
 });
 

@@ -24,6 +24,8 @@ const NavbarContainer = (props) => {
     <Navbar.Brand as={Link} to="/recipeapp/">Recipe App</Navbar.Brand>
     <Nav.Link as={Link} to="/recipeapp/">Home</Nav.Link>
     <Nav.Link as={Link} to="/recipeapp/recipe-upload">Recipe Upload</Nav.Link>
+    <Nav.Link as={Link} to="/recipeapp/myrecipes">My Recipes</Nav.Link>
+
     {
     loggedInUser ? 
     <NavDropdown 

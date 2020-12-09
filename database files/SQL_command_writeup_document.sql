@@ -1,3 +1,4 @@
+
 DROP TABLE  recipe10_peas,
 recipe13_peas,
 recipe14_peas4            ,
@@ -26,7 +27,7 @@ CREATE TABLE recipe${id}_${item} (
 =====================================
 --delete test rows from accounts
 
-DELETE from accounts WHERE id BETWEEN 2 AND 6;
+DELETE from accounts WHERE id BETWEEN 21 AND 40;
 DELETE from recipes WHERE id BETWEEN 3 AND 20;
 
 ==========================

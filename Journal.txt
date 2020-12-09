@@ -1,4 +1,23 @@
 ========================
+(9 Dec Mon)
+- Today I will create a page for the user to display all of their recipes. 
+  -Maybe the User recipe page should be same as profile page? 
+  -Start by just having a page where user can see their recipes. Later can decide to integrate it with profile page. 
+- Need to list all recipes for user on their recipes page.
+  - When we go to "My Recipes", we want the page to check for the loggedInUser, and then we want to display a list of the loggedInUser's recipes. Do we need a new route for this? 
+    - What are the steps?:
+      - We need to send a GET request to recipes table for all recipes from user 'test'
+      - DB returns all recipes from user 'test' 
+      - For our get request, we need a new route with the proper MySQL code for the DB retrieval. 
+- Need to dynamically generate page for each recipe. 
+
+========================
+(8 Dec Mon)
+-Today I successfully added fields to add ingredients to database. 
+-Tomorrow I will create a page that displays all of a user's recipes.
+-Each recipe will have a page dynamically generated. 
+
+========================
 
 (5 Dec Sat)
 
