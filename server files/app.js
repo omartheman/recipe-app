@@ -53,7 +53,7 @@ app.use(session({
 app.get(`${serverRoute}myrecipes`, (req, res) => {
   console.log('myrecipes req.session.username', req.session.username)
   const sqlGetUserRecipes = `
-    SELECT * FROM recipes WHERE user = '${req.session.username}';
+    SELECT * FROM recipes WHERE user = '${req.session.username}' ORDER BY item;
   `;
   connection.query(sqlGetUserRecipes, function (err, result) {
     if (err) throw err;

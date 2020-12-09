@@ -1,4 +1,7 @@
 
+--order alphabetically
+	SELECT * FROM recipes WHERE user = '${req.session.username}' ORDER BY user;
+======================
 DROP TABLE  recipe10_peas,
 recipe13_peas,
 recipe14_peas4            ,
