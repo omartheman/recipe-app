@@ -1,11 +1,15 @@
-.ingredient-amount-container {
- display: flex;
- justify-content: space-between; 
- width: 100%;
-}
-.ingredient-amount-container > div {
-  width: 49%;
+.add-ingredient-button {
+  margin-bottom: 10px;
 }
 .form-control {
   margin-bottom: 15px;
+}
+.ingredient-amount-container {
+ display: flex !important;
+ justify-content: space-between; 
+ margin-bottom: 10px;
+}
+.ingredient-amount-container > div {
+  width: 48%;
+  display: inline-block;
 }

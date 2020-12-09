@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import Navbar from './Navbar';
 import global_url_variable from './global_url_variable';
-import {Container, Form, Button} from 'react-bootstrap';
+import {Container, Form, Button, ListGroup} from 'react-bootstrap';
 import './RecipeUpload.css';
 
 const url = global_url_variable;
@@ -89,39 +89,40 @@ class RecipeUpload extends Component {
     //Render a new field for each ingredient. 
     const ingredientFields = ingredients.map((ing, index) => {
       return(
-        <div key={index} className="ingredient-amount-container">
-          <div>
-            <Form.Label>Ingredient #{index + 1}</Form.Label>
-            <Form.Control  
-              type="text" 
-              ingredientnumber={index}
-              onChange={(e) => {
-                const ingNum = Number(e.target.attributes.getNamedItem('ingredientnumber').value);
-                let {ingredients} = this.state;
-                const ingredientsContent = [...ingredients];
-                ingredientsContent[ingNum] = e.target.value;
-                ingredients = ingredientsContent;
-                this.setState({ingredients}, ()=>{console.log(this.state.ingredients)})
-              }}
-            />
-          </div>
-          
-          <div>
-            <Form.Label>Amount</Form.Label>
-            <Form.Control  
-              type="text" 
-              amountnumber={index}
-              onChange={(e) => {
-                const amountNum = Number(e.target.attributes.getNamedItem('amountnumber').value);
-                let {amounts} = this.state;
-                const amountsContent = [...amounts];
-                amountsContent[amountNum] = e.target.value;
-                amounts = amountsContent;
-                this.setState({amounts}, ()=>{console.log(this.state.amounts)})
-              }}
-            />
-          </div>
-        </div>
+
+          <ListGroup.Item variant="info" key={index} className="ingredient-amount-container">
+            <div>
+              <Form.Label>Ingredient #{index + 1}</Form.Label>
+              <Form.Control  
+                type="text" 
+                ingredientnumber={index}
+                onChange={(e) => {
+                  const ingNum = Number(e.target.attributes.getNamedItem('ingredientnumber').value);
+                  let {ingredients} = this.state;
+                  const ingredientsContent = [...ingredients];
+                  ingredientsContent[ingNum] = e.target.value;
+                  ingredients = ingredientsContent;
+                  this.setState({ingredients}, ()=>{console.log(this.state.ingredients)})
+                }}
+              />
+            </div>
+            
+            <div>
+              <Form.Label>Amount</Form.Label>
+              <Form.Control  
+                type="text" 
+                amountnumber={index}
+                onChange={(e) => {
+                  const amountNum = Number(e.target.attributes.getNamedItem('amountnumber').value);
+                  let {amounts} = this.state;
+                  const amountsContent = [...amounts];
+                  amountsContent[amountNum] = e.target.value;
+                  amounts = amountsContent;
+                  this.setState({amounts}, ()=>{console.log(this.state.amounts)})
+                }}
+              />
+            </div>
+          </ListGroup.Item>
       );
     })
 
@@ -166,8 +167,10 @@ class RecipeUpload extends Component {
                 this.setState({[e.target.id]: e.target.value})
               }}
             />
-            {ingredientFields}
-            <Button onClick={this.addIngredient}>Add Ingredient</Button>
+            <Button className="add-ingredient-button" onClick={this.addIngredient}>Add Ingredient</Button>
+            <ListGroup>
+              {ingredientFields}
+            </ListGroup>
           </Form>
           <Button onClick={this.handleClick}>Post</Button>
           <h3>Recipe 1</h3>
