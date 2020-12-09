@@ -28,7 +28,7 @@ class RecipeUpload extends Component {
       ingredients: [''],
       amounts: ['']
     }
-    // ingredients: [ingredient: 'lorem', amount: 'ipsum']
+    //STOP HERE: Add ingredients and amounts to respective new table in database 
     this.handleClick = this.handleClick.bind(this);
     this.addIngredient = this.addIngredient.bind(this);
   }
@@ -43,7 +43,7 @@ class RecipeUpload extends Component {
     }) 
   }
   handleClick(){
-    const {item, cook, description, img} = this.state;
+    const {item, cook, description, img, ingredients, amounts} = this.state;
     this.setState({
       item, cook, description, img})
     axios.post(urlRecipeUpload,     
@@ -51,7 +51,9 @@ class RecipeUpload extends Component {
         item: item, 
         cook: cook, 
         img: img,
-        description: description
+        description: description,
+        ingredients: ingredients,
+        amounts: amounts
       }
     )
     .then(response => {console.log('axios response',response)})

@@ -144,12 +144,7 @@ app.post(`${serverRoute}recipe-upload`, (req, res) => {
     console.log(result);
     const id = result[0].id;
     let item = req.body.item;
-    function updateRecipeName(item)
-    {
-      item=item.replace(/ /g,"_");
-      console.log('New item name: ',item);
-      return item;
-    }
+    function updateRecipeName(item){item=item.replace(/ /g,"_"); return item;}
     item = updateRecipeName(item);
     const sqlCreateIngredientsTable = `
       CREATE TABLE recipe${id}_${item} (
@@ -160,14 +155,16 @@ app.post(`${serverRoute}recipe-upload`, (req, res) => {
     );`;
     connection.query(sqlCreateIngredientsTable, (err, result) => {
       if (err) throw err; 
-      console.log(result);
     });
-    const sql2 = `
-    INSERT INTO recipe${id}_${item} (ingredient, amount) VALUES ('egg yolk', 2);`;
-    connection.query(sql2, (err, result) => {
-      if (err) throw err; 
-      console.log(result);
-    });
+
+    //Create a loop to insert all ingredients and amounts. 
+    for (let i = 0; i < req.body.ingredients.length; i++) {
+      const sqlAddIngredient = 
+        `INSERT INTO recipe${id}_${item} (ingredient, amount) VALUES ('${req.body.ingredients[i]}', '${req.body.amounts[i]}');`;
+      connection.query(sqlAddIngredient, (err, result) => {
+        if (err) throw err; 
+      });
+    }
   });
 });
 

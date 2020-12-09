@@ -16,8 +16,10 @@ h1 {
  display: flex !important;
  justify-content: space-between; 
  align-items: center;
- margin-bottom: 10px;
 }
+.ingredient-amount-container:last-of-type {
+  margin-bottom: 10px;
+} 
 .ingredient-amount-container > div {
   width: 48%;
   display: inline-block;
