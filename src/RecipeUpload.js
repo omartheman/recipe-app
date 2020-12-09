@@ -4,6 +4,7 @@ import axios from 'axios';
 import Navbar from './Navbar';
 import global_url_variable from './global_url_variable';
 import {Container, Form, Button} from 'react-bootstrap';
+import './RecipeUpload.css';
 
 const url = global_url_variable;
 const urlRecipeUpload = `${url}recipe-upload`;
@@ -24,9 +25,12 @@ class RecipeUpload extends Component {
       cook: '',
       img: '',
       description: '',
-      ingredients: []
+      ingredients: [''],
+      amounts: ['']
     }
+    // ingredients: [ingredient: 'lorem', amount: 'ipsum']
     this.handleClick = this.handleClick.bind(this);
+    this.addIngredient = this.addIngredient.bind(this);
   }
   componentDidMount() { 
     axios.get(url) 
@@ -63,25 +67,16 @@ class RecipeUpload extends Component {
     )
   }
   addIngredient(){
-    /*
     const {ingredients} = this.state;
-    let numberIngredients = ingredients.length;
-    numberIngredients++;
-    const newIngredient;
     //create new ingredient with unique key?
     //Ingredient doesn't need key, it can just use index of array. 
     this.setState({
-      ingredients: [...ingredients, newIngredient]
-    });
-    */
-  }
-  handleIngredientsPost(){
-    //update ingredients 
-    //Set state of each changed ingredient. 
+      ingredients: [...ingredients, '']
+    }, () => {console.log(this.state.ingredients)});
   }
   render() { 
     const {recipes} = this.state;
-    let {item, cook, date, img, description} = this.state;
+    let {item, cook, date, img, description, ingredients} = this.state;
     const {loggedInUser, onLogout} = this.props;
     if (recipes.length > 0) {
 
@@ -91,9 +86,44 @@ class RecipeUpload extends Component {
       img = recipes[0].img
       description = recipes[0].description
     }
-    //Let user create a new ingredient field.
-    //For every new ingredient field created, save input to state on post. 
-    // const ingredientFields = this.state.ingredients
+    //Render a new field for each ingredient. 
+    const ingredientFields = ingredients.map((ing, index) => {
+      return(
+        <div key={index} className="ingredient-amount-container">
+          <div>
+            <Form.Label>Ingredient #{index + 1}</Form.Label>
+            <Form.Control  
+              type="text" 
+              ingredientnumber={index}
+              onChange={(e) => {
+                const ingNum = Number(e.target.attributes.getNamedItem('ingredientnumber').value);
+                let {ingredients} = this.state;
+                const ingredientsContent = [...ingredients];
+                ingredientsContent[ingNum] = e.target.value;
+                ingredients = ingredientsContent;
+                this.setState({ingredients}, ()=>{console.log(this.state.ingredients)})
+              }}
+            />
+          </div>
+          
+          <div>
+            <Form.Label>Amount</Form.Label>
+            <Form.Control  
+              type="text" 
+              amountnumber={index}
+              onChange={(e) => {
+                const amountNum = Number(e.target.attributes.getNamedItem('amountnumber').value);
+                let {amounts} = this.state;
+                const amountsContent = [...amounts];
+                amountsContent[amountNum] = e.target.value;
+                amounts = amountsContent;
+                this.setState({amounts}, ()=>{console.log(this.state.amounts)})
+              }}
+            />
+          </div>
+        </div>
+      );
+    })
 
     return ( 
       <> 
@@ -136,33 +166,8 @@ class RecipeUpload extends Component {
                 this.setState({[e.target.id]: e.target.value})
               }}
             />
-            <Form.Label>Ingredient</Form.Label>
-            <Form.Control  
-              type="text" 
-              id="ingredient-0"
-              ingredientnumber="0"
-              onChange={(e) => {
-                const ingNum = Number(e.target.attributes.getNamedItem('ingredientnumber').value);
-                let {ingredients} = this.state;
-                const ingredientsContent = [...ingredients];
-                ingredientsContent[ingNum] = e.target.value;
-                ingredients = ingredientsContent;
-                this.setState({ingredients}, ()=>{console.log(this.state.ingredients)})
-              }}
-            />
-            <Form.Control  
-              type="text" 
-              id="ingredient-1"
-              ingredientnumber="1"
-              onChange={(e) => {
-                const ingNum = Number(e.target.attributes.getNamedItem('ingredientnumber').value);
-                let {ingredients} = this.state;
-                const ingredientsContent = [...ingredients];
-                ingredientsContent[ingNum] = e.target.value;
-                ingredients = ingredientsContent;
-                this.setState({ingredients}, ()=>{console.log(this.state.ingredients)})
-              }}
-            />
+            {ingredientFields}
+            <Button onClick={this.addIngredient}>Add Ingredient</Button>
           </Form>
           <Button onClick={this.handleClick}>Post</Button>
           <h3>Recipe 1</h3>

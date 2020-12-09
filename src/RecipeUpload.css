@@ -1,0 +1,11 @@
+.ingredient-amount-container {
+ display: flex;
+ justify-content: space-between; 
+ width: 100%;
+}
+.ingredient-amount-container > div {
+  width: 49%;
+}
+.form-control {
+  margin-bottom: 15px;
+}
