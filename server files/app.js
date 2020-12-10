@@ -174,7 +174,7 @@ app.post(`${serverRoute}recipe-upload`, (req, res) => {
   // *******CREATE TABLE FOR RECIPE INGREDIENTS********
   //Retrieve id from new recipe.
   const sqlGetId = `
-  SELECT id FROM recipes WHERE item='${req.body.item}' AND cook='${req.body.cook}' AND description='${req.body.description}';`;
+  SELECT id FROM recipes WHERE item='${req.body.item}' AND cook='${req.body.cook}' AND description='${req.body.description}' ORDER BY id DESC;`;
   console.log(sqlGetId);
   connection.query(sqlGetId, function (err, result) {
     if (err) throw err;
