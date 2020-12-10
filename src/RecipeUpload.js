@@ -32,16 +32,6 @@ class RecipeUpload extends Component {
     this.handleClick = this.handleClick.bind(this);
     this.addIngredient = this.addIngredient.bind(this);
   }
-  componentDidMount() { 
-    axios.get(url) 
-    .then(response => { 
-      console.log(response.data[0]);
-      this.setState({recipes: response.data}); 
-    }) 
-    .catch(error => { 
-      console.log(error) 
-    }) 
-  }
   handleClick(){
     const {item, cook, description, img, ingredients, amounts} = this.state;
     this.setState({
@@ -90,16 +80,8 @@ class RecipeUpload extends Component {
     this.setState({ingredients, amounts})
   }
   render() { 
-    const {recipes} = this.state;
-    let {item, cook, date, img, description, ingredients} = this.state;
+    let {ingredients} = this.state;
     const {loggedInUser, onLogout} = this.props;
-    if (recipes.length > 0) {
-      item = recipes[0].item
-      cook = recipes[0].cook
-      date = recipes[0].date
-      img = recipes[0].img
-      description = recipes[0].description
-    }
     //Render a new field for each ingredient. 
     const ingredientFields = ingredients.map((ing, index) => {
       return(
@@ -200,12 +182,6 @@ class RecipeUpload extends Component {
             </ListGroup>
           </Form>
           <Button variant="success" onClick={this.handleClick}>Post Your New Recipe!</Button>
-          <h3>Recipe 1</h3>
-          <div>Item: {item}</div>
-          <div>Cook: {cook}</div>
-          <div>Date: {date}</div>
-          <div>Picture: <img alt='' src={img} style={{width:'200px'}}/></div>
-          <div>Description: {description}</div>
         </Container>
       </> 
     ) 

@@ -35,6 +35,9 @@ DELETE from recipes WHERE id BETWEEN 3 AND 20;
 
 ==========================
 
+ALTER TABLE recipes 
+ADD COLUMN user varChar(255);
+
 --Add columns to 'accounts'
 
 ALTER TABLE accounts
