@@ -82,7 +82,6 @@ class RecipeUpload extends Component {
   render() { 
     let {ingredients} = this.state;
     const {loggedInUser, onLogout} = this.props;
-    //Render a new field for each ingredient. 
     const ingredientFields = ingredients.map((ing, index) => {
       return(
           <ListGroup.Item variant="info" key={index} className="ingredient-amount-container">

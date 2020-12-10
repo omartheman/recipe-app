@@ -8,6 +8,7 @@ import MyRecipes from './MyRecipes';
 import axios from 'axios';
 import CreateAccount from './CreateAccount';
 import global_url_variable from './global_url_variable';
+import RecipePage from './RecipePage';
 
 const url = global_url_variable;
 const urlAuth = `${url}auth`;
@@ -75,6 +76,13 @@ class App extends React.Component{
     const {username, password, loggedInUser} = this.state;
     return(
       <Switch>
+        <Route path="/recipeapp/recipe/:recipeId" render={(props) => (
+          <RecipePage
+            {...props}
+            loggedInUser={loggedInUser}
+            onLogout={this.handleLogout}
+          />
+        )} />
         <Route path="/recipeapp/myrecipes" render={() => (
           <MyRecipes
             loggedInUser={loggedInUser}

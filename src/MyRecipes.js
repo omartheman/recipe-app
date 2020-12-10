@@ -4,6 +4,7 @@ import {Container, ListGroup, Row, Col} from 'react-bootstrap';
 import axios from 'axios';
 import global_url_variable from './global_url_variable';
 import './MyRecipes.css';
+import {Link} from 'react-router-dom';
 
 const url = global_url_variable;
 const urlMyRecipes = `${url}myrecipes`;
@@ -33,7 +34,7 @@ class MyRecipes extends React.Component {
       recipeListLeft = recipes.map((x, ind) => {
         if (ind % 2 === 0) {
           return(
-            <ListGroup.Item key={ind} variant="primary">{x.item}</ListGroup.Item>
+            <ListGroup.Item key={ind} variant="primary" as={Link} to={`/recipeapp/recipe/${x.id}`}>{x.item}</ListGroup.Item>
           )
         } else {return null}
       })
