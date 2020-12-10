@@ -11,6 +11,14 @@
       - For our get request, we need a new route with the proper MySQL code for the DB retrieval. 
 - Need to dynamically generate page for each recipe. 
 
+- COMPLETED dynamic page generation.
+TOMORROW: 
+  - Tomorrow, fix so that apostrophes in the recipe upload don't mess up the server SQL code
+  - Tomorrow, add 'Loading...' for when nothing is displayed yet. 
+  - Add columns in DB for preparation steps for the recipe. 
+  - When you click 'Add Ingredients' button, make the new row appear first instead of last.
+  - Find out why viewing an incomplete recipe page logs out user in production. Or perhaps just prevent an incomplete recipe from being created by requiring all fields to be filled out. 
+  - Find out why datbase doesn't allow duplicate name of recipe, even though each recipe has unique id 
 ========================
 (8 Dec Mon)
 -Today I successfully added fields to add ingredients to database. 

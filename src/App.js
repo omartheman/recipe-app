@@ -57,7 +57,7 @@ class App extends React.Component{
       axios.get(urlAuth) 
       .then(res => { 
         console.log(res);
-        this.setState({loggedInUser: res.data})
+        this.setState({loggedInUser: res.data}, ()=>{console.log('userloggedin',res.data)})
       }).catch(error => {console.log(error)})
     )
   }

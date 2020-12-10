@@ -3,6 +3,7 @@ import Navbar from './Navbar';
 import axios from 'axios';
 import global_url_variable from './global_url_variable';
 import { Container, ListGroup, Row, Col } from 'react-bootstrap';
+import './RecipePage.css';
 
 const url = global_url_variable;
 const urlRecipe = `${url}getrecipe`;
@@ -39,7 +40,7 @@ const Recipe = (props) => {
         console.log(res.data);
         setIngredients(res.data.map(x => {
           return(
-            <ListGroup.Item>
+            <ListGroup.Item key={x.id}>
               <Row>
                 <Col>
                   {x.ingredient}
@@ -64,7 +65,7 @@ const Recipe = (props) => {
       />
       <Container>
         <h1>Recipe: {recipeName}</h1>
-        <img src={recipeImage} alt={description}></img>
+        <img className="recipe-image" src={recipeImage} alt={description}></img>
         <ListGroup>
           <ListGroup.Item>
             Cook: {cook}
