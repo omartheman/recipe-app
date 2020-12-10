@@ -6,6 +6,8 @@ const cors = require("cors");
 const session = require('express-session');
 const serverRoute = '/recipeapp/recipeapp-server/';
 
+function spacesToUnderscores(item){item=item.replace(/ /g,"_"); return item;}
+
 const mode =
 "developmentOmar";
 /*
@@ -50,6 +52,31 @@ app.use(session({
   }
 }));
 
+app.post(`${serverRoute}getingredients`, (req, res) => {
+  console.log(req.body);
+  const item = spacesToUnderscores(req.body.item);
+  console.log('spacesToUnderscores item: ', item)
+  const sqlGetIngredients = `
+    SELECT * FROM recipe${req.body.id}_${item};
+  `;
+  connection.query(sqlGetIngredients, (err, result) => {
+    if (err) throw err;
+    console.log('Result GET ingredients: ', result);
+    res.send(result);
+  })
+});
+
+app.post(`${serverRoute}getrecipe`, (req, res) => {
+  const sqlGetRecipe = `
+    SELECT * FROM recipes WHERE id = '${req.body.id}';
+  `;
+  connection.query(sqlGetRecipe, (err, result) => {
+    if (err) throw err; 
+    console.log('Result GET recipe: ', result)
+    res.send(result);
+  })
+});
+
 app.get(`${serverRoute}myrecipes`, (req, res) => {
   console.log('myrecipes req.session.username', req.session.username)
   const sqlGetUserRecipes = `
@@ -57,7 +84,7 @@ app.get(`${serverRoute}myrecipes`, (req, res) => {
   `;
   connection.query(sqlGetUserRecipes, function (err, result) {
     if (err) throw err;
-    console.log('result sql myrecipes',result)
+    console.log('Result sql myrecipes:',result)
     res.send(result);
   });  
 });
@@ -154,8 +181,7 @@ app.post(`${serverRoute}recipe-upload`, (req, res) => {
     console.log(result);
     const id = result[0].id;
     let item = req.body.item;
-    function updateRecipeName(item){item=item.replace(/ /g,"_"); return item;}
-    item = updateRecipeName(item);
+    item = spacesToUnderscores(item).toLowerCase();
     const sqlCreateIngredientsTable = `
       CREATE TABLE recipe${id}_${item} (
         id INT NOT NULL AUTO_INCREMENT,

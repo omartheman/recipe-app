@@ -20,7 +20,6 @@ const MyRecipes = (props) => {
       setRecipes([...res.data]);
     });
   }, []);
-  //set state with values from axios res.
   let recipeListLeft;
   let recipeListRight;
   if (recipes.length > 0) {
@@ -34,7 +33,7 @@ const MyRecipes = (props) => {
     recipeListRight = recipes.map((x, ind) => {
       if (ind % 2 !== 0) {
         return(
-          <ListGroup.Item key={ind} variant="primary">{x.item}</ListGroup.Item>
+          <ListGroup.Item key={ind} variant="primary" as={Link} to={`/recipeapp/recipe/${x.id}`}>{x.item}</ListGroup.Item>
         )
       } else {return null}
     })
