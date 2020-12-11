@@ -9,6 +9,7 @@ import './RecipeUpload.css';
 const url = global_url_variable;
 const urlRecipeUpload = `${url}recipe-upload`;
 const urlAuth = `${url}auth`;
+const urlFileUpload = `${url}image-upload`;
 axios.defaults.headers.common['Cache-Control'] = 'no-cache';
 
 /*
@@ -37,18 +38,21 @@ class RecipeUpload extends Component {
   handleClick(){
     axios.get(urlAuth)
     .then(res => {
-      if (res.data === ''){
-        alert("You're not logged in. You must be logged in to upload!")
-        return;
-      }
+      // if (res.data === ''){
+      //   alert("You're not logged in. You must be logged in to upload!")
+      //   return;
+      // }
       const {item, cook, description, img, imageFile, ingredients, amounts} = this.state;
       const formData = new FormData();
       formData.append(
-        "myFile",
+        "imageFile",
         imageFile,
         imageFile.name
       );
-
+      axios.post(urlFileUpload, formData)
+      .then(res => {
+        console.log(res);
+      });
       
       axios.post(urlRecipeUpload,     
         {
@@ -77,6 +81,17 @@ class RecipeUpload extends Component {
       console.log(error) 
     })
   }
+  fileData(){
+    const {imageFile} = this.state;
+    if (imageFile) {
+      return (
+        <>
+          <h2>File Details</h2>
+          <p>File Name: {imageFile.name}</p>
+        </>
+      )
+    }
+  }
   addIngredient(){
     const {ingredients, amounts} = this.state;
     //create new ingredient with unique key?
@@ -98,6 +113,7 @@ class RecipeUpload extends Component {
     amounts = amountsContent;
     this.setState({ingredients, amounts})
   }
+  
   render() { 
     let {ingredients} = this.state;
     const {loggedInUser, onLogout} = this.props;
@@ -202,6 +218,8 @@ class RecipeUpload extends Component {
                 this.setState({[e.target.id]: e.target.files[0]}, ()=>{console.log(this.state.imageFile)})
               }}
             />
+            {this.fileData()}
+
 
             <h2>Ingredients</h2>
             <Button className="ingredient-button-add" onClick={this.addIngredient}>Add Ingredient</Button>

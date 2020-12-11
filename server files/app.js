@@ -5,13 +5,12 @@ const mysql = require('mysql');
 const cors = require("cors");
 const session = require('express-session');
 const serverRoute = '/recipeapp/recipeapp-server/';
+const multer = require('multer');
+const fs = require('file-system');
 
 function spacesToUnderscores(item){item=item.replace(/ /g,"_"); return item;}
 function replaceSqlCharacters(str){
-  console.log('entered func')
-  console.log(str)
   const newStr = str.replace(/"/g, '_').replace(/'/g, '_').replace(/`/g, '_').replace(/;/g, '_').replace(/\*/g, '_').replace(/#/g, '_').replace(/\$/g, '_');
-  console.log(newStr)
   return newStr;
 }
 
@@ -58,6 +57,38 @@ app.use(session({
     // maxAge: 8*60*60*1000 //make session last 8 hours
   }
 }));
+
+
+const handleError = (err, res) => {
+  if (err) {console.log(err)}
+  res
+  .status(500)
+  .contentType("text/plain")
+  .end("Oops! Something went wrong!");
+}
+
+const imageUpload = multer({
+  dest: "C:/Users/HP EliteBook 8470p/Documents/Coding/recipe-app/uploaded_files_temp"
+});
+
+app.post(`${serverRoute}image-upload`, imageUpload.single("imageFile"),
+  (req, res) => {
+    const tempPath = req.file.path;
+    console.log('req.file',req.file)
+    console.log('temppath',tempPath);
+    const targetPath = path.join(__dirname, `../uploaded_files/image_upload_${req.file.filename}_${req.file.originalname}`);
+    console.log('targetpath', targetPath);
+
+    fs.rename(tempPath, targetPath, err => {
+      if (err) return handleError(err, res);
+      res
+        .status(200)
+        .contentType("text/plain")
+        .end("File uploaded!");
+      console.log('File uploaded!');
+    });
+  }
+)
 
 app.post(`${serverRoute}getingredients`, (req, res) => {
   console.log(req.body);
@@ -185,14 +216,12 @@ app.post(`${serverRoute}recipe-upload`, (req, res) => {
   //Retrieve id from new recipe.
   const sqlGetId = `
   SELECT id FROM recipes WHERE item = ? AND cook = ? AND description = ? ORDER BY id DESC;`;
-  console.log(sqlGetId);
   connection.query(sqlGetId,[
     req.body.item,
     req.body.cook,
     req.body.description
   ], function (err, result) {
     if (err) throw err;
-    console.log(result);
     const id = result[0].id;
     let item = req.body.item;
     item = replaceSqlCharacters(spacesToUnderscores(item).toLowerCase());
