@@ -8,6 +8,7 @@ import './RecipeUpload.css';
 
 const url = global_url_variable;
 const urlRecipeUpload = `${url}recipe-upload`;
+const urlAuth = `${url}auth`;
 axios.defaults.headers.common['Cache-Control'] = 'no-cache';
 
 /*
@@ -24,6 +25,7 @@ class RecipeUpload extends Component {
       item: '',
       cook: '',
       img: '',
+      imageFile: null,
       description: '',
       ingredients: [''],
       amounts: ['']
@@ -33,30 +35,47 @@ class RecipeUpload extends Component {
     this.addIngredient = this.addIngredient.bind(this);
   }
   handleClick(){
-    const {item, cook, description, img, ingredients, amounts} = this.state;
-    this.setState({
-      item, cook, description, img})
-    axios.post(urlRecipeUpload,     
-      {
-        item: item, 
-        cook: cook, 
-        img: img,
-        description: description,
-        ingredients: ingredients,
-        amounts: amounts
+    axios.get(urlAuth)
+    .then(res => {
+      if (res.data === ''){
+        alert("You're not logged in. You must be logged in to upload!")
+        return;
       }
-    )
-    .then(response => {console.log('axios response',response)})
-    .then(this.setState({item, cook, description, img}))
-    .then(
-      axios.get(url)
-      .then(response => { 
-        this.setState({recipes: response.data}); 
-      })
-      .catch(error => { 
-        console.log(error) 
-      })
-    )
+      const {item, cook, description, img, imageFile, ingredients, amounts} = this.state;
+      const formData = new FormData();
+      formData.append(
+        "myFile",
+        imageFile,
+        imageFile.name
+      );
+
+      
+      axios.post(urlRecipeUpload,     
+        {
+          item: item, 
+          cook: cook, 
+          img: img,
+          description: description,
+          ingredients: ingredients,
+          amounts: amounts
+        }
+      )
+      .then(response => {console.log('axios response',response)})
+      .then(this.setState({item, cook, description, img}))
+      .then(
+        axios.get(url)
+        .then(response => { 
+          this.setState({recipes: response.data}); 
+        })
+        .catch(error => { 
+          console.log(error) 
+        })
+      )
+    })
+    .catch(error => { 
+      alert("I'm sorry. There was an error with the server. Try refreshing the page, and logging in again.")
+      console.log(error) 
+    })
   }
   addIngredient(){
     const {ingredients, amounts} = this.state;
@@ -174,6 +193,16 @@ class RecipeUpload extends Component {
                 this.setState({[e.target.id]: e.target.value})
               }}
             />
+            <Form.Label>Upload Image</Form.Label>
+            <Form.Control  
+              type="file" 
+              id="imageFile"
+              name="imageFile"
+              onChange={(e) => {
+                this.setState({[e.target.id]: e.target.files[0]}, ()=>{console.log(this.state.imageFile)})
+              }}
+            />
+
             <h2>Ingredients</h2>
             <Button className="ingredient-button-add" onClick={this.addIngredient}>Add Ingredient</Button>
             <ListGroup>

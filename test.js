@@ -1,14 +1,12 @@
-const state = {
-  ingredients: [{ingredient: '', amount: ''}, {ingredient: '', amount: ''}]
+const str = 'My "nanny*$#  `'
+
+const newstr = str.replace(/"/g, '\\"').replace(/'/g, `\\'`).replace(/`/g, '\\`').replace(/;/g, '\\;');
+
+// console.log(newstr)
+
+function replaceSqlCharacters(str){
+
+  const newStr = str.replace(/"/g, '_').replace(/'/g, '_').replace(/`/g, '_').replace(/;/g, '_').replace(/\*/g, '_').replace(/#/g, '_').replace(/\$/g, '_');
+  return newStr;
 }
-
-let {ingredients} = state;
-// ingredients[0] = 5;
-const ingredientsContent = [...ingredients];
-let ingredientsContentIngredient = ingredientsContent[0].ingredient;
-ingredientsContentIngredient = 'flour';
-ingredientsContent 
-ingredients = ingredientsContent;
-
-console.log('changed ing',ingredients);
-console.log('final state',state);
+console.log(replaceSqlCharacters(str));

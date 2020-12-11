@@ -7,6 +7,13 @@ const session = require('express-session');
 const serverRoute = '/recipeapp/recipeapp-server/';
 
 function spacesToUnderscores(item){item=item.replace(/ /g,"_"); return item;}
+function replaceSqlCharacters(str){
+  console.log('entered func')
+  console.log(str)
+  const newStr = str.replace(/"/g, '_').replace(/'/g, '_').replace(/`/g, '_').replace(/;/g, '_').replace(/\*/g, '_').replace(/#/g, '_').replace(/\$/g, '_');
+  console.log(newStr)
+  return newStr;
+}
 
 const mode =
 "developmentOmar";
@@ -156,32 +163,40 @@ app.post(`${serverRoute}recipe-upload`, (req, res) => {
   //Check to see that user is logged in. 
   res.send('Got a POST request to upload recipe.');
   console.log('req.session.username: ',req.session.username)
-
   var sql = `INSERT INTO recipes (item, cook, img, description, user)
   VALUES (
-    '${req.body.item}',
-    '${req.body.cook}',
-    '${req.body.img}',
-    '${req.body.description}',
-    '${req.session.username}'
+    ?,
+    ?,
+    ?,
+    ?,
+    ?
   );`;
-  connection.query(sql, 
-    function (err, result) {
+  connection.query(sql, [
+    req.body.item,
+    req.body.cook,
+    req.body.img,
+    req.body.description,
+    req.session.username
+  ], function (err, result) {
     if (err) throw err;
     console.log(result.affectedRows + " record(s) updated");
   });
-
   // *******CREATE TABLE FOR RECIPE INGREDIENTS********
   //Retrieve id from new recipe.
   const sqlGetId = `
-  SELECT id FROM recipes WHERE item='${req.body.item}' AND cook='${req.body.cook}' AND description='${req.body.description}' ORDER BY id DESC;`;
+  SELECT id FROM recipes WHERE item = ? AND cook = ? AND description = ? ORDER BY id DESC;`;
   console.log(sqlGetId);
-  connection.query(sqlGetId, function (err, result) {
+  connection.query(sqlGetId,[
+    req.body.item,
+    req.body.cook,
+    req.body.description
+  ], function (err, result) {
     if (err) throw err;
     console.log(result);
     const id = result[0].id;
     let item = req.body.item;
-    item = spacesToUnderscores(item).toLowerCase();
+    item = replaceSqlCharacters(spacesToUnderscores(item).toLowerCase());
+    console.log('modified item: ', item)
     const sqlCreateIngredientsTable = `
       CREATE TABLE recipe${id}_${item} (
         id INT NOT NULL AUTO_INCREMENT,

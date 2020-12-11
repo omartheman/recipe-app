@@ -1,8 +1,17 @@
 =======================
+11 Dec Tue
 
-SQL code is matching multiple rows in 'recipes' table to try and add the respective new ingredients table. 
-  - Since SQL is not using a unique ID to identify recipe, it uses the name, description, and cook to match. If you don't fill out these fields, they return an empty string, and then you get multiple matches when you try to add an ingredient. When you get multiple matches, the database tries to match the first out of all of the matches, and then sees that this table already exists.
-    -If you can match the last of the matches, this would solve the problem. 
+Success List: 
+  - Add 'Loading...' for when nothing is displayed yet. 
+  - Add columns in DB for preparation steps for the recipe. 
+  - When you click 'Add Ingredients' button, make the new row appear first instead of last.
+  
+  - Add a user profile page, to edit password etc. 
+  - Add a login form to a dropdown on the navbar 
+  - Allow user to edit recipes on recipe page
+
+  - Create a few test recipes, and add them to the homepage display.
+  - Create a way to upload a recipe image
 
 ========================
 (9 Dec Mon)
