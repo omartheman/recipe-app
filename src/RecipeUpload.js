@@ -33,11 +33,15 @@ class RecipeUpload extends Component {
       imageFilePath: null,
       description: '',
       ingredients: [''],
-      amounts: ['']
+      amounts: [''],
+      blobFile: null,
+      originalFileName: null,
+      formData: null
     }
     //STOP HERE: Add ingredients and amounts to respective new table in database 
     this.handleClick = this.handleClick.bind(this);
     this.addIngredient = this.addIngredient.bind(this);
+    this.handleImageCrop = this.handleImageCrop.bind(this);
   }
   handleClick(){
     axios.get(urlAuth)
@@ -46,13 +50,14 @@ class RecipeUpload extends Component {
       //   alert("You're not logged in. You must be logged in to upload!")
       //   return;
       // }
-      const {item, cook, description, img, imageFile, ingredients, amounts} = this.state;
-      const formData = new FormData();
-      formData.append(
-        "imageFile",
-        imageFile,
-        imageFile.name
-      );
+      const {item, cook, description, img, imageFile, ingredients, amounts, formData} = this.state;
+      // const formData = new FormData();
+      // formData.append(
+      //   "imageFile",
+      //   imageFile,
+      //   imageFile.name
+      // );
+      console.log('formData', formData);
       axios.post(urlFileUpload, formData)
       .then(res => {
         console.log(res);
@@ -118,10 +123,19 @@ class RecipeUpload extends Component {
     amounts = amountsContent;
     this.setState({ingredients, amounts})
   }
-  // CropDemo({ src }) {
-  //   const [crop, setCrop] = useState({ aspect: 16 / 9 });
-  //   return <ReactCrop src={src} crop={crop} onChange={newCrop => setCrop(newCrop)} />;
-  // }  
+  handleImageCrop(blobFile){
+    console.log('entered handleImageCrop')
+    const newImage = new File([blobFile], blobFile.name, {type: blobFile.type});
+    let formData = new FormData();
+    formData.append("imageFile", newImage, newImage.name)
+    //save form data to state 
+    this.setState({formData});
+
+    // axios.post(urlFileUpload, formData)
+    // .then(res => {
+    //   console.log(res);
+    // });
+  }
   render() { 
     let {ingredients} = this.state;
     const {loggedInUser, onLogout} = this.props;
@@ -230,7 +244,9 @@ class RecipeUpload extends Component {
             />
             {this.fileData()}
             <ReactCrop />
-            <ImageCrop/>
+            <ImageCrop
+              onImageCrop={this.handleImageCrop}
+            />
             <h2>Ingredients</h2>
             <Button className="ingredient-button-add" onClick={this.addIngredient}>Add Ingredient</Button>
             <ListGroup>

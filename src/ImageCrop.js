@@ -94,6 +94,7 @@ class ImageCrop extends PureComponent {
         window.URL.revokeObjectURL(this.fileUrl);
         this.fileUrl = window.URL.createObjectURL(blob);
         this.setState({blobFile: blob})
+        this.props.onImageCrop(blob);
         resolve(this.fileUrl);
       }, 'image/jpeg');
     });
