@@ -1,29 +1,21 @@
 import React, { PureComponent } from 'react';
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
-import axios from 'axios';
-import global_url_variable from './global_url_variable';
-
-const url = global_url_variable;
-const urlFileUpload = `${url}image-upload`;
+import './ImageCrop.css';
+import { Row, Col } from 'react-bootstrap';
 
 class ImageCrop extends PureComponent {
-  constructor(props){
-    super(props);
-    this.state = {
-      src: null,
-      crop: {
-        unit: '%',
-        width: 30,
-        aspect: 3 / 2,
-      },
-      croppedImageUrl: null,
-      blobFile: null,
-      originalFileName: null
-    };
-    this.onSubmit = this.onSubmit.bind(this);
-  }
-
+  state = {
+    src: null,
+    crop: {
+      unit: '%',
+      width: 30,
+      aspect: 3 / 2,
+    },
+    croppedImageUrl: null,
+    blobFile: null,
+    originalFileName: null
+  };
   onSelectFile = e => {
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
@@ -35,22 +27,18 @@ class ImageCrop extends PureComponent {
       this.setState({originalFileName: e.target.files[0].name})
     }
   };
-
   // If you setState the crop in here you should return false.
   onImageLoaded = image => {
     this.imageRef = image;
   };
-
   onCropComplete = crop => {
     this.makeClientCrop(crop);
   };
-
   onCropChange = (crop, percentCrop) => {
     // You could also use percentCrop:
     // this.setState({ crop: percentCrop });
     this.setState({ crop });
   };
-
   async makeClientCrop(crop) {
     if (this.imageRef && crop.width && crop.height) {
       const croppedImageUrl = await this.getCroppedImg(
@@ -61,7 +49,6 @@ class ImageCrop extends PureComponent {
       this.setState({ croppedImageUrl }, ()=>{console.log('cropped',this.state.croppedImageUrl)});
     }
   }
-
   getCroppedImg(image, crop, fileName) {
     const canvas = document.createElement('canvas');
     const scaleX = image.naturalWidth / image.width;
@@ -69,7 +56,6 @@ class ImageCrop extends PureComponent {
     canvas.width = crop.width;
     canvas.height = crop.height;
     const ctx = canvas.getContext('2d');
-
     ctx.drawImage(
       image,
       crop.x * scaleX,
@@ -81,7 +67,6 @@ class ImageCrop extends PureComponent {
       crop.width,
       crop.height
     );
-
     return new Promise((resolve, reject) => {
       canvas.toBlob(blob => {
         if (!blob) {
@@ -99,46 +84,41 @@ class ImageCrop extends PureComponent {
       }, 'image');
     });
   }
-  onSubmit(e){
-    e.preventDefault();
-    const {blobFile} = this.state;
-    const newImage = new File([blobFile], blobFile.name, {type: blobFile.type});
-    let formData = new FormData();
-    formData.append("imageFile", newImage, newImage.name)
-    console.log('newimage.name',newImage.name)
-    // const formData = new FormData();
-    // formData.append(
-    //   "imageFile",
-    //   imageFile,
-    //   // imageFile.name
-    // );
-    axios.post(urlFileUpload, formData)
-    .then(res => {
-      console.log(res);
-    });
-  }
   render() {
     const { crop, croppedImageUrl, src } = this.state;
-
     return (
-      <div className="App">
+      <div className="">
         <div>
           <input type="file" accept="image/*" onChange={this.onSelectFile} />
         </div>
-        {src && (
-          <ReactCrop
-            src={src}
-            crop={crop}
-            ruleOfThirds
-            onImageLoaded={this.onImageLoaded}
-            onComplete={this.onCropComplete}
-            onChange={this.onCropChange}
-          />
-        )}
-        {croppedImageUrl && (
-          <img alt="Crop" style={{ maxWidth: '100%' }} src={croppedImageUrl} />
-        )}
-        <button onClick={this.onSubmit}>Submit Image</button>
+        {src && 
+          <>
+            <h3 className="image-crop-title">Please crop your image with the fixed ratio selection box.</h3>
+            <Row>
+              <Col>
+                <h3>Original Image</h3>
+                {src && (
+                  <ReactCrop
+                  src={src}
+                  crop={crop}
+                  ruleOfThirds
+                    onImageLoaded={this.onImageLoaded}
+                    onComplete={this.onCropComplete}
+                    onChange={this.onCropChange}
+                    />
+                    )}
+              </Col>
+              <Col>
+                <h3>Cropped Image</h3>
+                <div  className="cropped-image-column">
+                  {croppedImageUrl && (
+                    <img alt="Crop" style={{ maxWidth: '100%' }} src={croppedImageUrl} />
+                  )}
+                </div>
+              </Col>
+            </Row>
+          </>
+        }
       </div>
     );
   }

@@ -42,6 +42,9 @@ class RecipeUpload extends Component {
     this.handleImageCrop = this.handleImageCrop.bind(this);
   }
   handleClick(){
+    //STOP HERE
+    //Create 'imagePath' column in 'recipes' table
+    //Save the server path of the uploaded image to the new'recipes' row
     axios.get(urlAuth)
     .then(res => {
       // if (res.data === ''){
