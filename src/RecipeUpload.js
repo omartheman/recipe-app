@@ -47,37 +47,41 @@ class RecipeUpload extends Component {
     axios.get(urlAuth)
     .then(res => {
       // if (res.data === ''){
-      //   alert("You're not logged in. You must be logged in to upload!")
-      //   return;
+        //   alert("You're not logged in. You must be logged in to upload!")
+        //   return;
       // }
       const {item, cook, description, img, ingredients, amounts, formData} = this.state;
       console.log('formData', formData);
+      console.log('blob', this.state.blobFile)
+
       axios.post(urlFileUpload, formData)
       .then(res => {
         console.log(res);
-      });
-      
-      axios.post(urlRecipeUpload,     
-        {
-          item: item, 
-          cook: cook, 
-          img: img,
-          description: description,
-          ingredients: ingredients,
-          amounts: amounts
-        }
-      )
-      .then(response => {console.log('axios response',response)})
-      .then(this.setState({item, cook, description, img}))
+      })
       .then(
-        axios.get(url)
-        .then(response => { 
-          this.setState({recipes: response.data}); 
-        })
-        .catch(error => { 
-          console.log(error) 
-        })
+        axios.post(urlRecipeUpload,     
+          {
+            item: item, 
+            cook: cook, 
+            img: img,
+            description: description,
+            ingredients: ingredients,
+            amounts: amounts
+          }
+        )
+        .then(response => {console.log('axios response',response)})
+        .then(this.setState({item, cook, description, img}))
+        .then(
+          axios.get(url)
+          .then(response => { 
+            this.setState({recipes: response.data}); 
+          })
+          .catch(error => { 
+            console.log(error) 
+          })
+        )
       )
+      
     })
     .catch(error => { 
       alert("I'm sorry. There was an error with the server. Try refreshing the page, and logging in again.")
@@ -107,6 +111,7 @@ class RecipeUpload extends Component {
   }
   handleImageCrop(blobFile){
     console.log('entered handleImageCrop')
+    console.log('blob', blobFile)
     const newImage = new File([blobFile], blobFile.name, {type: blobFile.type});
     let formData = new FormData();
     formData.append("imageFile", newImage, newImage.name)

@@ -16,17 +16,19 @@ const Recipe = (props) => {
   const [description, setDescription] = useState(null);
   const [recipeImage, setRecipeImage] = useState(null);
   const [ingredients, setIngredients] = useState(null);
+  const [imagePath, setImagePath] = useState(null);
   //we need to retrieve data about specific recipe
   useEffect(() => {
     axios.post(urlRecipe, {
       id: recipeId
     })
     .then(res => {
-      console.log('res',res.data[0].item);
+      console.log('res',res.data);
       setRecipeName(res.data[0].item);
       setCook(res.data[0].cook);
       setDescription(res.data[0].description);
       setRecipeImage(res.data[0].img);
+      setImagePath(res.data[0].imagePath)
       return res;
     })
     .then(res => {
@@ -55,8 +57,6 @@ const Recipe = (props) => {
       })
     });
   }, [recipeId]);
-
-
   return(
     <>
       <Navbar 
@@ -66,6 +66,8 @@ const Recipe = (props) => {
       <Container>
         <h1>Recipe: {recipeName}</h1>
         <img className="recipe-image" src={recipeImage} alt={description}></img>
+        <img className="recipe-image" src={`https://brittanyjewellneal.com/uploaded_files/${imagePath}`} alt={description}></img>
+
         <ListGroup>
           <ListGroup.Item>
             Cook: {cook}

@@ -15,9 +15,9 @@ function replaceSqlCharacters(str){
 }
 
 const mode =
-"developmentOmar";
-/*
 "productionBritt";
+/*
+"developmentOmar";
 */
 
 let corsOrigin;
@@ -74,12 +74,12 @@ const handleError = (err, res) => {
   .end("Oops! Something went wrong!");
 }
 
+let tempImagePath = '';
 
 app.post(`${serverRoute}image-upload`, imageUpload.single("imageFile"),
   (req, res) => {
-    console.log('req',req);
+    console.log('req.file.name', req.file.filename);
     const tempPath = req.file.path;
-    console.log('req.file',req.file)
     console.log('temppath',tempPath);
     const targetPath = path.join(__dirname, `../uploaded_files/image_upload_${req.file.filename}_${req.file.originalname}`);
     console.log('targetpath', targetPath);
@@ -92,16 +92,25 @@ app.post(`${serverRoute}image-upload`, imageUpload.single("imageFile"),
         .end("File uploaded!");
       console.log('File uploaded!');
     });
-
+    
     //Add targetPath to respective 'recipes' row with SQL 
     //Need to identify correct recipe
-    const sqlAddImgPath = `
-      INSERT INTO recipes (imagePath) VALUES (?);
+    const sqlGetId = `
+    SELECT id from recipes ORDER BY id DESC;
     `;
-    console.log(sqlAddImgPath)
-    connection.query(sqlAddImgPath, [targetPath], (err, res) => {
+    connection.query(sqlGetId, (err, result) => {
       if (err) throw err;
-      res.send(result);
+      console.log(Number(result[0].id))
+      const id = Number(result[0].id);
+      const sqlAddImgPath = `
+        UPDATE recipes SET imagePath = ? WHERE id = ?;
+      `;
+      connection.query(sqlAddImgPath,[
+        `image_upload_${req.file.filename}_${req.file.originalname}`, 
+        id
+      ], (err, result) => {
+        if (err) throw err; 
+      })
     })
   }
 )
