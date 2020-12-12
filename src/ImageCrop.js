@@ -96,7 +96,7 @@ class ImageCrop extends PureComponent {
         this.setState({blobFile: blob})
         this.props.onImageCrop(blob);
         resolve(this.fileUrl);
-      }, 'image/jpeg');
+      }, 'image');
     });
   }
   onSubmit(e){

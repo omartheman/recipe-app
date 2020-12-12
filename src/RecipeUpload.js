@@ -29,8 +29,6 @@ class RecipeUpload extends Component {
       item: '',
       cook: '',
       img: '',
-      imageFile: null,
-      imageFilePath: null,
       description: '',
       ingredients: [''],
       amounts: [''],
@@ -50,13 +48,7 @@ class RecipeUpload extends Component {
       //   alert("You're not logged in. You must be logged in to upload!")
       //   return;
       // }
-      const {item, cook, description, img, imageFile, ingredients, amounts, formData} = this.state;
-      // const formData = new FormData();
-      // formData.append(
-      //   "imageFile",
-      //   imageFile,
-      //   imageFile.name
-      // );
+      const {item, cook, description, img, ingredients, amounts, formData} = this.state;
       console.log('formData', formData);
       axios.post(urlFileUpload, formData)
       .then(res => {
@@ -89,18 +81,6 @@ class RecipeUpload extends Component {
       alert("I'm sorry. There was an error with the server. Try refreshing the page, and logging in again.")
       console.log(error) 
     })
-  }
-  fileData(){
-    const {imageFile} = this.state;
-    if (imageFile) {
-      return (
-        <>
-          <h2>File Details</h2>
-          <p>File Name: {imageFile.name}</p>
-          {/* <ReactCrop src={imageFile} crop={aspect: 16 / 9}/> */}
-        </>
-      )
-    }
   }
   addIngredient(){
     const {ingredients, amounts} = this.state;
@@ -232,17 +212,6 @@ class RecipeUpload extends Component {
               }}
             />
             <Form.Label>Upload Image</Form.Label>
-            <Form.Control  
-              type="file" 
-              id="imageFile"
-              name="imageFile"
-              onChange={(e) => {
-                this.setState({
-                  [e.target.id]: e.target.files[0],
-                }, ()=>{console.log(this.state.imageFile)})
-              }}
-            />
-            {this.fileData()}
             <ReactCrop />
             <ImageCrop
               onImageCrop={this.handleImageCrop}
