@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import './ImageCrop.css';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Form } from 'react-bootstrap';
 
 class ImageCrop extends PureComponent {
   state = {
@@ -88,12 +88,14 @@ class ImageCrop extends PureComponent {
     const { crop, croppedImageUrl, src } = this.state;
     return (
       <div className="">
-        <div>
-          <input type="file" accept="image/*" onChange={this.onSelectFile} />
-        </div>
+        <Form.Label htmlFor="file-upload" className="btn btn-success">
+          Choose file 
+        </Form.Label>
+        {src ? " Chosen file shown below" : " No file chosen."}
+        <Form.File id="file-upload" style={{display:"none"}} label="Upload Image" type="file" accept="image/*" onChange={this.onSelectFile} />
         {src && 
           <>
-            <h3 className="image-crop-title">Please crop your image with the fixed ratio selection box.</h3>
+            <h3 className="image-crop-title">Please crop your image to the given ratio.</h3>
             <Row>
               <Col>
                 <h3>Original Image</h3>

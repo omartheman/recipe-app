@@ -5,7 +5,6 @@ import Navbar from './Navbar';
 import global_url_variable from './global_url_variable';
 import {Container, Form, Button, ListGroup} from 'react-bootstrap';
 import './RecipeUpload.css';
-import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import ImageCrop from './ImageCrop'; 
 
@@ -113,11 +112,6 @@ class RecipeUpload extends Component {
     formData.append("imageFile", newImage, newImage.name)
     //save form data to state 
     this.setState({formData});
-
-    // axios.post(urlFileUpload, formData)
-    // .then(res => {
-    //   console.log(res);
-    // });
   }
   render() { 
     let {ingredients} = this.state;
@@ -214,18 +208,15 @@ class RecipeUpload extends Component {
                 this.setState({[e.target.id]: e.target.value})
               }}
             />
-            <Form.Label>Upload Image</Form.Label>
-            <ReactCrop />
-            <ImageCrop
-              onImageCrop={this.handleImageCrop}
-            />
             <h2>Ingredients</h2>
-            <Button className="ingredient-button-add" onClick={this.addIngredient}>Add Ingredient</Button>
+            <Button className="ingredient-button-add" onClick={this.addIngredient} variant="success">Add Ingredient</Button>
             <ListGroup>
               {ingredientFields}
             </ListGroup>
+            <h2>Upload Images</h2>
+            <ImageCrop onImageCrop={this.handleImageCrop}/>
           </Form>
-          <Button variant="success" onClick={this.handleClick}>Post Your New Recipe!</Button>
+          <Button variant="primary" onClick={this.handleClick}>Post Your New Recipe!</Button>
         </Container>
       </> 
     ) 
