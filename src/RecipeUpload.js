@@ -1,10 +1,13 @@
 import './App.css';
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 import Navbar from './Navbar';
 import global_url_variable from './global_url_variable';
 import {Container, Form, Button, ListGroup} from 'react-bootstrap';
 import './RecipeUpload.css';
+import ReactCrop from 'react-image-crop';
+import 'react-image-crop/dist/ReactCrop.css';
+import ImageCrop from './ImageCrop'; 
 
 const url = global_url_variable;
 const urlRecipeUpload = `${url}recipe-upload`;
@@ -27,6 +30,7 @@ class RecipeUpload extends Component {
       cook: '',
       img: '',
       imageFile: null,
+      imageFilePath: null,
       description: '',
       ingredients: [''],
       amounts: ['']
@@ -88,6 +92,7 @@ class RecipeUpload extends Component {
         <>
           <h2>File Details</h2>
           <p>File Name: {imageFile.name}</p>
+          {/* <ReactCrop src={imageFile} crop={aspect: 16 / 9}/> */}
         </>
       )
     }
@@ -113,7 +118,10 @@ class RecipeUpload extends Component {
     amounts = amountsContent;
     this.setState({ingredients, amounts})
   }
-  
+  // CropDemo({ src }) {
+  //   const [crop, setCrop] = useState({ aspect: 16 / 9 });
+  //   return <ReactCrop src={src} crop={crop} onChange={newCrop => setCrop(newCrop)} />;
+  // }  
   render() { 
     let {ingredients} = this.state;
     const {loggedInUser, onLogout} = this.props;
@@ -215,12 +223,14 @@ class RecipeUpload extends Component {
               id="imageFile"
               name="imageFile"
               onChange={(e) => {
-                this.setState({[e.target.id]: e.target.files[0]}, ()=>{console.log(this.state.imageFile)})
+                this.setState({
+                  [e.target.id]: e.target.files[0],
+                }, ()=>{console.log(this.state.imageFile)})
               }}
             />
             {this.fileData()}
-
-
+            <ReactCrop />
+            <ImageCrop/>
             <h2>Ingredients</h2>
             <Button className="ingredient-button-add" onClick={this.addIngredient}>Add Ingredient</Button>
             <ListGroup>

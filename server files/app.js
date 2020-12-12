@@ -22,6 +22,7 @@ const mode =
 
 let corsOrigin;
 let connection;
+let imageUpload;
 if (mode === "productionBritt") {
   connection = mysql.createConnection({
     host: 'localhost', 
@@ -30,6 +31,9 @@ if (mode === "productionBritt") {
     database: 'britxbtx_recipe_app_test'
   });
   corsOrigin = 'https://brittanyjewellneal.com/recipeapp';
+  imageUpload = multer({
+    dest: "/home/britxbtx/public_html/uploaded_files_temp"
+  });
 } else if (mode === "developmentOmar") {
   connection = mysql.createConnection({
     host: 'localhost', 
@@ -38,6 +42,9 @@ if (mode === "productionBritt") {
     database: 'recipe_app_test'
   });
   corsOrigin = 'http://localhost:3000';
+  imageUpload = multer({
+    dest: "C:/Users/HP EliteBook 8470p/Documents/Coding/recipe-app/uploaded_files_temp"
+  });
 }
 
 app.use(express.static(__dirname + '../..'));
@@ -67,12 +74,10 @@ const handleError = (err, res) => {
   .end("Oops! Something went wrong!");
 }
 
-const imageUpload = multer({
-  dest: "C:/Users/HP EliteBook 8470p/Documents/Coding/recipe-app/uploaded_files_temp"
-});
 
 app.post(`${serverRoute}image-upload`, imageUpload.single("imageFile"),
   (req, res) => {
+    console.log('req',req);
     const tempPath = req.file.path;
     console.log('req.file',req.file)
     console.log('temppath',tempPath);
