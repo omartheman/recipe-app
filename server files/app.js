@@ -92,6 +92,17 @@ app.post(`${serverRoute}image-upload`, imageUpload.single("imageFile"),
         .end("File uploaded!");
       console.log('File uploaded!');
     });
+
+    //Add targetPath to respective 'recipes' row with SQL 
+    //Need to identify correct recipe
+    const sqlAddImgPath = `
+      INSERT INTO recipes (imagePath) VALUES (?);
+    `;
+    console.log(sqlAddImgPath)
+    connection.query(sqlAddImgPath, [targetPath], (err, res) => {
+      if (err) throw err;
+      res.send(result);
+    })
   }
 )
 

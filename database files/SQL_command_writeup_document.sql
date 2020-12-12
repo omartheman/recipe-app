@@ -36,6 +36,9 @@ DELETE from recipes WHERE id BETWEEN 3 AND 20;
 ==========================
 
 ALTER TABLE recipes 
+ADD COLUMN imagePath varChar(255);
+
+ALTER TABLE recipes 
 ADD COLUMN user varChar(255);
 
 --Add columns to 'accounts'
@@ -72,3 +75,16 @@ CREATE TABLE recipes
 	img	VARCHAR(300) NOT NULL, 
 	description 	VARCHAR(500) NOT NULL
 );
+
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysqldump -u root -p recipe_app_test > "c:\Users\HP EliteBook 8470p\Documents\Coding\recipe-app\database files\recipe_app_test.sql"
+
+===============================
+
+INSERT INTO recipes (item, cook, img, description) VALUES
+	('Dumplings',
+	'Omar', 
+	'https://images.unsplash.com/photo-1496116218417-1a781b1c416c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80',
+	'Pasture-raised chicken dumplings in a rice shell.');
+
+================
