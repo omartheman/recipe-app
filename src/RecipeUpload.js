@@ -228,61 +228,70 @@ class RecipeUpload extends Component {
         />
         <Container>
           <h1>Recipe Upload</h1>
-          <h2>Recipe Information</h2>
           <Form autoComplete="off">
-            <Form.Label>Name of Recipe</Form.Label>
-            <Form.Control 
-              type="text" 
-              id="item"
-              onChange={(e) => {
-                this.setState({[e.target.id]: e.target.value}, ()=>{console.log(this.state)})
-              }}
-            />
-            <Form.Label>Cook</Form.Label>
-            <Form.Control  
-              type="text" 
-              id="cook"
-              onChange={(e) => {
-                this.setState({[e.target.id]: e.target.value})
-              }} 
-            />
-            <Form.Label>Description</Form.Label>
-            <Form.Control 
-              as="textarea"
-              rows={3}
-              type="text" 
-              id="description"
-              placeholder="Tell us a little about your awesome recipe."
-              onChange={(e) => {
-                this.setState({[e.target.id]: e.target.value})
-              }} 
-            />
-            <Form.Label>Image URL</Form.Label>
-            <Form.Control  
-              type="text" 
-              id="img"
-              onChange={(e) => {
-                this.setState({[e.target.id]: e.target.value})
-              }}
-            />
+            <div className="upload-section">
+              <h2 className="recipe-info-heading">Recipe Information</h2>
+              <Form.Label>Name of Recipe</Form.Label>
+              <Form.Control 
+                type="text" 
+                id="item"
+                onChange={(e) => {
+                  this.setState({[e.target.id]: e.target.value}, ()=>{console.log(this.state)})
+                }}
+              />
+              <Form.Label>Cook</Form.Label>
+              <Form.Control  
+                type="text" 
+                id="cook"
+                onChange={(e) => {
+                  this.setState({[e.target.id]: e.target.value})
+                }} 
+              />
+              <Form.Label>Description</Form.Label>
+              <Form.Control 
+                as="textarea"
+                rows={3}
+                type="text" 
+                id="description"
+                placeholder="Tell us a little about your awesome recipe."
+                onChange={(e) => {
+                  this.setState({[e.target.id]: e.target.value})
+                }} 
+              />
+              <Form.Label>Image URL</Form.Label>
+              <Form.Control  
+                type="text" 
+                id="img"
+                onChange={(e) => {
+                  this.setState({[e.target.id]: e.target.value})
+                }}
+              />
+              
+              <div className="upload-section">
+                <h2>Ingredients</h2>
+                <Button className="button-add" onClick={this.addIngredient} variant="success">Add Ingredient</Button>
+                <ListGroup>
+                  {ingredientFields}
+                </ListGroup>
+              </div>
+            </div>
 
-            <h2>Ingredients</h2>
-            <Button className="ingredient-button-add" onClick={this.addIngredient} variant="success">Add Ingredient</Button>
-            <ListGroup>
-              {ingredientFields}
-            </ListGroup>
+            <div className="upload-section">
+              <h2>Steps</h2>
+              <Button className="button-add" onClick={this.addInstruction} variant="success">Add Step</Button>
+              <ListGroup>
+                {instructionFields}
+              </ListGroup>
+            </div>
 
-            <h2>Steps</h2>
-            <Button className="ingredient-button-add" onClick={this.addInstruction} variant="success">Add Step</Button>
-            <ListGroup>
-              {instructionFields}
-            </ListGroup>
+            <div className="upload-section">
+              <h2>Upload Images</h2>
+              <ListGroup>
+                {imageFields}
+              </ListGroup>
+              <Button className="button-add-image button-add" variant="success" onClick={this.addImageField}>Add Image</Button>
+            </div>
 
-            <h2>Upload Images</h2>
-            <ListGroup>
-              {imageFields}
-            </ListGroup>
-            <Button className="add-image-button" variant="success" onClick={this.addImageField}>Add Image</Button>
           </Form>
           <Button variant="primary" className="post-recipe-button" onClick={this.handlePostRecipe}>Post Your New Recipe!</Button>
         </Container>
