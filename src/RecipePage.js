@@ -19,6 +19,7 @@ const Recipe = (props) => {
   const [recipeImage, setRecipeImage] = useState(null);
   const [ingredients, setIngredients] = useState(null);
   const [images, setImages] = useState(null);
+  const [instructions, setInstructions] = useState(null);
   //we need to retrieve data about specific recipe
   useEffect(() => {
     axios.post(urlRecipe, {
@@ -57,7 +58,11 @@ const Recipe = (props) => {
       })
       .then(res => {
         console.log(res.data);
-        // setImages(res.data);
+        setInstructions(res.data.map((x, i) => (
+          <ListGroup.Item key={i}>
+            {x.instruction}
+          </ListGroup.Item>
+        )));
       })
       //RETRIEVE IMAGES
       axios.post(urlImages, {
@@ -73,8 +78,6 @@ const Recipe = (props) => {
         }));
       })
     })
-
-    
   }, [recipeId]);
   return(
     <>
@@ -97,6 +100,10 @@ const Recipe = (props) => {
         <h2>Ingredients</h2>
         <ListGroup>
           {ingredients}
+        </ListGroup>
+        <h2>Instructions</h2>
+        <ListGroup>
+          {instructions}
         </ListGroup>
       </Container>
     </>
