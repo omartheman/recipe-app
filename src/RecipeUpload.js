@@ -145,13 +145,13 @@ class RecipeUpload extends Component {
       return(
           <ListGroup.Item variant="info" key={index}>
               <Button 
-                className="remove-step-button"
+                className="remove-step-button button-remove"
                 variant="danger"
                 onClick={() => {this.removeInstruction(index)}}
               >
-                Remove Step {index + 1}
+                X
               </Button>
-              <Form.Label><h3>Step {index + 1}</h3></Form.Label>
+              <Form.Label><h3>Step {index + 1}:</h3></Form.Label>
               <Form.Control  
                 as="textarea"
                 rows={3}
@@ -202,7 +202,7 @@ class RecipeUpload extends Component {
               />
             </div>
             <Button 
-              className="ingredient-button-remove" 
+              className="button-remove" 
               variant="danger"
               onClick={() => {this.removeIngredient(index)}}
             >
@@ -213,7 +213,7 @@ class RecipeUpload extends Component {
     })
     const imageFields = this.state.imageFields.map((idNum, ind) =>  (
       <ListGroup.Item key={idNum} variant="primary">
-        { this.state.newImages[ind] && 
+        { this.state.imageFields.length > 1 && 
           <Button style={{float:'right'}} variant="danger" onClick={() => {this.removeImageField(ind)}}>Remove Image #{ind + 1}</Button>
         }
         <ImageCrop id_num={idNum} index_num={ind} onImageCrop={this.handleImageCrop}/>

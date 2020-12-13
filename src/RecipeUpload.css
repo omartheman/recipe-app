@@ -5,13 +5,17 @@
 }
 h1 {
   text-align: center;
+  margin-top: 20px !important;
+}
+h2 {
+  margin-top: 50px !important;
 }
 .ingredient-button-add {
   margin: 0 auto 20px;
   width: 100%;
   display: block !important;
 }
-.ingredient-button-remove {
+.button-remove {
   border-radius: 1000px !important;
   margin-left: 15px !important;
   height: fit-content;
@@ -36,6 +40,9 @@ h1 {
  margin-bottom: 10px; 
 }
 .post-recipe-button {
-  width: 100%;
-  margin-top: 30px; 
+  width: 50%;
+  margin-top: 80px; 
+  display: block !important; 
+  margin: 80px auto 0 !important;
+  border-radius: 1000px !important;
 }
