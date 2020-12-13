@@ -1,4 +1,5 @@
 
+
 --order alphabetically
 	SELECT * FROM recipes WHERE user = '${req.session.username}' ORDER BY user;
 ======================
@@ -27,11 +28,17 @@ CREATE TABLE recipe${id}_${item} (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
+CREATE TABLE recipe${id}_${item}_images (
+	id int(11) NOT NULL AUTO_INCREMENT,
+	imagePath varchar(50) NOT NULL,
+	amount varchar(50) NOT NULL,
+); 
+
 =====================================
 --delete test rows from accounts
 
 DELETE from accounts WHERE id BETWEEN 21 AND 40;
-DELETE from recipes WHERE id BETWEEN 3 AND 20;
+DELETE from recipes WHERE id BETWEEN 3 AND 1000;
 
 ==========================
 

@@ -87,43 +87,48 @@ const imageUpload2 = multer({storage: storage})
 
 app.post(`${serverRoute}image-upload`, imageUpload2.array("imageFile"),
   (req, res) => {
-    console.log('req.files',req.files);
-    for (let i = 0; i < req.files.length; i++) {
-      console.log('req.files[i].filename', req.files[i].filename);
-      const tempPath = req.files[i].path;
-      console.log('temppath',tempPath);
-      const targetPath = path.join(__dirname, `../uploaded_files/image_upload_${req.files[i].filename}_${req.files[i].originalname}`);
-      console.log('targetpath', targetPath);
-  
-      // fs.rename(tempPath, targetPath, err => {
-      //   if (err) return handleError(err, res);
-      //   res
-      //     .status(200)
-      //     .contentType("text/plain")
-      //     .end("File uploaded!");
-      //   console.log('File uploaded!');
-      // });
+    
+    // =========================================
+
+    //Need to identify correct recipe
+    const sqlGetId = `
+    SELECT * from recipes ORDER BY id DESC;
+    `;
+
+    //Create a new table with all image names. 
+    connection.query(sqlGetId, (err, result) => {
+      if (err) throw err;
+      console.log(Number(result[0].id))
+      const id = Number(result[0].id);
+      let item = result[0].item;
+      console.log('item name', item)
+      item = replaceSqlCharacters(spacesToUnderscores(item).toLowerCase());
+      const sqlCreateImagesTable = `
+        CREATE TABLE recipe${id}_${item}_images (
+        id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        imageName varchar(50) NOT NULL
+      );`;
+      connection.query(sqlCreateImagesTable, (err, result) => {
+        if (err) throw err; 
+        console.log(result);
+      });
+      // ===========*****************************************
       
-      //Add targetPath to respective 'recipes' row with SQL 
-      //Need to identify correct recipe
-      const sqlGetId = `
-      SELECT id from recipes ORDER BY id DESC;
-      `;
-      connection.query(sqlGetId, (err, result) => {
-        if (err) throw err;
-        console.log(Number(result[0].id))
-        const id = Number(result[0].id);
-        const sqlAddImgPath = `
-          UPDATE recipes SET imagePath = ? WHERE id = ?;
-        `;
-        connection.query(sqlAddImgPath,[
-          `image_upload_${req.files[i].filename}_${req.files[i].originalname}`, 
-          id
-        ], (err, result) => {
+      //Create a loop to insert all ingredients and amounts. 
+      
+      console.log('req.files',req.files);
+      for (let i = 0; i < req.files.length; i++) {
+        console.log('req.files[i].filename', req.files[i].filename);
+  
+        const sqlAddImgToImgTable = 
+          `INSERT INTO recipe${id}_${item}_images (imageName) VALUES 
+          ('${req.files[i].filename}');`;
+        connection.query(sqlAddImgToImgTable, (err, result) => {
           if (err) throw err; 
-        })
-      })
-    }
+        });
+      }
+      // ========================================================
+    })
   }
 )
 
@@ -305,7 +310,7 @@ app.post(`${serverRoute}recipe-upload`, (req, res) => {
     item = replaceSqlCharacters(spacesToUnderscores(item).toLowerCase());
     console.log('modified item: ', item)
     const sqlCreateIngredientsTable = `
-      CREATE TABLE recipe${id}_${item} (
+      CREATE TABLE recipe${id}_${item}_ingredients (
         id INT NOT NULL AUTO_INCREMENT,
         ingredient varchar(50) NOT NULL,
         amount varchar(50) NOT NULL,
@@ -318,7 +323,7 @@ app.post(`${serverRoute}recipe-upload`, (req, res) => {
     //Create a loop to insert all ingredients and amounts. 
     for (let i = 0; i < req.body.ingredients.length; i++) {
       const sqlAddIngredient = 
-        `INSERT INTO recipe${id}_${item} (ingredient, amount) VALUES ('${req.body.ingredients[i]}', '${req.body.amounts[i]}');`;
+        `INSERT INTO recipe${id}_${item}_ingredients (ingredient, amount) VALUES ('${req.body.ingredients[i]}', '${req.body.amounts[i]}');`;
       connection.query(sqlAddIngredient, (err, result) => {
         if (err) throw err; 
       });
