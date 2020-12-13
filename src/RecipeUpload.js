@@ -144,8 +144,17 @@ class RecipeUpload extends Component {
     const instructionFields = instructions.map((inst, index) => {
       return(
           <ListGroup.Item variant="info" key={index}>
-              <Form.Label>Instruction #{index + 1}</Form.Label>
+              <Button 
+                className="remove-step-button"
+                variant="danger"
+                onClick={() => {this.removeInstruction(index)}}
+              >
+                Remove Step {index + 1}
+              </Button>
+              <Form.Label><h3>Step {index + 1}</h3></Form.Label>
               <Form.Control  
+                as="textarea"
+                rows={3}
                 type="text" 
                 value={this.state.instructions[index]}   
                 id_num={index}
@@ -156,13 +165,6 @@ class RecipeUpload extends Component {
                   this.setState({instructions}, ()=>{console.log('inst',this.state.instructions)})
                 }}
               />
-            <Button 
-              className="ingredient-button-remove" 
-              variant="danger"
-              onClick={() => {this.removeInstruction(index)}}
-            >
-              X
-            </Button>
           </ListGroup.Item>
       );
     });
@@ -270,8 +272,8 @@ class RecipeUpload extends Component {
               {ingredientFields}
             </ListGroup>
 
-            <h2>Instructions</h2>
-            <Button className="ingredient-button-add" onClick={this.addInstruction} variant="success">Add Instruction</Button>
+            <h2>Steps</h2>
+            <Button className="ingredient-button-add" onClick={this.addInstruction} variant="success">Add Step</Button>
             <ListGroup>
               {instructionFields}
             </ListGroup>
