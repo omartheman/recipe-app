@@ -205,7 +205,7 @@ class RecipeUpload extends Component {
     })
     const imageFields = this.state.imageFields.map((idNum, ind) =>  (
       <ListGroup.Item key={idNum} variant="primary">
-        <ImageCrop id_num={idNum} display_num={ind + 1} onImageCrop={this.handleImageCrop}/>
+        <ImageCrop id_num={idNum} index_num={ind} onImageCrop={this.handleImageCrop}/>
         <Button variant="danger" onClick={() => {this.removeImageField(ind)}}>Remove Image #{ind + 1}</Button>
       </ListGroup.Item>
     ));

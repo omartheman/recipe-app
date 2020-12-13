@@ -15,9 +15,9 @@ function replaceSqlCharacters(str){
 }
 
 const mode =
-"developmentOmar";
-/*
 "productionBritt";
+/*
+"developmentOmar";
 */
 
 let corsOrigin;
@@ -100,7 +100,7 @@ app.post(`${serverRoute}image-upload`, imageUpload.array("imageFile"),
       const sqlCreateImagesTable = `
         CREATE TABLE recipe${id}_${item}_images (
         id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-        imageName varchar(50) NOT NULL
+        imageName varchar(255) NOT NULL
       );`;
       connection.query(sqlCreateImagesTable, (err, result) => {
         if (err) throw err; 
