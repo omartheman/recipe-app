@@ -15,9 +15,9 @@ function replaceSqlCharacters(str){
 }
 
 const mode =
-"productionBritt";
-/*
 "developmentOmar";
+/*
+"productionBritt";
 */
 
 let corsOrigin;
@@ -74,7 +74,58 @@ const handleError = (err, res) => {
   .end("Oops! Something went wrong!");
 }
 
-let tempImagePath = '';
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, 'C:/Users/HP EliteBook 8470p/Documents/Coding/recipe-app/uploaded_files')
+  },
+  filename: function(req, file, cb) {
+    cb(null, `${file.fieldname}_dateVal_${Date.now()}_${spacesToUnderscores(file.originalname)}`)
+  }
+})
+
+const imageUpload2 = multer({storage: storage})
+
+app.post(`${serverRoute}image-upload`, imageUpload2.array("imageFile"),
+  (req, res) => {
+    console.log('req.files',req.files);
+    for (let i = 0; i < req.files.length; i++) {
+      console.log('req.files[i].filename', req.files[i].filename);
+      const tempPath = req.files[i].path;
+      console.log('temppath',tempPath);
+      const targetPath = path.join(__dirname, `../uploaded_files/image_upload_${req.files[i].filename}_${req.files[i].originalname}`);
+      console.log('targetpath', targetPath);
+  
+      // fs.rename(tempPath, targetPath, err => {
+      //   if (err) return handleError(err, res);
+      //   res
+      //     .status(200)
+      //     .contentType("text/plain")
+      //     .end("File uploaded!");
+      //   console.log('File uploaded!');
+      // });
+      
+      //Add targetPath to respective 'recipes' row with SQL 
+      //Need to identify correct recipe
+      const sqlGetId = `
+      SELECT id from recipes ORDER BY id DESC;
+      `;
+      connection.query(sqlGetId, (err, result) => {
+        if (err) throw err;
+        console.log(Number(result[0].id))
+        const id = Number(result[0].id);
+        const sqlAddImgPath = `
+          UPDATE recipes SET imagePath = ? WHERE id = ?;
+        `;
+        connection.query(sqlAddImgPath,[
+          `image_upload_${req.files[i].filename}_${req.files[i].originalname}`, 
+          id
+        ], (err, result) => {
+          if (err) throw err; 
+        })
+      })
+    }
+  }
+)
 
 app.post(`${serverRoute}image-upload`, imageUpload.single("imageFile"),
   (req, res) => {
@@ -217,6 +268,8 @@ app.get(`${serverRoute}`, (req, res) => {
 
 app.post(`${serverRoute}recipe-upload`, (req, res) => {
   //Check to see that user is logged in. 
+
+
   res.send('Got a POST request to upload recipe.');
   console.log('req.session.username: ',req.session.username)
   var sql = `INSERT INTO recipes (item, cook, img, description, user)
