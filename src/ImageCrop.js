@@ -79,7 +79,7 @@ class ImageCrop extends PureComponent {
         window.URL.revokeObjectURL(this.fileUrl);
         this.fileUrl = window.URL.createObjectURL(blob);
         this.setState({blobFile: blob})
-        this.props.onImageCrop(blob, this.props.id_num);
+        this.props.onImageCrop(blob, this.props.display_num);
         resolve(this.fileUrl);
       }, 'image');
     });
@@ -88,7 +88,7 @@ class ImageCrop extends PureComponent {
     const { crop, croppedImageUrl, src } = this.state;
     return (
       <div className="">
-        <Form.Label htmlFor={`file-upload-${this.props.id_num}`} className="btn btn-success">
+        <Form.Label htmlFor={`file-upload-${this.props.id_num}`} className="btn btn-info">
           Choose file #{this.props.display_num}
         </Form.Label>
         {src ? " Chosen file shown below" : " No file chosen."}

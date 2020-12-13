@@ -35,7 +35,7 @@ class RecipeUpload extends Component {
       originalFileName: null,
       newImages: [],
       numImageFields: 1,
-      imageFields: []
+      imageFields: [0]
     }
     //STOP HERE: Add ingredients and amounts to respective new table in database 
     this.handleClick = this.handleClick.bind(this);
@@ -127,30 +127,32 @@ class RecipeUpload extends Component {
     this.setState({formData: [formData]});
     */
     // ====================================
-
     const newImage = new File([blobFile], blobFile.name, {type: blobFile.type});
     console.log('blobfile worked')
     const newImages = [...this.state.newImages];
+    console.log('newimages at beggining of crop', newImages)
+    //newImages adding at this index is causing problems. 
     newImages[index] = newImage;
     
-    this.setState({newImages});
+    this.setState({newImages}, ()=>{console.log('newImages in handleImageCrop',newImages, [...newImages])});
   }
   addImageField(){
     let {numImageFields} = this.state;
-    numImageFields++;
-    this.setState({numImageFields});
-
     const imageFields = [...this.state.imageFields, numImageFields];
-    this.setState({imageFields}, ()=>{console.log(this.state.imageFields)})
+    numImageFields++;
+    this.setState({numImageFields, imageFields}, ()=>{console.log(this.state.imageFields)})
   }
   removeImageField(ind){
-    console.log('remove #:', ind)
-    let {numImageFields} = this.state;
-    this.setState({numImageFields});
 
-    const imageFields = [...this.state.imageFields]
-    imageFields.splice(ind, 1)
-    this.setState({imageFields})
+    //Remove image from newImages
+
+    const imageFields = [...this.state.imageFields];
+    imageFields.splice(ind, 1);
+
+    const newImages = [...this.state.newImages];
+    newImages.splice(ind, 1);
+
+    this.setState({imageFields, newImages}, ()=>{console.log('updated newImages',this.state.newImages)})
   }
   render() { 
     let {ingredients} = this.state;
@@ -201,28 +203,12 @@ class RecipeUpload extends Component {
           </ListGroup.Item>
       );
     })
-    //Problem is that ID is being assigned. When #2 is deleted, #3 does not become #2. We want to store all ImageCrop in an array, so their data can be saved in the array, and their position can be determined based on their position in the array.
-    // const imageFields = () => {
-    //   const arr = [];
-    //   for (let i = 0; i < this.state.numImageFields; i++) {
-    //     arr.push(
-    //       <ListGroup.Item key={i} variant="primary">
-    //         <ImageCrop id_num={i} onImageCrop={this.handleImageCrop}/>
-    //         <Button variant="danger" onClick={() => {this.removeImageField(i)}}>Remove Image #{i+1}</Button>
-    //       </ListGroup.Item>
-    //     )
-    //   }
-    //   return arr;
-    // }
-    //Inside ImageCrop, it's still rendering the data to the image with the id "i". We need to change this inside of ImageCrop? 
-    //Give each ImageCrop a unique Id upon creation. Don't base it off of the position in the array. 
     const imageFields = this.state.imageFields.map((idNum, ind) =>  (
       <ListGroup.Item key={idNum} variant="primary">
-        <ImageCrop id_num={idNum} display_nu={ind + 1} onImageCrop={this.handleImageCrop}/>
+        <ImageCrop id_num={idNum} display_num={ind + 1} onImageCrop={this.handleImageCrop}/>
         <Button variant="danger" onClick={() => {this.removeImageField(ind)}}>Remove Image #{ind + 1}</Button>
       </ListGroup.Item>
     ));
-
 
     return ( 
       <> 
@@ -280,7 +266,7 @@ class RecipeUpload extends Component {
             </ListGroup>
             <Button className="add-image-button" variant="success" onClick={this.addImageField}>Add Image</Button>
           </Form>
-          <Button variant="primary" onClick={this.handleClick}>Post Your New Recipe!</Button>
+          <Button variant="primary" className="post-recipe-button" onClick={this.handleClick}>Post Your New Recipe!</Button>
         </Container>
       </> 
     ) 
