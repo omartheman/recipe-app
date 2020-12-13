@@ -35,16 +35,18 @@ class RecipeUpload extends Component {
       originalFileName: null,
       newImages: [],
       numImageFields: 1,
-      imageFields: [0]
+      imageFields: [0],
+      instructions: ['']
     }
     //STOP HERE: Add ingredients and amounts to respective new table in database 
-    this.handleClick = this.handleClick.bind(this);
+    this.handlePostRecipe = this.handlePostRecipe.bind(this);
     this.addIngredient = this.addIngredient.bind(this);
     this.handleImageCrop = this.handleImageCrop.bind(this);
     this.addImageField = this.addImageField.bind(this);
     this.removeImageField = this.removeImageField.bind(this);
+    this.addInstruction = this.addInstruction.bind(this);
   }
-  handleClick(){
+  handlePostRecipe(){
     axios.get(urlAuth)
     .then(res => {
       // if (res.data === ''){
@@ -97,25 +99,25 @@ class RecipeUpload extends Component {
       console.log(error) 
     })
   }
+  addInstruction(){
+    const {instructions} = this.state;
+    this.setState({instructions: [...instructions, '']});
+  }
+  removeInstruction(index){
+    const instructions = [...this.state.instructions];
+    instructions.splice(index, 1);
+    this.setState({instructions});
+  }
   addIngredient(){
     const {ingredients, amounts} = this.state;
-    //create new ingredient with unique key?
-    //Ingredient doesn't need key, it can just use index of array. 
-    this.setState({
-      ingredients: [...ingredients, ''],
-      amounts: [...amounts, '']
-    }, () => {console.log(this.state)});
+    this.setState({ingredients: [...ingredients, ''], amounts: [...amounts, '']});
   }
   removeIngredient(ingNum){
-    console.log(ingNum)
-    let {ingredients, amounts} = this.state;
-    const ingredientsContent = [...ingredients];
-    const amountsContent = [...amounts]; 
-    ingredientsContent.splice(ingNum, 1);
-    amountsContent.splice(ingNum, 1);
-    ingredients = ingredientsContent;
-    amounts = amountsContent;
-    this.setState({ingredients, amounts})
+    const ingredients = [...this.state.ingredients];
+    const amounts = [...this.state.amounts]; 
+    ingredients.splice(ingNum, 1);
+    amounts.splice(ingNum, 1);
+    this.setState({ingredients, amounts});
   }
   handleImageCrop(blobFile, index){
     const newImage = new File([blobFile], blobFile.name, {type: blobFile.type});
@@ -137,8 +139,33 @@ class RecipeUpload extends Component {
     this.setState({imageFields, newImages}, ()=>{console.log('updated newImages',this.state.newImages)})
   }
   render() { 
-    let {ingredients} = this.state;
+    let {ingredients, instructions} = this.state;
     const {loggedInUser, onLogout} = this.props;
+    const instructionFields = instructions.map((inst, index) => {
+      return(
+          <ListGroup.Item variant="info" key={index}>
+              <Form.Label>Instruction #{index + 1}</Form.Label>
+              <Form.Control  
+                type="text" 
+                value={this.state.instructions[index]}   
+                id_num={index}
+                onChange={(e) => {
+                  const num = Number(e.target.attributes.getNamedItem('id_num').value);
+                  let instructions = [...this.state.instructions];
+                  instructions[num] = e.target.value;
+                  this.setState({instructions}, ()=>{console.log('inst',this.state.instructions)})
+                }}
+              />
+            <Button 
+              className="ingredient-button-remove" 
+              variant="danger"
+              onClick={() => {this.removeInstruction(index)}}
+            >
+              X
+            </Button>
+          </ListGroup.Item>
+      );
+    });
     const ingredientFields = ingredients.map((ing, index) => {
       return(
           <ListGroup.Item variant="info" key={index} className="ingredient-amount-container">
@@ -146,14 +173,12 @@ class RecipeUpload extends Component {
               <Form.Label>Ingredient #{index + 1}</Form.Label>
               <Form.Control  
                 type="text" 
-                value={this.state.ingredients[index]}
+                value={this.state.ingredients[index]}   
                 ingredientnumber={index}
                 onChange={(e) => {
                   const ingNum = Number(e.target.attributes.getNamedItem('ingredientnumber').value);
-                  let {ingredients} = this.state;
-                  const ingredientsContent = [...ingredients];
-                  ingredientsContent[ingNum] = e.target.value;
-                  ingredients = ingredientsContent;
+                  let ingredients = [...this.state.ingredients];
+                  ingredients[ingNum] = e.target.value;
                   this.setState({ingredients}, ()=>{console.log(this.state.ingredients)})
                 }}
                 />
@@ -238,18 +263,26 @@ class RecipeUpload extends Component {
                 this.setState({[e.target.id]: e.target.value})
               }}
             />
+
             <h2>Ingredients</h2>
             <Button className="ingredient-button-add" onClick={this.addIngredient} variant="success">Add Ingredient</Button>
             <ListGroup>
               {ingredientFields}
             </ListGroup>
+
+            <h2>Instructions</h2>
+            <Button className="ingredient-button-add" onClick={this.addInstruction} variant="success">Add Instruction</Button>
+            <ListGroup>
+              {instructionFields}
+            </ListGroup>
+
             <h2>Upload Images</h2>
             <ListGroup>
               {imageFields}
             </ListGroup>
             <Button className="add-image-button" variant="success" onClick={this.addImageField}>Add Image</Button>
           </Form>
-          <Button variant="primary" className="post-recipe-button" onClick={this.handleClick}>Post Your New Recipe!</Button>
+          <Button variant="primary" className="post-recipe-button" onClick={this.handlePostRecipe}>Post Your New Recipe!</Button>
         </Container>
       </> 
     ) 

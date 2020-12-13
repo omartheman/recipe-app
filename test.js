@@ -1,10 +1,9 @@
 const state  = {
-  newImages: [1]
+  images: [1,2,3]
 }
-const oldImages = [...state.newImages]
-oldImages[2] = 5;
+const images = [...state.images]
+images.splice(1, 1)
 
-console.log(oldImages)
+console.log(state.images)
+console.log(images)
 
-
-console.log(state.newImages)
