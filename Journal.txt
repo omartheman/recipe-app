@@ -1,5 +1,12 @@
+12 Dec Wed
+
+Priorities: 
+
+- Add "Instructions" fields and tables to database
+- Add Multiple image uploads, and image tables to database. 
+
 =======================
-11 Dec Tue
+11 Dec Fri
 
 Success List: 
   - Add 'Loading...' for when nothing is displayed yet. 

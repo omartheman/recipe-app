@@ -22,8 +22,8 @@ const mode =
 
 let corsOrigin;
 let connection;
-let imageUpload;
-if (mode === "productionBritt") {
+let imageUploadPath;
+if (mode === 'productionBritt') {
   connection = mysql.createConnection({
     host: 'localhost', 
     user: 'britxbtx_omar2',
@@ -31,10 +31,8 @@ if (mode === "productionBritt") {
     database: 'britxbtx_recipe_app_test'
   });
   corsOrigin = 'https://brittanyjewellneal.com/recipeapp';
-  imageUpload = multer({
-    dest: "/home/britxbtx/public_html/uploaded_files_temp"
-  });
-} else if (mode === "developmentOmar") {
+  imageUploadPath = '/home/britxbtx/public_html/uploaded_files';
+} else if (mode === 'developmentOmar') {
   connection = mysql.createConnection({
     host: 'localhost', 
     user: 'root',
@@ -42,9 +40,7 @@ if (mode === "productionBritt") {
     database: 'recipe_app_test'
   });
   corsOrigin = 'http://localhost:3000';
-  imageUpload = multer({
-    dest: "C:/Users/HP EliteBook 8470p/Documents/Coding/recipe-app/uploaded_files_temp"
-  });
+  imageUploadPath = 'C:/Users/HP EliteBook 8470p/Documents/Coding/recipe-app/uploaded_files';
 }
 
 app.use(express.static(__dirname + '../..'));
@@ -61,66 +57,79 @@ app.use(session({
   saveUninitialized: true,
   cookie: {
     secure: false,
-    // maxAge: 8*60*60*1000 //make session last 8 hours
   }
 }));
 
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, imageUploadPath)
+  },
+  filename: function(req, file, cb) {
+    cb(null, `${file.fieldname}_dateVal_${Date.now()}_${spacesToUnderscores(file.originalname)}`)
+  }
+})
+const imageUpload = multer({storage: storage})
 
-const handleError = (err, res) => {
-  if (err) {console.log(err)}
-  res
-  .status(500)
-  .contentType("text/plain")
-  .end("Oops! Something went wrong!");
-}
+app.post(`${serverRoute}get-images`, (req, res) => {
+  console.log(req.body);
+  const item = spacesToUnderscores(req.body.item);
+  console.log('spacesToUnderscores item: ', item)
+  const sql = `
+    SELECT * FROM recipe${req.body.id}_${item}_images;
+  `;
+  connection.query(sql, (err, result) => {
+    if (err) throw err;
+    console.log('Result GET images: ', result);
+    res.send(result);
+  })
+})
 
-let tempImagePath = '';
-
-app.post(`${serverRoute}image-upload`, imageUpload.single("imageFile"),
+app.post(`${serverRoute}image-upload`, imageUpload.array("imageFile"),
   (req, res) => {
-    console.log('req.file.name', req.file.filename);
-    const tempPath = req.file.path;
-    console.log('temppath',tempPath);
-    const targetPath = path.join(__dirname, `../uploaded_files/image_upload_${req.file.filename}_${req.file.originalname}`);
-    console.log('targetpath', targetPath);
-
-    fs.rename(tempPath, targetPath, err => {
-      if (err) return handleError(err, res);
-      res
-        .status(200)
-        .contentType("text/plain")
-        .end("File uploaded!");
-      console.log('File uploaded!');
-    });
-    
-    //Add targetPath to respective 'recipes' row with SQL 
-    //Need to identify correct recipe
+    //Create a new table with all image names. 
     const sqlGetId = `
-    SELECT id from recipes ORDER BY id DESC;
+    SELECT * from recipes ORDER BY id DESC;
     `;
     connection.query(sqlGetId, (err, result) => {
       if (err) throw err;
       console.log(Number(result[0].id))
       const id = Number(result[0].id);
-      const sqlAddImgPath = `
-        UPDATE recipes SET imagePath = ? WHERE id = ?;
-      `;
-      connection.query(sqlAddImgPath,[
-        `image_upload_${req.file.filename}_${req.file.originalname}`, 
-        id
-      ], (err, result) => {
+      let item = result[0].item;
+      console.log('item name', item)
+      item = replaceSqlCharacters(spacesToUnderscores(item).toLowerCase());
+      const sqlCreateImagesTable = `
+        CREATE TABLE recipe${id}_${item}_images (
+        id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        imageName varchar(50) NOT NULL
+      );`;
+      connection.query(sqlCreateImagesTable, (err, result) => {
         if (err) throw err; 
-      })
+        console.log(result);
+      });
+
+      //Insert image names into image table. 
+      console.log('req.files',req.files);
+      for (let i = 0; i < req.files.length; i++) {
+        console.log('req.files[i].filename', req.files[i].filename);
+  
+        const sqlAddImgToImgTable = 
+          `INSERT INTO recipe${id}_${item}_images (imageName) VALUES 
+          ('${req.files[i].filename}');`;
+        connection.query(sqlAddImgToImgTable, (err, result) => {
+          if (err) throw err; 
+        });
+      }
     })
   }
 )
+
 
 app.post(`${serverRoute}getingredients`, (req, res) => {
   console.log(req.body);
   const item = spacesToUnderscores(req.body.item);
   console.log('spacesToUnderscores item: ', item)
   const sqlGetIngredients = `
-    SELECT * FROM recipe${req.body.id}_${item};
+    SELECT * FROM recipe${req.body.id}_${item}_ingredients;
   `;
   connection.query(sqlGetIngredients, (err, result) => {
     if (err) throw err;
@@ -217,6 +226,8 @@ app.get(`${serverRoute}`, (req, res) => {
 
 app.post(`${serverRoute}recipe-upload`, (req, res) => {
   //Check to see that user is logged in. 
+
+
   res.send('Got a POST request to upload recipe.');
   console.log('req.session.username: ',req.session.username)
   var sql = `INSERT INTO recipes (item, cook, img, description, user)
@@ -252,7 +263,7 @@ app.post(`${serverRoute}recipe-upload`, (req, res) => {
     item = replaceSqlCharacters(spacesToUnderscores(item).toLowerCase());
     console.log('modified item: ', item)
     const sqlCreateIngredientsTable = `
-      CREATE TABLE recipe${id}_${item} (
+      CREATE TABLE recipe${id}_${item}_ingredients (
         id INT NOT NULL AUTO_INCREMENT,
         ingredient varchar(50) NOT NULL,
         amount varchar(50) NOT NULL,
@@ -265,7 +276,7 @@ app.post(`${serverRoute}recipe-upload`, (req, res) => {
     //Create a loop to insert all ingredients and amounts. 
     for (let i = 0; i < req.body.ingredients.length; i++) {
       const sqlAddIngredient = 
-        `INSERT INTO recipe${id}_${item} (ingredient, amount) VALUES ('${req.body.ingredients[i]}', '${req.body.amounts[i]}');`;
+        `INSERT INTO recipe${id}_${item}_ingredients (ingredient, amount) VALUES ('${req.body.ingredients[i]}', '${req.body.amounts[i]}');`;
       connection.query(sqlAddIngredient, (err, result) => {
         if (err) throw err; 
       });
