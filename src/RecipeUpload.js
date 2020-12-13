@@ -229,7 +229,7 @@ class RecipeUpload extends Component {
         />
         <Container>
           <h1>Recipe Upload</h1>
-          <Form autoComplete="off">
+          <Form autoComplete="off" className="recipe-upload-form">
             <div className="upload-section">
               <h2 className="recipe-info-heading">Recipe Information</h2>
               <Form.Label>Name of Recipe</Form.Label>

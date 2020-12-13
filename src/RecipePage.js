@@ -41,9 +41,14 @@ const Recipe = (props) => {
       })
       .then(res => {
         console.log(res.data);
-        setIngredients(res.data.map((x, index) => {
-          
-        }));
+        setIngredients(res.data.map((x, i) => (
+          <ListGroup.Item key={i}>
+            <Row>
+              <Col>{x.ingredient}</Col>
+              <Col>{x.amount}</Col>
+            </Row>
+          </ListGroup.Item>
+        )));
       })
       //RETRIEVE INSTRUCTIONS
       axios.post(urlInstructions, {
@@ -80,6 +85,7 @@ const Recipe = (props) => {
       <Container>
         <h1>Recipe: {recipeName}</h1>
         {images}
+        <h2>Recipe Details</h2>
         <ListGroup>
           <ListGroup.Item>
             Cook: {cook}
