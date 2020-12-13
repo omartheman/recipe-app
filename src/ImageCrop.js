@@ -89,9 +89,9 @@ class ImageCrop extends PureComponent {
     return (
       <div className="">
         <Form.Label htmlFor={`file-upload-${this.props.id_num}`} className="btn btn-info">
-          Choose file #{this.props.index_num + 1}
+          Choose Image #{this.props.index_num + 1}
         </Form.Label>
-        {src ? " Chosen file shown below" : " No file chosen."}
+        {src ? ` Image #${this.props.index_num + 1} shown below` : " No image chosen."}
         <Form.File className="image-crop-file-input" id={`file-upload-${this.props.id_num}`} label="Upload Image" type="file" accept="image/*" onChange={this.onSelectFile} />
         {src && 
           <>

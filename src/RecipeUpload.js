@@ -109,7 +109,6 @@ class RecipeUpload extends Component {
   removeIngredient(ingNum){
     console.log(ingNum)
     let {ingredients, amounts} = this.state;
-    //remove respective index from each.
     const ingredientsContent = [...ingredients];
     const amountsContent = [...amounts]; 
     ingredientsContent.splice(ingNum, 1);
@@ -119,21 +118,9 @@ class RecipeUpload extends Component {
     this.setState({ingredients, amounts})
   }
   handleImageCrop(blobFile, index){
-    console.log('index',index)
-    /*
     const newImage = new File([blobFile], blobFile.name, {type: blobFile.type});
-    let formData = new FormData();
-    formData.append("imageFile", newImage, newImage.name)
-    this.setState({formData: [formData]});
-    */
-    // ====================================
-    const newImage = new File([blobFile], blobFile.name, {type: blobFile.type});
-    console.log('blobfile worked')
     const newImages = [...this.state.newImages];
-    console.log('newimages at beggining of crop', newImages)
-    //newImages adding at this index is causing problems. 
     newImages[index] = newImage;
-    
     this.setState({newImages}, ()=>{console.log('newImages in handleImageCrop',newImages, [...newImages])});
   }
   addImageField(){
@@ -143,15 +130,10 @@ class RecipeUpload extends Component {
     this.setState({numImageFields, imageFields}, ()=>{console.log(this.state.imageFields)})
   }
   removeImageField(ind){
-
-    //Remove image from newImages
-
     const imageFields = [...this.state.imageFields];
     imageFields.splice(ind, 1);
-
     const newImages = [...this.state.newImages];
     newImages.splice(ind, 1);
-
     this.setState({imageFields, newImages}, ()=>{console.log('updated newImages',this.state.newImages)})
   }
   render() { 
@@ -176,7 +158,6 @@ class RecipeUpload extends Component {
                 }}
                 />
             </div>
-            
             <div>
               <Form.Label>Amount</Form.Label>
               <Form.Control  
@@ -205,8 +186,10 @@ class RecipeUpload extends Component {
     })
     const imageFields = this.state.imageFields.map((idNum, ind) =>  (
       <ListGroup.Item key={idNum} variant="primary">
+        { this.state.newImages[ind] && 
+          <Button style={{float:'right'}} variant="danger" onClick={() => {this.removeImageField(ind)}}>Remove Image #{ind + 1}</Button>
+        }
         <ImageCrop id_num={idNum} index_num={ind} onImageCrop={this.handleImageCrop}/>
-        <Button variant="danger" onClick={() => {this.removeImageField(ind)}}>Remove Image #{ind + 1}</Button>
       </ListGroup.Item>
     ));
 
