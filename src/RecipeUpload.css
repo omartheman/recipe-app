@@ -1,8 +1,14 @@
+.add-image-button {
+  display: block !important;
+  width:100%;
+  margin-top: 10px;
+}
 h1 {
   text-align: center;
 }
 .ingredient-button-add {
   margin-bottom: 10px;
+  width: 100%;
 }
 .ingredient-button-remove {
   border-radius: 1000px !important;

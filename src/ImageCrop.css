@@ -1,6 +1,9 @@
 .image-crop-title {
   color: #0071ea;
 }
+.image-crop-file-input {
+  display: none;
+}
 .cropped-image-column {
   display: flex;
   align-items: center;
