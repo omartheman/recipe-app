@@ -8,6 +8,7 @@ import './RecipePage.css';
 const url = global_url_variable;
 const urlRecipe = `${url}getrecipe`;
 const urlIngredients = `${url}getingredients`;
+const urlImages = `${url}get-images`
 
 const Recipe = (props) => {
   const [recipeId] = useState(Number(props.match.params.recipeId));
@@ -16,7 +17,7 @@ const Recipe = (props) => {
   const [description, setDescription] = useState(null);
   const [recipeImage, setRecipeImage] = useState(null);
   const [ingredients, setIngredients] = useState(null);
-  const [imagePath, setImagePath] = useState(null);
+  const [images, setImages] = useState(null);
   //we need to retrieve data about specific recipe
   useEffect(() => {
     axios.post(urlRecipe, {
@@ -28,34 +29,36 @@ const Recipe = (props) => {
       setCook(res.data[0].cook);
       setDescription(res.data[0].description);
       setRecipeImage(res.data[0].img);
-      setImagePath(res.data[0].imagePath)
       return res;
     })
     .then(res => {
-      //change item name to lowercase, create db item name. 
       const itemLow = res.data[0].item.toLowerCase();
+      //RETRIEVE INGREDIENTS
       axios.post(urlIngredients, {
         id: recipeId,
         item: itemLow
       })
       .then(res => {
         console.log(res.data);
-        setIngredients(res.data.map(x => {
+        // setImages(res.data);
+      })
+
+      //RETRIEVE IMAGES
+      axios.post(urlImages, {
+        id: recipeId,
+        item: itemLow
+      })
+      .then(res => {
+        console.log(res.data);
+        setImages(res.data.map((x, index) => {
           return(
-            <ListGroup.Item key={x.id}>
-              <Row>
-                <Col>
-                  {x.ingredient}
-                </Col>
-                <Col>
-                  {x.amount}
-                </Col>
-              </Row>
-            </ListGroup.Item>
+            <img key={index} src={`https://brittanyjewellneal.com/uploaded_files/${x.imageName}`} alt={x.imageName}/>
           )
         }));
       })
-    });
+    })
+
+    
   }, [recipeId]);
   return(
     <>
@@ -65,9 +68,7 @@ const Recipe = (props) => {
       />
       <Container>
         <h1>Recipe: {recipeName}</h1>
-        <img className="recipe-image" src={recipeImage} alt={description}></img>
-        <img className="recipe-image" src={`https://brittanyjewellneal.com/uploaded_files/${imagePath}`} alt={description}></img>
-
+        {images}
         <ListGroup>
           <ListGroup.Item>
             Cook: {cook}

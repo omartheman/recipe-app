@@ -15,15 +15,15 @@ function replaceSqlCharacters(str){
 }
 
 const mode =
-"developmentOmar";
-/*
 "productionBritt";
+/*
+"developmentOmar";
 */
 
 let corsOrigin;
 let connection;
-let imageUpload;
-if (mode === "productionBritt") {
+let imageUploadPath;
+if (mode === 'productionBritt') {
   connection = mysql.createConnection({
     host: 'localhost', 
     user: 'britxbtx_omar2',
@@ -31,10 +31,8 @@ if (mode === "productionBritt") {
     database: 'britxbtx_recipe_app_test'
   });
   corsOrigin = 'https://brittanyjewellneal.com/recipeapp';
-  imageUpload = multer({
-    dest: "/home/britxbtx/public_html/uploaded_files_temp"
-  });
-} else if (mode === "developmentOmar") {
+  imageUploadPath = '/home/britxbtx/public_html/uploaded_files';
+} else if (mode === 'developmentOmar') {
   connection = mysql.createConnection({
     host: 'localhost', 
     user: 'root',
@@ -42,9 +40,7 @@ if (mode === "productionBritt") {
     database: 'recipe_app_test'
   });
   corsOrigin = 'http://localhost:3000';
-  imageUpload = multer({
-    dest: "C:/Users/HP EliteBook 8470p/Documents/Coding/recipe-app/uploaded_files_temp"
-  });
+  imageUploadPath = 'C:/Users/HP EliteBook 8470p/Documents/Coding/recipe-app/uploaded_files';
 }
 
 app.use(express.static(__dirname + '../..'));
@@ -61,41 +57,39 @@ app.use(session({
   saveUninitialized: true,
   cookie: {
     secure: false,
-    // maxAge: 8*60*60*1000 //make session last 8 hours
   }
 }));
 
-
-const handleError = (err, res) => {
-  if (err) {console.log(err)}
-  res
-  .status(500)
-  .contentType("text/plain")
-  .end("Oops! Something went wrong!");
-}
-
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    cb(null, 'C:/Users/HP EliteBook 8470p/Documents/Coding/recipe-app/uploaded_files')
+    cb(null, imageUploadPath)
   },
   filename: function(req, file, cb) {
     cb(null, `${file.fieldname}_dateVal_${Date.now()}_${spacesToUnderscores(file.originalname)}`)
   }
 })
+const imageUpload = multer({storage: storage})
 
-const imageUpload2 = multer({storage: storage})
+app.post(`${serverRoute}get-images`, (req, res) => {
+  console.log(req.body);
+  const item = spacesToUnderscores(req.body.item);
+  console.log('spacesToUnderscores item: ', item)
+  const sql = `
+    SELECT * FROM recipe${req.body.id}_${item}_images;
+  `;
+  connection.query(sql, (err, result) => {
+    if (err) throw err;
+    console.log('Result GET images: ', result);
+    res.send(result);
+  })
+})
 
-app.post(`${serverRoute}image-upload`, imageUpload2.array("imageFile"),
+app.post(`${serverRoute}image-upload`, imageUpload.array("imageFile"),
   (req, res) => {
-    
-    // =========================================
-
-    //Need to identify correct recipe
+    //Create a new table with all image names. 
     const sqlGetId = `
     SELECT * from recipes ORDER BY id DESC;
     `;
-
-    //Create a new table with all image names. 
     connection.query(sqlGetId, (err, result) => {
       if (err) throw err;
       console.log(Number(result[0].id))
@@ -112,10 +106,8 @@ app.post(`${serverRoute}image-upload`, imageUpload2.array("imageFile"),
         if (err) throw err; 
         console.log(result);
       });
-      // ===========*****************************************
-      
-      //Create a loop to insert all ingredients and amounts. 
-      
+
+      //Insert image names into image table. 
       console.log('req.files',req.files);
       for (let i = 0; i < req.files.length; i++) {
         console.log('req.files[i].filename', req.files[i].filename);
@@ -127,56 +119,17 @@ app.post(`${serverRoute}image-upload`, imageUpload2.array("imageFile"),
           if (err) throw err; 
         });
       }
-      // ========================================================
     })
   }
 )
 
-app.post(`${serverRoute}image-upload`, imageUpload.single("imageFile"),
-  (req, res) => {
-    console.log('req.file.name', req.file.filename);
-    const tempPath = req.file.path;
-    console.log('temppath',tempPath);
-    const targetPath = path.join(__dirname, `../uploaded_files/image_upload_${req.file.filename}_${req.file.originalname}`);
-    console.log('targetpath', targetPath);
-
-    fs.rename(tempPath, targetPath, err => {
-      if (err) return handleError(err, res);
-      res
-        .status(200)
-        .contentType("text/plain")
-        .end("File uploaded!");
-      console.log('File uploaded!');
-    });
-    
-    //Add targetPath to respective 'recipes' row with SQL 
-    //Need to identify correct recipe
-    const sqlGetId = `
-    SELECT id from recipes ORDER BY id DESC;
-    `;
-    connection.query(sqlGetId, (err, result) => {
-      if (err) throw err;
-      console.log(Number(result[0].id))
-      const id = Number(result[0].id);
-      const sqlAddImgPath = `
-        UPDATE recipes SET imagePath = ? WHERE id = ?;
-      `;
-      connection.query(sqlAddImgPath,[
-        `image_upload_${req.file.filename}_${req.file.originalname}`, 
-        id
-      ], (err, result) => {
-        if (err) throw err; 
-      })
-    })
-  }
-)
 
 app.post(`${serverRoute}getingredients`, (req, res) => {
   console.log(req.body);
   const item = spacesToUnderscores(req.body.item);
   console.log('spacesToUnderscores item: ', item)
   const sqlGetIngredients = `
-    SELECT * FROM recipe${req.body.id}_${item};
+    SELECT * FROM recipe${req.body.id}_${item}_ingredients;
   `;
   connection.query(sqlGetIngredients, (err, result) => {
     if (err) throw err;
