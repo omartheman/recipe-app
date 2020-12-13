@@ -239,13 +239,10 @@ app.get(`${serverRoute}`, (req, res) => {
 
 app.post(`${serverRoute}recipe-upload`, (req, res) => {
   //Check to see that user is logged in. 
-
-
   res.send('Got a POST request to upload recipe.');
   console.log('req.session.username: ',req.session.username)
-  var sql = `INSERT INTO recipes (item, cook, img, description, user)
+  var sql = `INSERT INTO recipes (item, cook, description, user)
   VALUES (
-    ?,
     ?,
     ?,
     ?,
@@ -254,7 +251,6 @@ app.post(`${serverRoute}recipe-upload`, (req, res) => {
   connection.query(sql, [
     req.body.item,
     req.body.cook,
-    req.body.img,
     req.body.description,
     req.session.username
   ], function (err, result) {
@@ -318,7 +314,6 @@ app.post(`${serverRoute}`, function(req, res){
   var sql = `UPDATE recipes SET 
     item = '${req.body.item}',
     cook = '${req.body.cook}',
-    img = '${req.body.img}',
     description = '${req.body.description}' 
     WHERE id = '2' `;
   connection.query(sql, 

@@ -69,7 +69,6 @@ class RecipeUpload extends Component {
         {
           item: item, 
           cook: cook, 
-          img: img,
           description: description,
           ingredients: ingredients,
           amounts: amounts,

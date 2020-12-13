@@ -16,7 +16,6 @@ const Recipe = (props) => {
   const [recipeName, setRecipeName] = useState(null);
   const [cook, setCook] = useState(null); 
   const [description, setDescription] = useState(null);
-  const [recipeImage, setRecipeImage] = useState(null);
   const [ingredients, setIngredients] = useState(null);
   const [images, setImages] = useState(null);
   const [instructions, setInstructions] = useState(null);
@@ -30,7 +29,6 @@ const Recipe = (props) => {
       setRecipeName(res.data[0].item);
       setCook(res.data[0].cook);
       setDescription(res.data[0].description);
-      setRecipeImage(res.data[0].img);
       return res;
     })
     .then(res => {
