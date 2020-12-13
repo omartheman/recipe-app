@@ -15,9 +15,9 @@ function replaceSqlCharacters(str){
 }
 
 const mode =
-"developmentOmar";
-/*
 "productionBritt";
+/*
+"developmentOmar";
 */
 
 let corsOrigin;
