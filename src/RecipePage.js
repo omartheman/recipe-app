@@ -4,12 +4,40 @@ import axios from 'axios';
 import global_url_variable from './global_url_variable';
 import { Container, ListGroup, Row, Col } from 'react-bootstrap';
 import './RecipePage.css';
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+import image1 from './images/imageFile_dateVal_1607883271123_boat_on_lake copy.jpg';
+import image2 from './images/imageFile_dateVal_1607883271123_boat_on_lake.jpg';
+import image3 from './images/imageFile_dateVal_1607883271125_block-game-thumbnail copy.png';
+import image4 from './images/imageFile_dateVal_1607883271125_block-game-thumbnail.png';
+import image5 from './images/imageFile_dateVal_1607898827213_bootstrap_sample_site copy.png';
+import image6 from './images/imageFile_dateVal_1607898827213_bootstrap_sample_site.png';
 
 const url = global_url_variable;
 const urlRecipe = `${url}getrecipe`;
 const urlIngredients = `${url}getingredients`;
 const urlImages = `${url}get-images`
 const urlInstructions = `${url}get-instructions`
+
+const responsive = {
+  superLargeDesktop: {
+    // the naming can be any, depends on you.
+    breakpoint: { max: 4000, min: 3000 },
+    items: 5
+  },
+  desktop: {
+    breakpoint: { max: 3000, min: 1024 },
+    items: 3
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 464 },
+    items: 2
+  },
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
+    items: 1
+  }
+};
 
 const Recipe = (props) => {
   const [recipeId] = useState(Number(props.match.params.recipeId));
@@ -86,6 +114,26 @@ const Recipe = (props) => {
       <Container>
         <h1>Recipe: {recipeName}</h1>
         {images}
+        <Carousel responsive={responsive}>
+          <div>
+            <img src={image1} alt='alt' />
+          </div>
+          <div>
+            <img src={image2} alt='alt' />
+          </div>
+          <div>
+            <img src={image3} alt='alt' />
+          </div>
+          <div>
+            <img src={image4} alt='alt' />
+          </div>
+          <div>
+            <img src={image5} alt='alt' />
+          </div>
+          <div>
+            <img src={image6} alt='alt' />
+          </div>
+        </Carousel>;
         <h2>Recipe Details</h2>
         <ListGroup>
           <ListGroup.Item>
