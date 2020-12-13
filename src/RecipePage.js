@@ -9,6 +9,7 @@ const url = global_url_variable;
 const urlRecipe = `${url}getrecipe`;
 const urlIngredients = `${url}getingredients`;
 const urlImages = `${url}get-images`
+const urlInstructions = `${url}get-instructions`
 
 const Recipe = (props) => {
   const [recipeId] = useState(Number(props.match.params.recipeId));
@@ -40,9 +41,19 @@ const Recipe = (props) => {
       })
       .then(res => {
         console.log(res.data);
+        setIngredients(res.data.map((x, index) => {
+          
+        }));
+      })
+      //RETRIEVE INSTRUCTIONS
+      axios.post(urlInstructions, {
+        id: recipeId,
+        item: itemLow
+      })
+      .then(res => {
+        console.log(res.data);
         // setImages(res.data);
       })
-
       //RETRIEVE IMAGES
       axios.post(urlImages, {
         id: recipeId,

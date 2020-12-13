@@ -53,7 +53,7 @@ class RecipeUpload extends Component {
         //   alert("You're not logged in. You must be logged in to upload!")
         //   return;
       // }
-      const {item, cook, description, img, ingredients, amounts, newImages} = this.state;
+      const {item, cook, description, img, ingredients, amounts, newImages, instructions} = this.state;
 
       console.log('newimages', newImages)
       let formData = new FormData();
@@ -72,7 +72,8 @@ class RecipeUpload extends Component {
           img: img,
           description: description,
           ingredients: ingredients,
-          amounts: amounts
+          amounts: amounts,
+          instructions: instructions
         }
       )
       .then(response => {console.log('axios response',response)})
@@ -285,7 +286,7 @@ class RecipeUpload extends Component {
             </div>
 
             <div className="upload-section">
-              <h2>Upload Images</h2>
+              <h2 className="recipe-image-uploads-heading">Upload Images</h2>
               <ListGroup>
                 {imageFields}
               </ListGroup>

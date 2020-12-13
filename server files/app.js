@@ -123,6 +123,19 @@ app.post(`${serverRoute}image-upload`, imageUpload.array("imageFile"),
   }
 )
 
+app.post(`${serverRoute}get-instructions`, (req, res) => {
+  console.log(req.body);
+  const item = spacesToUnderscores(req.body.item);
+  console.log('spacesToUnderscores item: ', item)
+  const sqlGetIngredients = `
+    SELECT * FROM recipe${req.body.id}_${item}_instructions;
+  `;
+  connection.query(sqlGetIngredients, (err, result) => {
+    if (err) throw err;
+    console.log('Result GET ingredients: ', result);
+    res.send(result);
+  })
+});
 
 app.post(`${serverRoute}getingredients`, (req, res) => {
   console.log(req.body);
@@ -262,6 +275,7 @@ app.post(`${serverRoute}recipe-upload`, (req, res) => {
     let item = req.body.item;
     item = replaceSqlCharacters(spacesToUnderscores(item).toLowerCase());
     console.log('modified item: ', item)
+    // CREATE INGREDIENTS TABLE
     const sqlCreateIngredientsTable = `
       CREATE TABLE recipe${id}_${item}_ingredients (
         id INT NOT NULL AUTO_INCREMENT,
@@ -272,12 +286,27 @@ app.post(`${serverRoute}recipe-upload`, (req, res) => {
     connection.query(sqlCreateIngredientsTable, (err, result) => {
       if (err) throw err; 
     });
-
-    //Create a loop to insert all ingredients and amounts. 
     for (let i = 0; i < req.body.ingredients.length; i++) {
       const sqlAddIngredient = 
         `INSERT INTO recipe${id}_${item}_ingredients (ingredient, amount) VALUES ('${req.body.ingredients[i]}', '${req.body.amounts[i]}');`;
       connection.query(sqlAddIngredient, (err, result) => {
+        if (err) throw err; 
+      });
+    }
+    // CREATE INSTRUCTIONS TABLE
+    const sqlCreateInstructionsTable = `
+      CREATE TABLE recipe${id}_${item}_instructions (
+        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        instruction varchar(50) NOT NULL
+    );`;
+    connection.query(sqlCreateInstructionsTable, (err, result) => {
+      if (err) throw err; 
+    });
+    for (let i = 0; i < req.body.instructions.length; i++) {
+      const sqlAddInstruction = 
+        `INSERT INTO recipe${id}_${item}_instructions (instruction) 
+        VALUES ('${req.body.instructions[i]}');`;
+      connection.query(sqlAddInstruction, (err, result) => {
         if (err) throw err; 
       });
     }
