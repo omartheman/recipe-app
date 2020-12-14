@@ -1,3 +1,20 @@
+
+=====================================
+14 Dec Mon
+
+- Write a blog post about something you're learning in this project. 
+- Make a video about something you learned in this project. 
+- Write a summary about what you've learned so far in this project. 
+- Add Pics of you DJing to your "about me"
+
+Blog post ideas: 
+- How to add carousel 
+- How to connect React to MySQL and Express
+- How to add image uploads with React 
+
+
+=======================
+
 12 Dec Wed
 
 Priorities: 

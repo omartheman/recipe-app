@@ -16,8 +16,8 @@ import image6 from './images/imageFile_dateVal_1607898827213_bootstrap_sample_si
 const url = global_url_variable;
 const urlRecipe = `${url}getrecipe`;
 const urlIngredients = `${url}getingredients`;
-const urlImages = `${url}get-images`
-const urlInstructions = `${url}get-instructions`
+const urlImages = `${url}get-images`;
+const urlInstructions = `${url}get-instructions`;
 // image1, image2, image3, image4, image5, image6
 const arr = [ image1, image2, image3, image4, image5, image6];
 const carouselItems = arr.map( x => (
@@ -82,7 +82,7 @@ const Recipe = (props) => {
       })
       //RETRIEVE IMAGES
       axios.post(urlImages, {
-        id: recipeId,
+        id: recipeId, 
         item: itemLow
       })
       .then(res => {

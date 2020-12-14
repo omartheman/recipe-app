@@ -27,7 +27,6 @@ class RecipeUpload extends Component {
       recipes: [],
       item: '',
       cook: '',
-      img: '',
       description: '',
       ingredients: [''],
       amounts: [''],
@@ -53,7 +52,7 @@ class RecipeUpload extends Component {
         //   alert("You're not logged in. You must be logged in to upload!")
         //   return;
       // }
-      const {item, cook, description, img, ingredients, amounts, newImages, instructions} = this.state;
+      const {item, cook, description, ingredients, amounts, newImages, instructions} = this.state;
 
       console.log('newimages', newImages)
       let formData = new FormData();
@@ -76,7 +75,7 @@ class RecipeUpload extends Component {
         }
       )
       .then(response => {console.log('axios response',response)})
-      .then(this.setState({item, cook, description, img}))
+      .then(this.setState({item, cook, description}))
       .then(
         axios.get(url)
         .then(response => { 
@@ -92,7 +91,7 @@ class RecipeUpload extends Component {
           console.log(res);
         })
       )
-        //STOP HERE: Moved axios.post for file to  bottom, because want to make sure recipe gets uploaded first. Maybe this would cause the temp path to save properly in express? Check so that image upload still works correctly.
+        //STOP HERE: Moved axios.post for file to  bottom, because want to make sure recipe gets uploaded first. Maybe this would cause the temp path to save properly in express? Check so that age upload still works correctly.
     })
     .catch(error => { 
       alert("I'm sorry. There was an error with the server. Try refreshing the page, and logging in again.")
@@ -257,14 +256,6 @@ class RecipeUpload extends Component {
                 onChange={(e) => {
                   this.setState({[e.target.id]: e.target.value})
                 }} 
-              />
-              <Form.Label>Image URL</Form.Label>
-              <Form.Control  
-                type="text" 
-                id="img"
-                onChange={(e) => {
-                  this.setState({[e.target.id]: e.target.value})
-                }}
               />
               
               <div className="upload-section">
