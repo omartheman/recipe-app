@@ -18,8 +18,8 @@ const urlRecipe = `${url}getrecipe`;
 const urlIngredients = `${url}getingredients`;
 const urlImages = `${url}get-images`
 const urlInstructions = `${url}get-instructions`
-// , image3, image4, image5, image6
-const arr = [image1, image2, image3, image4];
+// image1, image2, image3, image4, image5, image6
+const arr = [ image1, image2, image3, image4, image5, image6];
 const carouselItems = arr.map( x => (
   <div className="carousel-img-container"><img className="carousel-img" src={x} alt='alt' /></div>
 ));
@@ -38,6 +38,7 @@ const Recipe = (props) => {
   const [instructions, setInstructions] = useState(null);
   //we need to retrieve data about specific recipe
   useEffect(() => {
+    console.log('images',images)
     axios.post(urlRecipe, {
       id: recipeId
     })
@@ -87,6 +88,7 @@ const Recipe = (props) => {
       .then(res => {
         console.log(res.data);
         if (url === "http://localhost:4000/recipeapp/recipeapp-server/") {
+          console.log('caritems',carouselItems)
           setImages(carouselItems)
         } else {
           setImages(res.data.map(x => (
@@ -102,14 +104,9 @@ const Recipe = (props) => {
       })
     })
   }, [recipeId]);
-  return(
-    <>
-      <Navbar 
-        loggedInUser={props.loggedInUser}
-        onLogout={props.onLogout}
-      />
-      <Container>
-        <h1>Recipe: {recipeName}</h1>
+  const carousel = () => {
+    if (images) {
+      return(
         <Carousel 
           responsive={responsive}
           infinite={true}
@@ -127,7 +124,23 @@ const Recipe = (props) => {
           // renderDotsOutside={renderButtonGroupOutside}
         >
           {images}
-        </Carousel>
+        </Carousel> 
+      );
+    } else {
+      return null;
+    }
+  }       
+    
+
+  return(
+    <>
+      <Navbar 
+        loggedInUser={props.loggedInUser}
+        onLogout={props.onLogout}
+      />
+      <Container>
+        <h1>Recipe: {recipeName}</h1>
+        {carousel()}
         <h2>Recipe Details</h2>
         <ListGroup>
           <ListGroup.Item>

@@ -1,3 +1,10 @@
+const mode =
+
+"developmentOmar";
+/*
+"productionBritt";
+*/
+
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -13,12 +20,6 @@ function replaceSqlCharacters(str){
   const newStr = str.replace(/"/g, '_').replace(/'/g, '_').replace(/`/g, '_').replace(/;/g, '_').replace(/\*/g, '_').replace(/#/g, '_').replace(/\$/g, '_');
   return newStr;
 }
-
-const mode =
-"developmentOmar";
-/*
-"productionBritt";
-*/
 
 let corsOrigin;
 let connection;
