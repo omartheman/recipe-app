@@ -5,3 +5,18 @@
   border-radius: 3px;
   margin-bottom: 20px; 
 }
+.carousel-img {
+  width: 90%;
+  border-radius: 3px; 
+}
+.carousel-img-container {
+  display: flex;
+  justify-content: center;
+}
+.no-carousel-img-container-2 img {
+  width: 100%;
+}
+.react-multi-carousel-dot-list {
+  position: static !important;
+  margin-top: 20px !important; 
+}

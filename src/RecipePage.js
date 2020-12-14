@@ -18,26 +18,15 @@ const urlRecipe = `${url}getrecipe`;
 const urlIngredients = `${url}getingredients`;
 const urlImages = `${url}get-images`
 const urlInstructions = `${url}get-instructions`
+// , image3, image4, image5, image6
+const arr = [image1, image2, image3, image4];
+const carouselItems = arr.map( x => (
+  <div className="carousel-img-container"><img className="carousel-img" src={x} alt='alt' /></div>
+));
 
-const responsive = {
-  superLargeDesktop: {
-    // the naming can be any, depends on you.
-    breakpoint: { max: 4000, min: 3000 },
-    items: 5
-  },
-  desktop: {
-    breakpoint: { max: 3000, min: 1024 },
-    items: 3
-  },
-  tablet: {
-    breakpoint: { max: 1024, min: 464 },
-    items: 2
-  },
-  mobile: {
-    breakpoint: { max: 464, min: 0 },
-    items: 1
-  }
-};
+const carouselButtons = arr.map(x => (
+  <div><img className="carousel-button" src={x} alt='alt' /></div>
+))
 
 const Recipe = (props) => {
   const [recipeId] = useState(Number(props.match.params.recipeId));
@@ -97,11 +86,19 @@ const Recipe = (props) => {
       })
       .then(res => {
         console.log(res.data);
-        setImages(res.data.map((x, index) => {
-          return(
-            <img key={index} src={`https://brittanyjewellneal.com/uploaded_files/${x.imageName}`} alt={x.imageName}/>
-          )
-        }));
+        if (url === "http://localhost:4000/recipeapp/recipeapp-server/") {
+          setImages(carouselItems)
+        } else {
+          setImages(res.data.map(x => (
+            <div className="carousel-img-container">
+              <img 
+                className="carousel-img" 
+                src={`https://brittanyjewellneal.com/uploaded_files/${x.imageName}`} 
+                alt={x.imageName} 
+              />
+            </div>
+          )));
+        }
       })
     })
   }, [recipeId]);
@@ -113,27 +110,24 @@ const Recipe = (props) => {
       />
       <Container>
         <h1>Recipe: {recipeName}</h1>
-        {images}
-        <Carousel responsive={responsive}>
-          <div>
-            <img src={image1} alt='alt' />
-          </div>
-          <div>
-            <img src={image2} alt='alt' />
-          </div>
-          <div>
-            <img src={image3} alt='alt' />
-          </div>
-          <div>
-            <img src={image4} alt='alt' />
-          </div>
-          <div>
-            <img src={image5} alt='alt' />
-          </div>
-          <div>
-            <img src={image6} alt='alt' />
-          </div>
-        </Carousel>;
+        <Carousel 
+          responsive={responsive}
+          infinite={true}
+          showDots={true}
+          // customDot={<CustomDot/>}
+          // renderDotsOutside={renderButtonGroupOutside} 
+          renderDotsOutside={true}
+          autoPlay={true}
+          ssr={true} // means to render carousel on server-side.
+          autoPlaySpeed={5000}
+          keyBoardControl={true}
+          transitionDuration={1000}
+          removeArrowOnDeviceType={["tablet", "mobile"]}
+          // renderButtonGroupOutside={true} customButtonGroup={<ButtonGroup />}
+          // renderDotsOutside={renderButtonGroupOutside}
+        >
+          {images}
+        </Carousel>
         <h2>Recipe Details</h2>
         <ListGroup>
           <ListGroup.Item>
@@ -155,5 +149,47 @@ const Recipe = (props) => {
     </>
   );
 }
+
+const responsive = {
+  superLargeDesktop: {
+    // the naming can be any, depends on you.
+    breakpoint: { max: 4000, min: 3000 },
+    items: 5
+  },
+  desktop: {
+    breakpoint: { max: 3000, min: 1024 },
+    items: 3
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 464 },
+    items: 2
+  },
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
+    items: 1
+  }
+};
+
+
+
+const CustomDot = ({ onClick, ...rest }) => {
+  const {
+    onMove,
+    index,
+    active,
+    carouselState: { currentSlide, deviceType }
+  } = rest;
+  const carouselItems = [...carouselButtons];
+  // onMove means if dragging or swiping in progress.
+  // active is provided by this lib for checking if the item is active or not.
+  return (
+    <button
+      className={active ? "active" : "inactive"}
+      onClick={() => onClick()}
+    >
+      {React.Children.toArray(carouselItems)[index]}
+    </button>
+  );
+};
 
 export default Recipe;
