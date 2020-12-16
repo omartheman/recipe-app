@@ -3,10 +3,11 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Navbar from './Navbar';
 import global_url_variable from './global_url_variable';
-import {Container, Form, Button, ListGroup, List} from 'react-bootstrap';
+import { Container, Form, Button, ListGroup } from 'react-bootstrap';
 import './RecipeUpload.css';
 import 'react-image-crop/dist/ReactCrop.css';
 import ImageCrop from './ImageCrop'; 
+import { Redirect } from 'react-router-dom';
 
 const url = global_url_variable;
 const urlRecipeUpload = `${url}recipe-upload`;
@@ -30,7 +31,8 @@ class RecipeUpload extends Component {
       newImages: [],
       numImageFields: 1,
       imageFields: [0],
-      instructions: ['']
+      instructions: [''],
+      redirect: false
     }
     this.handlePostRecipe = this.handlePostRecipe.bind(this);
     this.addIngredient = this.addIngredient.bind(this);
@@ -38,6 +40,7 @@ class RecipeUpload extends Component {
     this.addImageField = this.addImageField.bind(this);
     this.removeImageField = this.removeImageField.bind(this);
     this.addInstruction = this.addInstruction.bind(this);
+    this.redirectTest = this.redirectTest.bind(this);
   }
   handlePostRecipe(){
     axios.get(urlAuth)
@@ -85,7 +88,8 @@ class RecipeUpload extends Component {
           console.log(res);
         })
       )
-        //STOP HERE: Moved axios.post for file to  bottom, because want to make sure recipe gets uploaded first. Maybe this would cause the temp path to save properly in express? Check so that age upload still works correctly.
+      .then(this.setState({redirect: true}))
+      //Add reroute here. 
     })
     .catch(error => { 
       alert("I'm sorry. There was an error with the server. Try refreshing the page, and logging in again.")
@@ -131,9 +135,14 @@ class RecipeUpload extends Component {
     newImages.splice(ind, 1);
     this.setState({imageFields, newImages}, ()=>{console.log('updated newImages',this.state.newImages)})
   }
+  redirectTest(){
+    console.log('redirectTest working')
+    this.setState({redirect: true})
+  }
   render() { 
     let {ingredients, instructions} = this.state;
     const {loggedInUser, onLogout} = this.props;
+    const {redirect} = this.state; 
     const instructionFields = instructions.map((inst, index) => {
       return(
           <ListGroup.Item variant="info" key={index}>
@@ -166,7 +175,7 @@ class RecipeUpload extends Component {
           <ListGroup.Item variant="info" key={index} className="ingredient-amount-container">
             <div>
               <Form.Label>Ingredient #{index + 1}</Form.Label>
-              <Form.Control  
+              <Form.Control
                 type="text" 
                 value={this.state.ingredients[index]}   
                 ingredientnumber={index}
@@ -176,7 +185,7 @@ class RecipeUpload extends Component {
                   ingredients[ingNum] = e.target.value;
                   this.setState({ingredients}, ()=>{console.log(this.state.ingredients)})
                 }}
-                />
+              />
             </div>
             <div>
               <Form.Label>Amount</Form.Label>
@@ -215,6 +224,7 @@ class RecipeUpload extends Component {
 
     return ( 
       <> 
+        {redirect ? <Redirect to="/recipeapp" /> : null}
         <Navbar 
           loggedInUser={loggedInUser}
           onLogout={onLogout}
@@ -279,6 +289,7 @@ class RecipeUpload extends Component {
 
           </Form>
           <Button variant="primary" className="post-recipe-button" onClick={this.handlePostRecipe}>Post Your New Recipe!</Button>
+          <Button onClick={this.redirectTest}>Redirect</Button>
         </Container>
       </> 
     ) 
