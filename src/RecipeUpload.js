@@ -40,7 +40,6 @@ class RecipeUpload extends Component {
     this.addImageField = this.addImageField.bind(this);
     this.removeImageField = this.removeImageField.bind(this);
     this.addInstruction = this.addInstruction.bind(this);
-    this.redirectTest = this.redirectTest.bind(this);
   }
   handlePostRecipe(){
     axios.get(urlAuth)
@@ -134,10 +133,6 @@ class RecipeUpload extends Component {
     const newImages = [...this.state.newImages];
     newImages.splice(ind, 1);
     this.setState({imageFields, newImages}, ()=>{console.log('updated newImages',this.state.newImages)})
-  }
-  redirectTest(){
-    console.log('redirectTest working')
-    this.setState({redirect: true})
   }
   render() { 
     let {ingredients, instructions} = this.state;
@@ -289,7 +284,6 @@ class RecipeUpload extends Component {
 
           </Form>
           <Button variant="primary" className="post-recipe-button" onClick={this.handlePostRecipe}>Post Your New Recipe!</Button>
-          <Button onClick={this.redirectTest}>Redirect</Button>
         </Container>
       </> 
     ) 
