@@ -219,7 +219,7 @@ class RecipeUpload extends Component {
 
     return ( 
       <> 
-        {redirect ? <Redirect to="/recipeapp" /> : null}
+        {redirect ? <Redirect to="/recipeapp/recipe-upload-success" /> : null}
         <Navbar 
           loggedInUser={loggedInUser}
           onLogout={onLogout}

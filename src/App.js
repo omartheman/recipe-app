@@ -9,13 +9,12 @@ import axios from 'axios';
 import CreateAccount from './CreateAccount';
 import global_url_variable from './global_url_variable';
 import RecipePage from './RecipePage';
+import RecipeUploadSuccess from './RecipeUploadSuccess';
 
 const url = global_url_variable;
 const urlAuth = `${url}auth`;
 axios.defaults.headers.common['Cache-Control'] = 'no-cache';
 axios.defaults.withCredentials = true;
-
-//find where Login data posts
 
 class App extends React.Component{
   constructor(props){
@@ -76,6 +75,12 @@ class App extends React.Component{
     const {username, password, loggedInUser} = this.state;
     return(
       <Switch>
+        <Route path="/recipeapp/recipe-upload-success" render={() => (
+          <RecipeUploadSuccess
+            loggedInUser={loggedInUser}
+            onLogout={this.handleLogout}
+          />
+        )} />
         <Route path="/recipeapp/recipe/:recipeId" render={(props) => (
           <RecipePage
             {...props}
