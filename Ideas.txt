@@ -1,3 +1,4 @@
 (14 Dec Mon)
 
 - Add a raining animation of food icons, like you did for your timer, on the "upload complete" page 
+- Add React-Awesome-Slider to recipe app
