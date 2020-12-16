@@ -1,7 +1,7 @@
 import React from 'react';
 import HomeMainCont from './HomeMainCont';
 import Navbar from './Navbar';
-import {Container, Row, Col} from 'react-bootstrap';
+import {Container, Row, Col, Spinner} from 'react-bootstrap';
 import FeaturedRecipe from './FeaturedRecipe';
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
@@ -75,7 +75,7 @@ class Home extends React.Component {
             // renderButtonGroupOutside={true} customButtonGroup={<ButtonGroup />}
             // renderDotsOutside={renderButtonGroupOutside}
           >
-            {images}
+            {carouselItems}
           </Carousel>
         );
       } else {
