@@ -10,6 +10,7 @@ import CreateAccount from './CreateAccount';
 import global_url_variable from './global_url_variable';
 import RecipePage from './RecipePage';
 import RecipeUploadSuccess from './RecipeUploadSuccess';
+import AllRecipes from './AllRecipes';
 
 const url = global_url_variable;
 const urlAuth = `${url}auth`;
@@ -84,6 +85,12 @@ class App extends React.Component{
         <Route path="/recipeapp/recipe/:recipeId" render={(props) => (
           <RecipePage
             {...props}
+            loggedInUser={loggedInUser}
+            onLogout={this.handleLogout}
+          />
+        )} />
+        <Route path="/recipeapp/all-recipes" render={() => (
+          <AllRecipes
             loggedInUser={loggedInUser}
             onLogout={this.handleLogout}
           />

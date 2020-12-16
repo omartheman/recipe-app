@@ -175,6 +175,18 @@ app.post(`${serverRoute}getrecipe`, (req, res) => {
   })
 });
 
+app.get(`${serverRoute}all-recipes`, (req, res) => {
+  console.log('myrecipes req.session.username', req.session.username)
+  const sqlGetUserRecipes = `
+    SELECT * FROM recipes ORDER BY item;
+  `;
+  connection.query(sqlGetUserRecipes, function (err, result) {
+    if (err) throw err;
+    console.log('Result sql myrecipes:',result)
+    res.send(result);
+  });  
+});
+
 app.get(`${serverRoute}myrecipes`, (req, res) => {
   console.log('myrecipes req.session.username', req.session.username)
   const sqlGetUserRecipes = `

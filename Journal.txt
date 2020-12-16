@@ -3,6 +3,10 @@
 - Add an "All Recipes" page 
 - Add dropdown login 
 - Make "My Recipes" dissapear on logout
+- Add loading animation on homepage for carousel
+- Add directorys in server for pages that cant refresh in recipe app.
+- Check if there is a limit to how many recipes appear in carousel. 
+- Add features to the 
 
 =====================================
 14 Dec Mon

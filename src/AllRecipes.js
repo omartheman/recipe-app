@@ -7,14 +7,14 @@ import './MyRecipes.css';
 import { Link } from 'react-router-dom';
 
 const url = global_url_variable;
-const urlMyRecipes = `${url}myrecipes`;
+const urlAllRecipes = `${url}all-recipes`;
 
 axios.defaults.headers.common['Cache-Control'] = 'no-cache';
 
 const AllRecipes = (props) => {
   const [recipes, setRecipes] = useState([]);
   useEffect(() => {
-    axios.get(urlMyRecipes)
+    axios.get(urlAllRecipes)
     .then(res => {
       console.log(res.data);
       setRecipes([...res.data]);
@@ -45,7 +45,7 @@ const AllRecipes = (props) => {
         onLogout={props.onLogout}
       />
       <Container>
-        <h1>My Recipes</h1>
+        <h1>All Recipes</h1>
         <Row>
           <Col>
             <ListGroup className="recipe-list-group">
