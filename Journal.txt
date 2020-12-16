@@ -1,6 +1,5 @@
 16 Dec Wed
 
-- Today I'm going to add a "success" page to the recipeapp. 
 - Add an "All Recipes" page 
 - Add dropdown login 
 - Make "My Recipes" dissapear on logout
