@@ -14,11 +14,6 @@ const urlAuth = `${url}auth`;
 const urlFileUpload = `${url}image-upload`;
 axios.defaults.headers.common['Cache-Control'] = 'no-cache';
 
-/*
--Create a connection between the logged in user and recipeupload. 
--Use loggedInUser from App state to determie where to post data from database.
--Create "recipes" table in database. 
-*/
 class RecipeUpload extends Component {
   constructor(props){
     super(props);
@@ -37,7 +32,6 @@ class RecipeUpload extends Component {
       imageFields: [0],
       instructions: ['']
     }
-    //STOP HERE: Add ingredients and amounts to respective new table in database 
     this.handlePostRecipe = this.handlePostRecipe.bind(this);
     this.addIngredient = this.addIngredient.bind(this);
     this.handleImageCrop = this.handleImageCrop.bind(this);
