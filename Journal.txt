@@ -1,24 +1,26 @@
+17 Dec Thu
+
+How to add login dropdown: 
+
+ 1. Login data needs to be sent to App.js
+ 2. Add a username and password form to navbar.
+ 3. Add the login fields to the navbar component. From the navbar, correct data will be passed up to the App component. 
+  4. Login info need to be passed up through each page's component to App.js
+  5. In App.js, can each route be wrapped in Navbar? No, because Navbar is within each page. But navbar can go on top?
+================================
+
 16 Dec Wed
 
-- Fix Google chrome so that you can load local resources. 
-- Fix CSS for homepage carousel small images
-- WRITE SCHOOL REPORT 
+- Add second password and email field in create account form 
+- Add dropdown login 
+- Add titles and descriptions to recipes on homepage.
+- Set featured recipe to be one random recipe for a week
 - Find out why sometimes user is logged out, but it looks like they're logged in. 
   - Potentially send a GET to server every 5 seconds to check that user is still logged in? 
 -Switch Upload page so you can't leave fields blank, and so that you can't upload without being logged in.
-- Fix so that you can pull images from local resources
-  - Add an 'if' to ignore recipes with no image.
-- Find out why some home carousel images are small
-- Fix lightbox height on live site
-- Add loading screen to recipe page
-- Make it so that Link fits content...
-- Add feature to carousel to select recipe when clicked
 - Add Cook to the All Recipes list
-- Add second password field in create account form 
-- Add Lightbox to recipes on My Recipes
 - Add function to delete recipe
 - add function to modify recipe 
-- Add dropdown login 
 
 =====================================
 14 Dec Mon

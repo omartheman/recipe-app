@@ -11,6 +11,7 @@ import global_url_variable from './global_url_variable';
 import RecipePage from './RecipePage';
 import RecipeUploadSuccess from './RecipeUploadSuccess';
 import AllRecipes from './AllRecipes';
+import Navbar from './Navbar';
 
 const url = global_url_variable;
 const urlAuth = `${url}auth`;
@@ -126,10 +127,20 @@ class App extends React.Component{
           />
         )} />
         <Route path="/recipeapp" render={() => (
-          <Home
-            loggedInUser={loggedInUser}
-            onLogout={this.handleLogout}
-          />
+          <>
+            <Navbar
+              loginSubmit={this.handleLoginSubmit}
+              onLoginFormChange={this.handleLoginFormChange}
+              loggedInUser={loggedInUser}
+              onLogout={this.handleLogout}
+              username={username}
+              password={password} 
+            />
+            <Home
+              loggedInUser={loggedInUser}
+              onLogout={this.handleLogout}
+            />
+          </>
         )} />
       </Switch>
     )
