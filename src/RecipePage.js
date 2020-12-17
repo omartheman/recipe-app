@@ -22,7 +22,9 @@ const urlInstructions = `${url}get-instructions`;
 // image1, image2, image3, image4, image5, image6
 const arr = [ image1, image2, image3, image4, image5, image6];
 const carouselItems = arr.map( x => (
-  <div className="carousel-img-container"><img className="carousel-img" src={x} alt='alt' /></div>
+  <SRLWrapper>
+    <div className="carousel-img-container"><img className="carousel-img" src={x} alt='alt' /></div>
+  </SRLWrapper>
 ));
 
 const carouselButtons = arr.map(x => (

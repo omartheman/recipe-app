@@ -16,7 +16,7 @@ import image5 from './images/imageFile_dateVal_1607898827213_bootstrap_sample_si
 import image6 from './images/imageFile_dateVal_1607898827213_bootstrap_sample_site.png';
 // image1, image2, image3, image4, image5, image6
 const arr = [ image1, image2, image3, image4, image5, image6];
-const carouselItems = arr.map( x => (
+let carouselItems = arr.map( x => (
   <div className="carousel-img-container"><img className="carousel-img" src={x} alt='alt' /></div>
 ));
 
@@ -49,7 +49,7 @@ class Home extends React.Component {
   }
   render(){
     const {loggedInUser, onLogout} = this.props;
-    const images = this.state.imageNames.map((x, i) => (
+    let images = this.state.imageNames.map((x, i) => (
       <div key={i} className="carousel-img-container">
         <img 
           className="carousel-img" 
@@ -58,6 +58,9 @@ class Home extends React.Component {
         />
       </div>
     ))
+    if (url === "http://localhost:4000/recipeapp/recipeapp-server/") {
+      images = carouselItems;
+    }
     const carousel = () => {
       if (this.state.imageNames) {
         return(
@@ -77,7 +80,7 @@ class Home extends React.Component {
             // renderButtonGroupOutside={true} customButtonGroup={<ButtonGroup />}
             // renderDotsOutside={renderButtonGroupOutside}
           >
-            {carouselItems}
+            {images}
           </Carousel>
         );
       } else {
