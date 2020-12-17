@@ -7,6 +7,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import global_url_variable from './global_url_variable';
 import axios from 'axios';
+import './Home.css';
 
 import image1 from './images/imageFile_dateVal_1607883271123_boat_on_lake copy.jpg';
 import image2 from './images/imageFile_dateVal_1607883271123_boat_on_lake.jpg';
@@ -14,7 +15,6 @@ import image3 from './images/imageFile_dateVal_1607883271125_block-game-thumbnai
 import image4 from './images/imageFile_dateVal_1607883271125_block-game-thumbnail.png';
 import image5 from './images/imageFile_dateVal_1607898827213_bootstrap_sample_site copy.png';
 import image6 from './images/imageFile_dateVal_1607898827213_bootstrap_sample_site.png';
-// image1, image2, image3, image4, image5, image6
 const arr = [ image1, image2, image3, image4, image5, image6];
 let carouselItems = arr.map( x => (
   <div className="carousel-img-container"><img className="carousel-img" src={x} alt='alt' /></div>
@@ -40,6 +40,7 @@ class Home extends React.Component {
         })
         .then(res => {
           console.log('carousel res',res)
+          console.log('carousel item id', res.data.id)
           this.setState({imageNames: [...this.state.imageNames, res.data]}, () => {console.log('this.state.imageNames',this.state.imageNames)})
         })
         return null;
@@ -62,7 +63,7 @@ class Home extends React.Component {
       images = carouselItems;
     }
     const carousel = () => {
-      if (this.state.imageNames) {
+      if (this.state.imageNames.length > 0) {
         return(
           <Carousel 
             responsive={responsive}
