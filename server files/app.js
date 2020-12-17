@@ -78,7 +78,7 @@ app.post(`${serverRoute}get-images-home-carousel`, (req, res) => {
     LIMIT 1;`;
   connection.query(sql, (err, result) => {
     if (err) throw err;
-    res.send(result[0].imageName);
+    res.send([req.body.id, result[0].imageName]);
     console.log('Result GET images: ', result[0].imageName);
   })
 })

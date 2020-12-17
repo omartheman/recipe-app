@@ -1,5 +1,17 @@
 16 Dec Wed
 
+- Fix Google chrome so that you can load local resources. 
+- Fix CSS for homepage carousel small images
+- WRITE SCHOOL REPORT 
+- Find out why sometimes user is logged out, but it looks like they're logged in. 
+  - Potentially send a GET to server every 5 seconds to check that user is still logged in? 
+-Switch Upload page so you can't leave fields blank, and so that you can't upload without being logged in.
+- Fix so that you can pull images from local resources
+  - Add an 'if' to ignore recipes with no image.
+- Find out why some home carousel images are small
+- Fix lightbox height on live site
+- Add loading screen to recipe page
+- Make it so that Link fits content...
 - Add feature to carousel to select recipe when clicked
 - Add Cook to the All Recipes list
 - Add second password field in create account form 

@@ -8,6 +8,7 @@ import "react-multi-carousel/lib/styles.css";
 import global_url_variable from './global_url_variable';
 import axios from 'axios';
 import './Home.css';
+import { Link } from 'react-router-dom';
 
 import image1 from './images/imageFile_dateVal_1607883271123_boat_on_lake copy.jpg';
 import image2 from './images/imageFile_dateVal_1607883271123_boat_on_lake.jpg';
@@ -16,8 +17,12 @@ import image4 from './images/imageFile_dateVal_1607883271125_block-game-thumbnai
 import image5 from './images/imageFile_dateVal_1607898827213_bootstrap_sample_site copy.png';
 import image6 from './images/imageFile_dateVal_1607898827213_bootstrap_sample_site.png';
 const arr = [ image1, image2, image3, image4, image5, image6];
-let carouselItems = arr.map( x => (
-  <div className="carousel-img-container"><img className="carousel-img" src={x} alt='alt' /></div>
+let carouselItems = arr.map( (x, i) => (
+  <div key={i} className="carousel-img-container">
+    <Link to="#">
+        <img className="carousel-img" src={x} alt='alt' />
+    </Link>
+  </div>
 ));
 
 const url = global_url_variable;
@@ -30,38 +35,43 @@ class Home extends React.Component {
   }
   componentDidMount(){
     //RETRIEVE IMAGES
-    axios.get(url)
-    .then(res => {
-      console.log('res recipes',res);
-      res.data.map(x => {
-        axios.post(urlImagesHomeCarousel, {
-          id: x.id, 
-          item: x.item,
+    if (url !== "http://localhost:4000/recipeapp/recipeapp-server/"){
+      console.log('axios running')
+      axios.get(url)
+      .then(res => {
+        console.log('res recipes',res);
+        res.data.map(x => {
+          axios.post(urlImagesHomeCarousel, {
+            id: x.id, 
+            item: x.item,
+          })
+          .then(res => {
+            console.log('carousel res',res)
+            console.log('carousel item id', res.data.id)
+            this.setState({imageNames: [...this.state.imageNames, res.data]}, () => {console.log('this.state.imageNames',this.state.imageNames)})
+          })
+          return null;
         })
-        .then(res => {
-          console.log('carousel res',res)
-          console.log('carousel item id', res.data.id)
-          this.setState({imageNames: [...this.state.imageNames, res.data]}, () => {console.log('this.state.imageNames',this.state.imageNames)})
-        })
-        return null;
       })
-    })
-    //set image links on carousel 
+    } else { this.setState({imageNames: ['placeholder']}) }
   }
   render(){
     const {loggedInUser, onLogout} = this.props;
     let images = this.state.imageNames.map((x, i) => (
       <div key={i} className="carousel-img-container">
-        <img 
-          className="carousel-img" 
-          src={`https://brittanyjewellneal.com/uploaded_files/${x}`} 
-          alt={x} 
-        />
+        <Link to={`/recipeapp/recipe/${x[0]}`}>
+          <img 
+            className="carousel-img" 
+            src={`https://brittanyjewellneal.com/uploaded_files/${x[1]}`} 
+            alt={x[1]} 
+          />
+        </Link>
       </div>
     ))
     if (url === "http://localhost:4000/recipeapp/recipeapp-server/") {
       images = carouselItems;
     }
+    console.log(images)
     const carousel = () => {
       if (this.state.imageNames.length > 0) {
         return(
@@ -72,7 +82,7 @@ class Home extends React.Component {
             // customDot={<CustomDot/>}
             // renderDotsOutside={renderButtonGroupOutside} 
             renderDotsOutside={true}
-            autoPlay={true}
+            // autoPlay={true}
             ssr={true} // means to render carousel on server-side.
             autoPlaySpeed={5000}
             keyBoardControl={true}

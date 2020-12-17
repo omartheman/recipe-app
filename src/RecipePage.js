@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import axios from 'axios';
 import global_url_variable from './global_url_variable';
-import { Container, ListGroup, Row, Col } from 'react-bootstrap';
+import { Container, ListGroup, Row, Col, Spinner } from 'react-bootstrap';
 import Carousel from "react-multi-carousel";
 import { SRLWrapper } from 'simple-react-lightbox';
 import './RecipePage.css';
@@ -145,6 +145,9 @@ const Recipe = (props) => {
       />
       <Container>
         <h1>Recipe: {recipeName}</h1>
+        {images ? null :
+        <Spinner variant="success" animation="border" role="status" id="spinner-centered"><span className="sr-only">Loading...</span></Spinner>
+        }
         {carousel()}
         <h2>Recipe Details</h2>
         <ListGroup>

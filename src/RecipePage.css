@@ -1,9 +1,11 @@
 /* REACT SIMPLE LIGHTBOX MINIMUM WIDTHS */
 .css-1676xar {
   min-width: 65vw;
+  height: auto !important;
 }
 .css-138pcbv {
   min-width: 75vw;
+  height: auto !important;
 }
 .recipe-image {
   width: 400px;
@@ -20,8 +22,12 @@
   display: flex;
   justify-content: center;
 }
+.carousel-img-container a {
+  width: 90%;
+}
 .carousel-img-container img {
   cursor: pointer;
+  width: 100%;
 }
 .no-carousel-img-container-2 img {
   width: 100%;
