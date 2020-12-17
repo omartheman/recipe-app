@@ -7,6 +7,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import global_url_variable from './global_url_variable';
 import axios from 'axios';
+
 import image1 from './images/imageFile_dateVal_1607883271123_boat_on_lake copy.jpg';
 import image2 from './images/imageFile_dateVal_1607883271123_boat_on_lake.jpg';
 import image3 from './images/imageFile_dateVal_1607883271125_block-game-thumbnail copy.png';
@@ -35,20 +36,21 @@ class Home extends React.Component {
       res.data.map(x => {
         axios.post(urlImagesHomeCarousel, {
           id: x.id, 
-          item: x.item
+          item: x.item,
         })
         .then(res => {
           console.log('carousel res',res)
           this.setState({imageNames: [...this.state.imageNames, res.data]}, () => {console.log('this.state.imageNames',this.state.imageNames)})
         })
+        return null;
       })
     })
     //set image links on carousel 
   }
   render(){
     const {loggedInUser, onLogout} = this.props;
-    const images = this.state.imageNames.map(x => (
-      <div className="carousel-img-container">
+    const images = this.state.imageNames.map((x, i) => (
+      <div key={i} className="carousel-img-container">
         <img 
           className="carousel-img" 
           src={`https://brittanyjewellneal.com/uploaded_files/${x}`} 
@@ -79,7 +81,7 @@ class Home extends React.Component {
           </Carousel>
         );
       } else {
-        return null;
+        return <Spinner variant="success" animation="border" role="status" className="spinner-home-carousel" id="spinner-centered"><span className="sr-only">Loading...</span></Spinner>;
       }
     }
     return(
@@ -88,8 +90,7 @@ class Home extends React.Component {
           loggedInUser={loggedInUser}
           onLogout={onLogout}
         />
-        <Container>
-
+        <Container id="home">
           {carousel()} 
           <Row>
             <Col lg>
