@@ -2,10 +2,12 @@
 .css-1676xar {
   min-width: 65vw;
   height: auto !important;
+  max-height: none !important;
 }
 .css-138pcbv {
-  min-width: 75vw;
+  min-width: 60vw;
   height: auto !important;
+  max-height: none !important;
 }
 .recipe-image {
   width: 400px;
@@ -21,6 +23,9 @@
 .carousel-img-container {
   display: flex;
   justify-content: center;
+}
+.carousel-img-container-recipe-page {
+  width: 90%;
 }
 .carousel-img-container a {
   width: 90%;
