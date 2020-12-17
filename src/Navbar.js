@@ -1,6 +1,6 @@
 import {React} from 'react';
 import './Navbar.css';
-import {Navbar, Nav, NavDropdown, Form} from 'react-bootstrap';
+import {Navbar, Nav, NavDropdown, Form, Button} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import global_url_variable from './global_url_variable';
@@ -42,24 +42,45 @@ const NavbarContainer = (props) => {
       </NavDropdown> 
     </>
     : 
-    <div className="ml-auto">
+    <div className="ml-auto navbar-log-in-dropdown">
       <NavDropdown 
         title={"Log In"} 
         id="basic-nav-dropdown" 
         className="ml-auto"
-      >
-        <NavDropdown.Item href="#action/3.2">
-          <Form>
-            <Form.Label>
-              Username
-              <Form.Control>
-                
-              </Form.Control>
-            </Form.Label>
+        >
+        <NavDropdown.Item>
+          <Form action="auth" onSubmit={loginSubmit}>
+            <Form.Label>Username</Form.Label>
+            <Form.Control 
+              type="text" 
+              placeholder="Enter username" 
+              required
+              id="username"
+              onChange={(e) => {
+                onLoginFormChange({[e.target.id]: e.target.value}, 'username');
+              }}
+            />
           </Form>
+          <Form.Group controlId="formBasicPassword" onKeyDown={(e) => {if (e.keyCode === 13) {loginSubmit(e)}}}>
+            <Form.Label>Password</Form.Label>
+            <Form.Control 
+              type="password" 
+              placeholder="Give me password!" 
+              required
+              onChange={(e) => {
+                onLoginFormChange({[e.target.type]: e.target.value}, 'password');
+              }} 
+            />
+            <Button 
+              variant="primary" 
+              type="submit"
+              onClick={loginSubmit}
+            >
+              Submit
+            </Button>
+          </Form.Group>
         </NavDropdown.Item>
       </NavDropdown>
-      <Nav.Link  className="d-inline" as={Link} to="/recipeapp/login">Log In</Nav.Link>
       <Nav.Link  className="d-inline" as={Link} to="/recipeapp/create-account">Create Account</Nav.Link>
     </div>
     }

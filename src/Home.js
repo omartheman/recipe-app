@@ -82,7 +82,7 @@ class Home extends React.Component {
             // customDot={<CustomDot/>}
             // renderDotsOutside={renderButtonGroupOutside} 
             renderDotsOutside={true}
-            autoPlay={true}
+            // autoPlay={true}
             ssr={true} // means to render carousel on server-side.
             autoPlaySpeed={5000}
             keyBoardControl={true}
@@ -100,10 +100,6 @@ class Home extends React.Component {
     }
     return(
       <div>
-        <Navbar 
-          loggedInUser={loggedInUser}
-          onLogout={onLogout}
-        />
         <Container id="home">
           {carousel()} 
           <Row>

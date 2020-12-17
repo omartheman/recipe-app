@@ -5,3 +5,18 @@ nav {
 .dropdown:hover .dropdown-menu {
   display: block;
 }
+.navbar-log-in-dropdown {
+  display: flex;
+
+}
+.dropdown-item.active, .dropdown-item:active {
+  color: black !important;
+  text-decoration: none;
+  background-color: transparent !important;
+}
+.dropdown-menu {
+  background: #f8f9fa !important;
+  left: auto !important;
+  right: 0 !important;
+  min-width: 17rem !important;
+}
