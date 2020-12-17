@@ -3,8 +3,9 @@ import Navbar from './Navbar';
 import axios from 'axios';
 import global_url_variable from './global_url_variable';
 import { Container, ListGroup, Row, Col } from 'react-bootstrap';
-import './RecipePage.css';
 import Carousel from "react-multi-carousel";
+import { SRLWrapper } from 'simple-react-lightbox';
+import './RecipePage.css';
 import "react-multi-carousel/lib/styles.css";
 import image1 from './images/imageFile_dateVal_1607883271123_boat_on_lake copy.jpg';
 import image2 from './images/imageFile_dateVal_1607883271123_boat_on_lake.jpg';
@@ -92,13 +93,15 @@ const Recipe = (props) => {
           setImages(carouselItems)
         } else {
           setImages(res.data.map(x => (
-            <div className="carousel-img-container">
-              <img 
-                className="carousel-img" 
-                src={`https://brittanyjewellneal.com/uploaded_files/${x.imageName}`} 
-                alt={x.imageName} 
-              />
-            </div>
+            <SRLWrapper>
+              <div className="carousel-img-container">
+                <img 
+                  className="carousel-img" 
+                  src={`https://brittanyjewellneal.com/uploaded_files/${x.imageName}`} 
+                  alt={x.imageName} 
+                />
+              </div>
+            </SRLWrapper>
           )));
         }
       })

@@ -1,12 +1,12 @@
 16 Dec Wed
 
-- Add dropdown login 
-- Add loading animation on homepage for carousel
-- Add directorys in server for pages that cant refresh in recipe app.
-- Check if there is a limit to how many recipes appear in carousel. 
 - Add feature to carousel to select recipe when clicked
 - Add Cook to the All Recipes list
+- Add second password field in create account form 
 - Add Lightbox to recipes on My Recipes
+- Add function to delete recipe
+- add function to modify recipe 
+- Add dropdown login 
 
 =====================================
 14 Dec Mon
