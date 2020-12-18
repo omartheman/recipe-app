@@ -17,6 +17,7 @@ class CreateAccount extends React.Component{
     this.state = {
       username: '',
       password: '',
+      passwordConfirm: '',
       firstName: '',
       lastName: '',
       email:''
@@ -26,7 +27,12 @@ class CreateAccount extends React.Component{
   }
   handleCreateAccSubmit(e){
     //create a post request that will upload the new data to the database, to create the new account.
-    const {username, password, firstName, lastName, email} = this.state;
+    const {username, password, passwordConfirm, firstName, lastName, email} = this.state;
+    
+    if (password !== passwordConfirm) {
+      alert("Please check passwords, they don't match!");
+      return;
+    }
     e.preventDefault();
     axios.post(urlCreateAcc,     
       {
@@ -61,15 +67,14 @@ class CreateAccount extends React.Component{
       )
       }
     )
-
-    //==============================
-
   }
 
   handleCreateAccFormChange(eTargetAttrVal, item){
     if (item === 'username'){
       this.setState(eTargetAttrVal);
     } else if (item === 'password') {
+      //Check that password and verifypassword are same 
+      // Set state for password and verify to check they're same 
       this.setState(eTargetAttrVal);
     }
   }
@@ -136,8 +141,19 @@ class CreateAccount extends React.Component{
               required
               onChange={(e) => {
                 this.handleCreateAccFormChange({[e.target.type]: e.target.value}, 'password');
+                this.setState({password: e.target.value});
               }} 
             />
+            <Form.Label>Confirm Password</Form.Label>
+            <Form.Control 
+              type="password-confirm" 
+              placeholder="Shh, it's a secret!" 
+              required
+              onChange={(e) => {
+                this.setState({passwordConfirm: e.target.value});
+              }} 
+            />
+
             <Button 
               variant="primary" 
               type="submit"

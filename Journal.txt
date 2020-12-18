@@ -1,4 +1,10 @@
+18 Dec Fri
+
+Add Create account confirm
+
+
 17 Dec Thu
+
 
 - Fix lightbox so that it includes all images in the recipe in the slideshow.
 - Fix login so you can press enter on username and not refresh page
