@@ -17,6 +17,7 @@
   margin-bottom: 20px; 
 }
 .carousel-img {
+  cursor: pointer;
   width: 90%;
   border-radius: 3px; 
 }
@@ -25,14 +26,16 @@
   justify-content: center;
 }
 .carousel-img-container-recipe-page {
-  width: 90%;
+  display: flex;
+  justify-content: center;
 }
 .carousel-img-container a {
-  width: 90%;
+  width: 95%;
+  display: flex;
+  justify-content: center;
 }
 .carousel-img-container img {
-  cursor: pointer;
-  width: 100%;
+ 
 }
 .no-carousel-img-container-2 img {
   width: 100%;
