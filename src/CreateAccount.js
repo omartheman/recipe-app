@@ -98,53 +98,57 @@ class CreateAccount extends React.Component{
         <Container className="create-account-form-container">
           <h1>Create Account</h1>
           <Form action="auth" onSubmit={this.handleCreateAccSubmit}>
-            <Form.Label>First Name</Form.Label>
-            <Form.Control 
-              type="text" 
-              placeholder="What's your first name?" 
-              required
-              id="firstName"
-              onChange={(e) => {
-                this.handleCreateAccFormChange({[e.target.id]: e.target.value}, 'username');
-              }}
-            />
-            <Form.Label>Last Name</Form.Label>
-            <Form.Control 
-              type="text" 
-              placeholder="Tell us your last name!" 
-              required
-              id="lastName"
-              onChange={(e) => {
-                this.handleCreateAccFormChange({[e.target.id]: e.target.value}, 'username');
-              }}
-            />
-
-            <Form.Label>Email</Form.Label>
-            <Form.Control 
-              type="email" 
-              placeholder="How about your email?" 
-              required
-              id="email"
-              onChange={(e) => {
-                this.handleCreateAccFormChange({[e.target.id]: e.target.value}, 'username');
-                this.setState({email: e.target.value});
-              }}
-            />
-            <Form.Label>Confirm Email</Form.Label>
-            <Form.Control 
-              type="email" 
-              placeholder="How about your email?" 
-              required
-              id="email"
-              onChange={(e) => {
-                this.setState({emailConfirm: e.target.value});
-              }}
-            />
-
+            <div className="create-account-form-section">
+              <Form.Label>First Name</Form.Label>
+              <Form.Control 
+                type="text" 
+                placeholder="What's your first name? 🦩" 
+                required
+                id="firstName"
+                onChange={(e) => {
+                  this.handleCreateAccFormChange({[e.target.id]: e.target.value}, 'username');
+                }}
+              />
+              <Form.Label>Last Name</Form.Label>
+              <Form.Control 
+                type="text" 
+                placeholder="Tell us your last name!" 
+                required
+                id="lastName"
+                onChange={(e) => {
+                  this.handleCreateAccFormChange({[e.target.id]: e.target.value}, 'username');
+                }}
+              />
+            </div>
+            <div className="create-account-form-section">
+              <Form.Label>Email</Form.Label>
+              <Form.Control 
+                type="email" 
+                placeholder="How about your email? 🦜" 
+                required
+                id="email"
+                onChange={(e) => {
+                  this.handleCreateAccFormChange({[e.target.id]: e.target.value}, 'username');
+                  this.setState({email: e.target.value});
+                }}
+              />
+              <Form.Label>Confirm Email</Form.Label>
+              <Form.Control 
+                type="email" 
+                placeholder="Please confirm email." 
+                required
+                id="email"
+                onChange={(e) => {
+                  this.setState({emailConfirm: e.target.value});
+                }}
+              />
+            </div>
+            <div className="create-account-form-section">
+            </div>
             <Form.Label>Username</Form.Label>
             <Form.Control 
               type="text" 
-              placeholder="Your awesome username here." 
+              placeholder="Your awesome username here. 😺" 
               required
               id="username"
               onChange={(e) => {
@@ -152,6 +156,7 @@ class CreateAccount extends React.Component{
               }}
             />
           </Form>
+          
           <Form.Group controlId="formBasicPassword" onKeyDown={(e) => {if (e.keyCode === 13) {}}}>
             <Form.Label>Password</Form.Label>
             <Form.Control 
@@ -166,7 +171,7 @@ class CreateAccount extends React.Component{
             <Form.Label>Confirm Password</Form.Label>
             <Form.Control 
               type="password-confirm" 
-              placeholder="Shh, it's a secret!" 
+              placeholder="Confirm password 😁" 
               required
               onChange={(e) => {
                 this.setState({passwordConfirm: e.target.value});
@@ -177,6 +182,7 @@ class CreateAccount extends React.Component{
               variant="primary" 
               type="submit"
               onClick={this.handleCreateAccSubmit}
+              className="submit-button-general"
             >
               Submit
             </Button>

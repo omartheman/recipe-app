@@ -1,3 +1,9 @@
 .create-account-form-container input {
   margin-bottom: 20px;
 }
+.create-account-form-section {
+  margin-bottom: 70px;
+}
+.submit-button-general {
+  margin-top: 30px; 
+}

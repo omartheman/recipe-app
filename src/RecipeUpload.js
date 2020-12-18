@@ -151,6 +151,7 @@ class RecipeUpload extends Component {
               <Form.Label><h3>Step {index + 1}:</h3></Form.Label>
               <Form.Control  
                 as="textarea"
+                placeholder="Let's hear some instructions! 🌯"
                 rows={3}
                 type="text" 
                 value={this.state.instructions[index]}   
@@ -172,6 +173,7 @@ class RecipeUpload extends Component {
               <Form.Label>Ingredient #{index + 1}</Form.Label>
               <Form.Control
                 type="text" 
+                placeholder="Inquiring minds want to know. 🍅"
                 value={this.state.ingredients[index]}   
                 ingredientnumber={index}
                 onChange={(e) => {
@@ -231,6 +233,7 @@ class RecipeUpload extends Component {
               <h2 id="recipe-info-heading">Recipe Information</h2>
               <Form.Label>Name of Recipe</Form.Label>
               <Form.Control 
+                placeholder="What do you call this masterpeice? 🥘"
                 type="text" 
                 id="item"
                 onChange={(e) => {
@@ -239,6 +242,7 @@ class RecipeUpload extends Component {
               />
               <Form.Label>Cook</Form.Label>
               <Form.Control  
+                placeholder="Who created this recipe?"
                 type="text" 
                 id="cook"
                 onChange={(e) => {
@@ -251,7 +255,7 @@ class RecipeUpload extends Component {
                 rows={3}
                 type="text" 
                 id="description"
-                placeholder="Tell us a little about your awesome recipe."
+                placeholder="Tell us a little about your awesome recipe. 🥗"
                 onChange={(e) => {
                   this.setState({[e.target.id]: e.target.value})
                 }} 
