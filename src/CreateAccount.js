@@ -20,18 +20,26 @@ class CreateAccount extends React.Component{
       passwordConfirm: '',
       firstName: '',
       lastName: '',
-      email:''
+      email:'',
+      emailConfirm: ''
     }
     this.handleCreateAccSubmit = this.handleCreateAccSubmit.bind(this);
     this.handleCreateAccFormChange = this.handleCreateAccFormChange.bind(this);
   }
   handleCreateAccSubmit(e){
     //create a post request that will upload the new data to the database, to create the new account.
-    const {username, password, passwordConfirm, firstName, lastName, email} = this.state;
+    const {username, password, passwordConfirm, firstName, lastName, email, emailConfirm} = this.state;
     
     if (password !== passwordConfirm) {
-      alert("Please check passwords, they don't match!");
+      alert("Please check passwords, they don't match! 🤯");
       return;
+    } 
+    if (email !== emailConfirm) {
+      alert("Please check your email inputs, they don't match! 😵");
+      return;
+    }
+    if (username === '' || password == '' || firstName === '' || lastName === '' || email === '') {
+      alert("Please fill in all fields before sumbitting. 🤓")
     }
     e.preventDefault();
     axios.post(urlCreateAcc,     
@@ -119,6 +127,17 @@ class CreateAccount extends React.Component{
               id="email"
               onChange={(e) => {
                 this.handleCreateAccFormChange({[e.target.id]: e.target.value}, 'username');
+                this.setState({email: e.target.value});
+              }}
+            />
+            <Form.Label>Confirm Email</Form.Label>
+            <Form.Control 
+              type="email" 
+              placeholder="How about your email?" 
+              required
+              id="email"
+              onChange={(e) => {
+                this.setState({emailConfirm: e.target.value});
               }}
             />
 
