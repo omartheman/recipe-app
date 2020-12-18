@@ -1,4 +1,4 @@
-import Navbar from './Navbar';
+import Navbar from './NavbarContainer';
 import { useState } from 'react'; 
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import 'react-awesome-button/dist/styles.css';

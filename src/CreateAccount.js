@@ -1,5 +1,5 @@
 import React from 'react';
-import Navbar from './Navbar';
+import Navbar from './NavbarContainer';
 import {Container, Form, Button} from 'react-bootstrap';
 import axios from 'axios';
 import global_url_variable from './global_url_variable';

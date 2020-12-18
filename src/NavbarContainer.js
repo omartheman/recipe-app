@@ -50,7 +50,7 @@ const NavbarContainer = (props) => {
         className="ml-auto"
         >
         <NavDropdown.Item>
-          <Form action="auth" onSubmit={loginSubmit}>
+          <Form action="auth">
             <Form.Label>Username</Form.Label>
             <Form.Control 
               type="text" 

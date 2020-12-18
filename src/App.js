@@ -11,7 +11,7 @@ import global_url_variable from './global_url_variable';
 import RecipePage from './RecipePage';
 import RecipeUploadSuccess from './RecipeUploadSuccess';
 import AllRecipes from './AllRecipes';
-import NavbarContainer from './Navbar';
+import NavbarContainer from './NavbarContainer';
 
 const url = global_url_variable;
 const urlAuth = `${url}auth`;
@@ -76,6 +76,16 @@ class App extends React.Component{
     console.log(this.state);
     console.log('logformchange',this.handleLoginFormChange)
     const {username, password, loggedInUser} = this.state;
+    const navbar = 
+      <NavbarContainer
+        loginSubmit={this.handleLoginSubmit}
+        onLoginFormChange={this.handleLoginFormChange}
+        loggedInUser={loggedInUser}
+        onLogout={this.handleLogout}
+        username={username}
+        password={password}
+      />
+    ;
     return(
       <Switch>
         <Route path="/recipeapp/recipe-upload-success" render={() => (
@@ -129,14 +139,7 @@ class App extends React.Component{
         )} />
         <Route path="/recipeapp" render={() => (
           <>
-            <NavbarContainer
-              loginSubmit={this.handleLoginSubmit}
-              onLoginFormChange={this.handleLoginFormChange}
-              loggedInUser={loggedInUser}
-              onLogout={this.handleLogout}
-              username={username}
-              password={password}
-            />
+            {navbar}
             <Home
               loggedInUser={loggedInUser}
               onLogout={this.handleLogout}
