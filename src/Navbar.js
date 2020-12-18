@@ -12,6 +12,7 @@ axios.defaults.withCredentials = true;
 
 const NavbarContainer = (props) => {
   const {loginSubmit, loggedInUser, onLoginFormChange, onLogout} = props;
+  
   const handleClick = () => {
     axios.get(urlLogout) 
     .then(res => { 

@@ -1,6 +1,5 @@
 import React from 'react';
 import HomeMainCont from './HomeMainCont';
-import Navbar from './Navbar';
 import {Container, Row, Col, Spinner} from 'react-bootstrap';
 import FeaturedRecipe from './FeaturedRecipe';
 import Carousel from "react-multi-carousel";
@@ -56,7 +55,6 @@ class Home extends React.Component {
     } else { this.setState({imageNames: ['placeholder']}) }
   }
   render(){
-    const {loggedInUser, onLogout} = this.props;
     let images = this.state.imageNames.map((x, i) => (
       <div key={i} className="carousel-img-container">
         <Link to={`/recipeapp/recipe/${x[0]}`}>

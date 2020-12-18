@@ -20,6 +20,7 @@ class Login extends React.Component {
   }
   render(){
     const {loginSubmit, loggedInUser, onLoginFormChange, onLogout} = this.props;
+    console.log('on login page',loginSubmit, loggedInUser, onLoginFormChange, onLogout)
     return(
       <>
         <Navbar 
