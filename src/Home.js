@@ -18,7 +18,7 @@ import image6 from './images/imageFile_dateVal_1607898827213_bootstrap_sample_si
 const arr = [ image1, image2, image3, image4, image5, image6];
 let carouselItems = arr.map( (x, i) => (
   <div key={i} className="carousel-img-container">
-    <Link to="#">
+    <Link to="#" className="carousel-link-home">
         <img className="carousel-img" src={x} alt='alt' />
     </Link>
   </div>
