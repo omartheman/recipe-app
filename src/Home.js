@@ -63,20 +63,24 @@ class Home extends React.Component {
   }
   render(){
     let images = this.state.imageNames.map((x, i) => {
-      return(
-        <>
-          <div key={i} className="carousel-img-container">
-            <Link className="carousel-link-home" to={`/recipeapp/recipe/${x[0]}`}>
-              <h3 className="carousel-title">{x[2]}</h3>
-              <img 
-                className="carousel-img" 
-                src={`https://brittanyjewellneal.com/uploaded_files/${x[1]}`} 
-                alt={x[1]} 
-              />
-            </Link>
-          </div>
-        </>
-      )
+      if (this.state.featuredRecipe.length > 0){
+        if (x[0] !== this.state.featuredRecipe[0]) {
+          return(
+            <>
+              <div key={i} className="carousel-img-container">
+                <Link className="carousel-link-home" to={`/recipeapp/recipe/${x[0]}`}>
+                  <h3 className="carousel-title">{x[2]}</h3>
+                  <img 
+                    className="carousel-img" 
+                    src={`https://brittanyjewellneal.com/uploaded_files/${x[1]}`} 
+                    alt={x[1]} 
+                  />
+                </Link>
+              </div>
+            </>
+          )
+        }
+      }
     })
     if (url === "http://localhost:4000/recipeapp/recipeapp-server/") {
       images = carouselItems;

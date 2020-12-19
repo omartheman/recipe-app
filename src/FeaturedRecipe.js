@@ -42,7 +42,7 @@ class FeaturedRecipe extends React.Component{
     }
     return(
       <>
-        {featuredRecipeEl}
+        {this.state.featuredRecipe.length > 0 ? featuredRecipeEl : null}
       </>
     );
   }  

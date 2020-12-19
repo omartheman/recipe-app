@@ -99,7 +99,7 @@ app.get(`${serverRoute}get-featured-recipe`, (req, res) => {
     connection.query(sql, (err, result) => {
       if (err) throw err;
       const imagePath = result[0].imageName;
-      res.send([id, imagePath, item, description]);
+      res.send([id, imagePath, item, description, pastDayNum, todaysDayNum]);
       console.log('Result GET images: ', result[0].imageName);
     })
   });
