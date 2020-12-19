@@ -74,9 +74,6 @@ const NavbarContainer = (props) => {
         <div 
           ref={node}
           className="navbar-login-button" 
-          // onClick={() => {
-          //   setLoginDropdown(prev => !prev);
-          // }}
         >
           <a href="#" className="navbar-login-button-link">
             Log In
