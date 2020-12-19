@@ -69,7 +69,7 @@ const storage = multer.diskStorage({
 })
 const imageUpload = multer({storage: storage})
 
-let pastDayNum = 186146;
+let pastDayNum = 0;
 let randomRecipe = 0;
 app.get(`${serverRoute}get-featured-recipe`, (req, res) => {
   console.log(`Got a GET request to /get-featured-recipe;`);
@@ -78,18 +78,31 @@ app.get(`${serverRoute}get-featured-recipe`, (req, res) => {
   console.log('pastDayNum: ', pastDayNum)
   console.log('todaysDayNum: ', todaysDayNum)
   if (pastDayNum + 7 < todaysDayNum) {
-    console.log('entered IF')
+    console.log('Entered IF to change featured recipe.')
     pastDayNum = todaysDayNum;
-
+    connection.query("SELECT * FROM recipes", function (err, result) {
+      if (err) throw err;
+      randomRecipe = Math.floor(Math.random()*result.length);
+    });
   }
+  //get images for new recipe
   connection.query("SELECT * FROM recipes", function (err, result) {
     if (err) throw err;
-    // console.log(result);
-    res.send(result);
+    console.log(result);
+    const id = result[randomRecipe].id;
+    const item = spacesToUnderscores(result[randomRecipe].item).toLowerCase();
+    const description = result[randomRecipe].description;
+    const sql = `
+    SELECT * FROM recipe${id}_${item}_images
+    ORDER BY RAND()
+    LIMIT 1;`;
+    connection.query(sql, (err, result) => {
+      if (err) throw err;
+      const imagePath = result[0].imageName;
+      res.send([id, imagePath, item, description]);
+      console.log('Result GET images: ', result[0].imageName);
+    })
   });
-  
-  //store the old date value.
-  //If 7 days have passed since old date value, set a new one. 
 })
 
 app.post(`${serverRoute}get-images-home-carousel`, (req, res) => {

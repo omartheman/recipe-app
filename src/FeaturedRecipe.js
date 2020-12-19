@@ -1,8 +1,24 @@
 import React from 'react';
 import './FeaturedRecipe.css';
 import {Container, Image} from 'react-bootstrap';
+import axios from 'axios';
+import global_url_variable from './global_url_variable';
+
+const url = global_url_variable;
+const urlImagesHomeCarousel = `${url}get-images-home-carousel`;
+const urlFeatured = `${url}get-featured-recipe`;
 
 class FeaturedRecipe extends React.Component{
+  state = {
+    featuredRecipe: []
+  }
+  componentDidMount(){
+    axios.get(urlFeatured)
+    .then(res => {
+      console.log('featured res', res);
+      this.setState({featuredRecipe: res.data})
+    })
+  }
   render(){
     return(
       <Container>

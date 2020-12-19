@@ -34,7 +34,8 @@ const urlFeatured = `${url}get-featured-recipe`;
 class Home extends React.Component {
   state = {
     images: null,
-    imageNames: []
+    imageNames: [],
+    featuredRecipe: []
   }
   componentDidMount(){
     //RETRIEVE IMAGES
@@ -57,6 +58,7 @@ class Home extends React.Component {
     axios.get(urlFeatured)
     .then(res => {
       console.log('featured res', res);
+      this.setState({featuredRecipe: res.data})
     })
   }
   render(){
@@ -112,7 +114,9 @@ class Home extends React.Component {
               <HomeMainCont />
             </Col>
             <Col lg>
-              <FeaturedRecipe />
+              <FeaturedRecipe 
+              
+              />
             </Col>
           </Row>
         </Container>
