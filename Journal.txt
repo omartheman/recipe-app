@@ -1,5 +1,5 @@
 18 Dec Fri
-
+redirect user from 'my recipes' page on logout
 Add custom titles to homepage carousel
 add featured recipe 
 fix login dropdown link action
