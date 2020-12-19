@@ -6,7 +6,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import global_url_variable from './global_url_variable';
 import axios from 'axios';
-import './Home.css';
+import './Home.scss';
 import { Link } from 'react-router-dom';
 
 import image1 from './images/imageFile_dateVal_1607883271123_boat_on_lake copy.jpg';

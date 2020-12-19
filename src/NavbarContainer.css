@@ -44,7 +44,10 @@ nav {
   background-color: rgb(248, 249, 250);
   padding: 20px;
   width: 300px;
-  z-index: 2;
+  z-index: 1001;
+}
+.navbar-site-name {
+  font-weight: 500;
 }
 .hidden {
   display: none !important;
