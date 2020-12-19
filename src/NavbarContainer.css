@@ -22,23 +22,22 @@ nav {
   display: flex;
   align-items: center;
 }
-.navbar-login-button:hover .navbar-login-form {
-  /* display: block; */
-}
 .navbar-login-button-link {
   /* height: 100%; */
   vertical-align: middle !important;
+  color: #007bff;
 }
 .navbar-create-acc-button {
   padding: 0 15px !important;
 }
 .navbar-login-button-link:hover {
-  text-decoration: none;
+  color: #0056b3;
+  cursor: pointer; 
 }
 .navbar-login-form {
   /* box-shadow: 0 0 3px 0.01px; */
   border: 1px solid rgba(0, 0, 0, 0.15);
-  border-radius: 3px;
+  border-radius: 4px;
   position: absolute;
   top: calc(var(--navHeight) - 10px);
   right: 20px;
@@ -48,7 +47,7 @@ nav {
   z-index: 2;
 }
 .hidden {
-  display: none;
+  display: none !important;
 }
 .dropdown-item.active, .dropdown-item:active {
   color: black !important;

@@ -22,7 +22,7 @@ const NavbarContainer = (props) => {
     };
   }, []);
   useEffect(() => {
-    console.log('logged user', loggedInUser)
+    console.log('logged user', '[', loggedInUser,'], type', typeof loggedInUsert)
     if (loggedInUser !== '' && loggedInUser !== null) {
       setLoginDropdown(false);
     }
@@ -60,19 +60,19 @@ const NavbarContainer = (props) => {
       <Nav.Link as={Link} to="/recipeapp/recipe-upload">Recipe Upload</Nav.Link>
       <Nav.Link as={Link} to="/recipeapp/all-recipes">All Recipes</Nav.Link>
       <>
-        <Nav.Link as={Link} to="/recipeapp/myrecipes">My Recipes</Nav.Link>
-        <NavDropdown 
-          title={`Hello, ${loggedInUser}!`} 
-          id="basic-nav-dropdown" 
-          className="ml-auto"
-        >
-          <NavDropdown.Item onClick={handleClickLogout} href="#">Log Out</NavDropdown.Item>
-          <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-          <NavDropdown.Divider />
-          <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-        </NavDropdown> 
+      <Nav.Link className={loggedInUser === null || loggedInUser === '' ? "hidden" : null} as={Link} to="/recipeapp/myrecipes">My Recipes</Nav.Link>
+      <NavDropdown 
+        title={`Hello, ${loggedInUser}!`} 
+        id="basic-nav-dropdown" 
+        className={`${loggedInUser === null || loggedInUser === '' ? "hidden" : null} ml-auto`} 
+      >
+        <NavDropdown.Item onClick={handleClickLogout} href="#">Log Out</NavDropdown.Item>
+        <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+        <NavDropdown.Divider />
+        <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+      </NavDropdown> 
       </>
-      <div className="ml-auto navbar-log-in-dropdown">
+      <div className={`${loggedInUser ? "hidden": null} ml-auto navbar-log-in-dropdown`}>
         <div 
           ref={node}
           className="navbar-login-button" 
