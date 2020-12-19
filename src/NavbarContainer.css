@@ -23,7 +23,7 @@ nav {
   align-items: center;
 }
 .navbar-login-button:hover .navbar-login-form {
-  display: block;
+  /* display: block; */
 }
 .navbar-login-button-link {
   /* height: 100%; */
@@ -45,6 +45,9 @@ nav {
   padding: 20px;
   width: 400px;
   z-index: 2;
+}
+.hidden {
+  display: none;
 }
 .dropdown-item.active, .dropdown-item:active {
   color: black !important;
