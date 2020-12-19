@@ -4,10 +4,14 @@ nav {
 }
 .dropdown:hover .dropdown-menu {
   /* Display navbar on hover, except it doesn't work because click activation interferes */
-  /* display: block; */
+  display: block;
 }
 .navbar-log-in-dropdown {
   display: flex;
+}
+.navbar-login-form {
+  position: absolute;
+  top: 0;
 }
 .dropdown-item.active, .dropdown-item:active {
   color: black !important;
