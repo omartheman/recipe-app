@@ -36,14 +36,15 @@ nav {
   text-decoration: none;
 }
 .navbar-login-form {
-  /* display: none; */
-  border-radius: 0 0 0 3px;
+  /* box-shadow: 0 0 3px 0.01px; */
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 3px;
   position: absolute;
-  top: var(--navHeight);
-  right: 0;
-  background-color: rgb(236, 236, 236);
+  top: calc(var(--navHeight) - 10px);
+  right: 20px;
+  background-color: rgb(248, 249, 250);
   padding: 20px;
-  width: 400px;
+  width: 300px;
   z-index: 2;
 }
 .hidden {

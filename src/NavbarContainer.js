@@ -21,6 +21,12 @@ const NavbarContainer = (props) => {
       document.removeEventListener("mousedown", handleClick);
     };
   }, []);
+  useEffect(() => {
+    console.log('logged user', loggedInUser)
+    if (loggedInUser !== '' && loggedInUser !== null) {
+      setLoginDropdown(false);
+    }
+  })
   const handleClickLogout = () => {
     axios.get(urlLogout) 
     .then(res => { 
@@ -32,11 +38,18 @@ const NavbarContainer = (props) => {
   const handleClick = e => {
     if (node.current.contains(e.target)) {
       // inside click
+        console.log(e.target.className)
+        setLoginDropdown(prev => !prev);
       return;
     }
     // outside click 
     // ... do whatever on click outside here ...
     console.log('heyder')
+    console.log(e.target.className.match('login-form-identifier'))
+    if (e.target.className.match('login-form-identifier')) {
+      console.log('yp')
+      return;
+    }
     setLoginDropdown(false);
   };
   return(
@@ -46,8 +59,6 @@ const NavbarContainer = (props) => {
       <Nav.Link as={Link} to="/recipeapp/">Home</Nav.Link>
       <Nav.Link as={Link} to="/recipeapp/recipe-upload">Recipe Upload</Nav.Link>
       <Nav.Link as={Link} to="/recipeapp/all-recipes">All Recipes</Nav.Link>
-      {
-        loggedInUser ? 
       <>
         <Nav.Link as={Link} to="/recipeapp/myrecipes">My Recipes</Nav.Link>
         <NavDropdown 
@@ -61,28 +72,27 @@ const NavbarContainer = (props) => {
           <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
         </NavDropdown> 
       </>
-      : 
       <div className="ml-auto navbar-log-in-dropdown">
         <div 
+          ref={node}
           className="navbar-login-button" 
-          onClick={() => {
-            setLoginDropdown(prev => !prev);
-          }}
+          // onClick={() => {
+          //   setLoginDropdown(prev => !prev);
+          // }}
         >
           <a href="#" className="navbar-login-button-link">
             Log In
           </a>
-          
         </div>
         <Nav.Link  className="d-inline navbar-create-acc-button" as={Link} to="/recipeapp/create-account">Create Account</Nav.Link>
       </div>
-      }
     </Navbar>
     
-    <div ref={node} className={loginDropdown ? "navbar-login-form" :"navbar-login-form hidden"}>
-      <Form action="auth" onSubmit={loginSubmit}>
-        <Form.Label>Username</Form.Label>
+    <div className={loginDropdown ? "navbar-login-form login-form-identifier" :"navbar-login-form hidden login-form-identifier"}>
+      <Form action="auth" onSubmit={loginSubmit} className="login-form-identifier">
+        <Form.Label className="login-form-identifier">Username</Form.Label>
         <Form.Control 
+          className="login-form-identifier"
           type="text" 
           placeholder="Enter username" 
           required
@@ -92,9 +102,14 @@ const NavbarContainer = (props) => {
           }}
         />
       </Form>
-      <Form.Group controlId="formBasicPassword" onKeyDown={(e) => {if (e.keyCode === 13) {loginSubmit(e)}}}>
-        <Form.Label>Password</Form.Label>
+      <Form.Group 
+        className="login-form-identifier"
+        controlId="formBasicPassword" 
+        onKeyDown={(e) => {if (e.keyCode === 13) {loginSubmit(e)}}}
+      >
+        <Form.Label className="login-form-identifier">Password</Form.Label>
         <Form.Control 
+          className="login-form-identifier"
           type="password" 
           placeholder="Give me password!" 
           required
@@ -103,9 +118,12 @@ const NavbarContainer = (props) => {
           }} 
         />
         <Button 
+          className="login-form-identifier"
           variant="primary" 
           type="submit"
-          onClick={loginSubmit}
+          onClick={(e) => {
+            loginSubmit(e);
+          }}
         >
           Submit
         </Button>
