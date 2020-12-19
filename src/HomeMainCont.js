@@ -1,7 +1,7 @@
 import React from 'react';
 import './HomeMainCont.css';
 
-const HomeMainCont = () => (
+const HomeMainCont = (props) => (
   <main className="container">
     <div className="welcome-text">
       <h2>Welcome to The Recipe Cabinet</h2>

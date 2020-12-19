@@ -22,7 +22,7 @@ class FeaturedRecipe extends React.Component{
   render(){
     const {featuredRecipe} = this.state;
     let featuredRecipeEl =
-      <Container as={Link} to={`recipeapp/recipe/${featuredRecipe[0]}`}>
+      <Container className="featured-recipe-container" as={Link} to={`/recipeapp/recipe/${featuredRecipe[0]}`}>
           <h3>Featured Recipe: {featuredRecipe[2]}</h3>
           <Image 
             className="featrd-rec-img" 

@@ -4,6 +4,7 @@ import axios from 'axios';
 import global_url_variable from './global_url_variable';
 import './MyRecipes.css';
 import { Link } from 'react-router-dom';
+import './AllRecipes.scss';
 
 const url = global_url_variable;
 const urlAllRecipes = `${url}all-recipes`;
@@ -25,14 +26,14 @@ const AllRecipes = (props) => {
     recipeListLeft = recipes.map((x, ind) => {
       if (ind % 2 === 0) {
         return(
-          <ListGroup.Item key={ind} variant="primary" as={Link} to={`/recipeapp/recipe/${x.id}`}>{x.item}</ListGroup.Item>
+          <ListGroup.Item className="recipe-list-group-item"  key={ind} variant="primary" as={Link} to={`/recipeapp/recipe/${x.id}`}>{x.item}</ListGroup.Item>
         )
       } else {return null}
     })
     recipeListRight = recipes.map((x, ind) => {
       if (ind % 2 !== 0) {
         return(
-          <ListGroup.Item key={ind} variant="primary" as={Link} to={`/recipeapp/recipe/${x.id}`}>{x.item}</ListGroup.Item>
+          <ListGroup.Item className="recipe-list-group-item" key={ind} variant="primary" as={Link} to={`/recipeapp/recipe/${x.id}`}>{x.item}</ListGroup.Item>
         )
       } else {return null}
     })

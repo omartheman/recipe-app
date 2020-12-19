@@ -1,0 +1,11 @@
+@mixin animateRecipeList {
+  @for $i from 1 through 1000 {
+    &:nth-child(#{$i}) {
+      opacity: 0;
+      animation: fade_in #{$i * .5}s forwards;
+    }
+  }
+}
+.recipe-list-group-item {
+  @include animateRecipeList();
+}

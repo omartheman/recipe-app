@@ -1,5 +1,6 @@
 19 dec Sat
 
+make sure you can't create a duplicate account
 add Create Account Success
 fix navbar hamburger
 
