@@ -12,6 +12,7 @@ import RecipePage from './RecipePage';
 import RecipeUploadSuccess from './RecipeUploadSuccess';
 import AllRecipes from './AllRecipes';
 import NavbarContainer from './NavbarContainer';
+import CreateAccountSuccess from './CreateAccountSuccess';
 
 const url = global_url_variable;
 const urlAuth = `${url}auth`;
@@ -85,6 +86,15 @@ class App extends React.Component{
     ;
     return(
       <Switch>
+        <Route path="/recipeapp/create-account-success" render={() => (
+          <>
+            {navbar}
+            <CreateAccountSuccess
+              loggedInUser={loggedInUser}
+              onLogout={this.handleLogout}
+            />
+          </>
+        )} />
         <Route path="/recipeapp/recipe-upload-success" render={() => (
           <>
             {navbar}

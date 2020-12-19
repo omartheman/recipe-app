@@ -1,7 +1,6 @@
 import './App.css';
 import React, { Component } from 'react';
 import axios from 'axios';
-import Navbar from './NavbarContainer';
 import global_url_variable from './global_url_variable';
 import { Container, Form, Button, ListGroup } from 'react-bootstrap';
 import './RecipeUpload.css';

@@ -47,7 +47,14 @@ nav {
   z-index: 1001;
 }
 .navbar-site-name {
+  display: flex !important;
+  align-items: center;
   font-weight: 500;
+  height: 100%;
+  img {
+    height: 50%;
+    padding-left: 7px;
+  }
 }
 .hidden {
   display: none !important;

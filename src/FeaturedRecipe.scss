@@ -1,6 +1,14 @@
 .featrd-rec-img {
   width: 100%;
 }
+.featured-recipe-container {
+  p, h3 {
+    color: black;
+  }
+}
 .featured-recipe-container:hover {
   text-decoration: none;
+  h3 {
+    color: rgb(75, 75, 75);
+  }
 }

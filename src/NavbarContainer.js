@@ -1,9 +1,10 @@
 import {React, useState, useEffect, useRef} from 'react';
-import './NavbarContainer.css';
+import './NavbarContainer.scss';
 import {Navbar, Nav, NavDropdown, Form, Button} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import global_url_variable from './global_url_variable';
+import avocadoTabIcon from './images/avo-android-chrome-192x192.png';
 
 const url = global_url_variable;
 const urlLogout = `${url}logout`;
@@ -50,7 +51,12 @@ const NavbarContainer = (props) => {
   return(
   <>
     <Navbar>
-      <Navbar.Brand as={Link} to="/recipeapp/" className="navbar-site-name">The Recipe Cabinet 🥑</Navbar.Brand>
+      <Navbar.Brand as={Link} to="/recipeapp/" className="navbar-site-name">
+        <span>
+          The Recipe Cabinet 
+        </span>
+        <img src={avocadoTabIcon} />
+      </Navbar.Brand>
       <Nav.Link as={Link} to="/recipeapp/">Home</Nav.Link>
       <Nav.Link as={Link} to="/recipeapp/recipe-upload">Recipe Upload</Nav.Link>
       <Nav.Link as={Link} to="/recipeapp/all-recipes">All Recipes</Nav.Link>
@@ -119,7 +125,6 @@ const NavbarContainer = (props) => {
         </Button>
       </Form.Group>
     </div>
-        
   </>
   );
 }

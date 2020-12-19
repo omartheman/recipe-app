@@ -3,6 +3,7 @@ import {Container, Form, Button} from 'react-bootstrap';
 import axios from 'axios';
 import global_url_variable from './global_url_variable';
 import './CreateAccount.css';
+import { Redirect } from 'react-router-dom';
 
 const url = global_url_variable;
 const urlAuth = `${url}auth`;
@@ -20,7 +21,8 @@ class CreateAccount extends React.Component{
       firstName: '',
       lastName: '',
       email:'',
-      emailConfirm: ''
+      emailConfirm: '',
+      redirect: false
     }
     this.handleCreateAccSubmit = this.handleCreateAccSubmit.bind(this);
     this.handleCreateAccFormChange = this.handleCreateAccFormChange.bind(this);
@@ -35,10 +37,14 @@ class CreateAccount extends React.Component{
     } 
     if (email !== emailConfirm) {
       alert("Please check your email inputs, they don't match! 😵");
+
       return;
     }
     if (username === '' || password == '' || firstName === '' || lastName === '' || email === '') {
       alert("Please fill in all fields before sumbitting. 🤓")
+      if (url !== 'http://localhost:4000/recipeapp/recipeapp-server/'){
+        return;
+      }
     }
     e.preventDefault();
     axios.post(urlCreateAcc,     
@@ -72,8 +78,8 @@ class CreateAccount extends React.Component{
           this.setState({loggedInUser: res.data})
         }).catch(error => {console.log(error)})
       )
-      }
-    )
+      .then(this.setState({redirect: true}))
+    })
   }
 
   handleCreateAccFormChange(eTargetAttrVal, item){
@@ -89,6 +95,7 @@ class CreateAccount extends React.Component{
     console.log('this.state', this.state)
     return(
       <>
+        {this.state.redirect ? <Redirect to="/recipeapp/create-account-success" /> : null}
         <Container className="create-account-form-container">
           <h1>Create Account</h1>
           <Form action="auth" onSubmit={this.handleCreateAccSubmit}>
