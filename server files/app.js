@@ -91,6 +91,7 @@ app.get(`${serverRoute}get-featured-recipe`, (req, res) => {
     console.log(result);
     const id = result[randomRecipe].id;
     const item = spacesToUnderscores(result[randomRecipe].item).toLowerCase();
+    const itemTitle = result[randomRecipe].item;
     const description = result[randomRecipe].description;
     const sql = `
     SELECT * FROM recipe${id}_${item}_images
@@ -99,7 +100,7 @@ app.get(`${serverRoute}get-featured-recipe`, (req, res) => {
     connection.query(sql, (err, result) => {
       if (err) throw err;
       const imagePath = result[0].imageName;
-      res.send([id, imagePath, item, description, pastDayNum, todaysDayNum]);
+      res.send([id, imagePath, itemTitle, description, pastDayNum, todaysDayNum]);
       console.log('Result GET images: ', result[0].imageName);
     })
   });
