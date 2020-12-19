@@ -68,13 +68,15 @@ const storage = multer.diskStorage({
   }
 })
 const imageUpload = multer({storage: storage})
-let pastDayNum = 0;
+
+let pastDayNum = 186146;
 let randomRecipe = 0;
 app.get(`${serverRoute}get-featured-recipe`, (req, res) => {
   console.log(`Got a GET request to /get-featured-recipe;`);
-  const todaysDayNum = Math.floor(Date.now()/1000/8640)%7;
+  const todaysDayNum = Math.floor(Date.now()/1000/8640);
+  console.log(Date.now())
   console.log('pastDayNum: ', pastDayNum)
-  console.log('todaysDayNum: ', pastDayNum)
+  console.log('todaysDayNum: ', todaysDayNum)
   if (pastDayNum + 7 < todaysDayNum) {
     console.log('entered IF')
     pastDayNum = todaysDayNum;
@@ -82,7 +84,7 @@ app.get(`${serverRoute}get-featured-recipe`, (req, res) => {
   }
   connection.query("SELECT * FROM recipes", function (err, result) {
     if (err) throw err;
-    console.log(result);
+    // console.log(result);
     res.send(result);
   });
   
