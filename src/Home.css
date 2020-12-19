@@ -13,7 +13,8 @@ h2:hover {
 }
 .carousel-title {
   background: rgba(253, 253, 253, 0.671);
-  border-radius: 30px;
+  /* border-radius: 30px; */
+  color: black;
   margin: 0 20px 10px;
   padding: 5px 10px;
   font-size: 17px;
@@ -23,6 +24,7 @@ h2:hover {
   z-index: 1;
   opacity: 0;
   transition: 0.4s;
+  width: 100%;
 }
 .carousel-link-home:hover .carousel-title {
   display: block;
