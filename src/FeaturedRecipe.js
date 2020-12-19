@@ -5,7 +5,6 @@ import axios from 'axios';
 import global_url_variable from './global_url_variable';
 
 const url = global_url_variable;
-const urlImagesHomeCarousel = `${url}get-images-home-carousel`;
 const urlFeatured = `${url}get-featured-recipe`;
 
 class FeaturedRecipe extends React.Component{
@@ -20,11 +19,31 @@ class FeaturedRecipe extends React.Component{
     })
   }
   render(){
-    return(
+    const {featuredRecipe} = this.state;
+    let featuredRecipeEl =
       <Container>
-        <h3>Featured Recipe</h3>
-          <Image className="featrd-rec-img" src="https://images.unsplash.com/photo-1582169505937-b9992bd01ed9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=698&q=80" rounded fluid/>
+        <h3>Featured Recipe: {featuredRecipe[2]}</h3>
+          <Image 
+            className="featrd-rec-img" 
+            src={`https://brittanyjewellneal.com/uploaded_files/${featuredRecipe[1]}`}  
+            rounded fluid
+          />
+          <p>{featuredRecipe[3]}</p>
       </Container>
+    ;
+    if (url === "http://localhost:4000/recipeapp/recipeapp-server/") {
+      featuredRecipeEl = 
+        <Container>
+          <h3>Featured Recipe: Fried Eggs</h3>
+          <Image className="featrd-rec-img" src="https://images.unsplash.com/photo-1582169505937-b9992bd01ed9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=698&q=80" rounded fluid/>
+          <p>Lorem ipsum recipe shit</p>
+        </Container>
+      ;
+    }
+    return(
+      <>
+        {featuredRecipeEl}
+      </>
     );
   }  
 }

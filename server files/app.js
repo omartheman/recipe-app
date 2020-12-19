@@ -1,8 +1,8 @@
 const mode =
 
-"developmentOmar";
-/*
 "productionBritt";
+/*
+"developmentOmar";
 */
 
 const express = require('express');
