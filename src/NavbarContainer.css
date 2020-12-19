@@ -1,6 +1,11 @@
+:root {
+  --navHeight: 60px;
+}
 nav {
   background-color: rgb(211, 211, 211);
   height: 60px;
+  height: var(--navHeight);
+  padding: 0 20px !important;
 }
 .dropdown:hover .dropdown-menu {
   /* Display navbar on hover, except it doesn't work because click activation interferes */
@@ -8,10 +13,38 @@ nav {
 }
 .navbar-log-in-dropdown {
   display: flex;
+  align-items: center;
+  height: 100%;
+}
+.navbar-login-button {
+  padding: 0 15px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.navbar-login-button:hover .navbar-login-form {
+  display: block;
+}
+.navbar-login-button-link {
+  /* height: 100%; */
+  vertical-align: middle !important;
+}
+.navbar-create-acc-button {
+  padding: 0 15px !important;
+}
+.navbar-login-button-link:hover {
+  text-decoration: none;
 }
 .navbar-login-form {
+  /* display: none; */
+  border-radius: 0 0 0 3px;
   position: absolute;
-  top: 0;
+  top: var(--navHeight);
+  right: 0;
+  background-color: rgb(236, 236, 236);
+  padding: 20px;
+  width: 400px;
+  z-index: 2;
 }
 .dropdown-item.active, .dropdown-item:active {
   color: black !important;
