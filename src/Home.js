@@ -30,6 +30,8 @@ let carouselItems = arr.map( (x, i) => (
 const url = global_url_variable;
 const urlImagesHomeCarousel = `${url}get-images-home-carousel`;
 
+//Add featured recipe route in app.js
+
 class Home extends React.Component {
   state = {
     images: null,
