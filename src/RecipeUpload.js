@@ -136,7 +136,6 @@ class RecipeUpload extends Component {
   }
   render() { 
     let {ingredients, instructions} = this.state;
-    const {loggedInUser, onLogout} = this.props;
     const {redirect} = this.state; 
     const instructionFields = instructions.map((inst, index) => {
       return(
@@ -222,10 +221,6 @@ class RecipeUpload extends Component {
     return ( 
       <> 
         {redirect ? <Redirect to="/recipeapp/recipe-upload-success" /> : null}
-        <Navbar 
-          loggedInUser={loggedInUser}
-          onLogout={onLogout}
-        />
         <Container>
           <h1>Recipe Upload</h1>
           <Form autoComplete="off" className="recipe-upload-form">

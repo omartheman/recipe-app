@@ -139,10 +139,6 @@ const Recipe = (props) => {
 
   return(
     <>
-      <Navbar 
-        loggedInUser={props.loggedInUser}
-        onLogout={props.onLogout}
-      />
       <Container>
         <h1>Recipe: {recipeName}</h1>
         {images ? null :

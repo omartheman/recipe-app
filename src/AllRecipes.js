@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Navbar from './NavbarContainer';
 import { Container, ListGroup, Row, Col, Spinner } from 'react-bootstrap';
 import axios from 'axios';
 import global_url_variable from './global_url_variable';
@@ -40,28 +39,24 @@ const AllRecipes = (props) => {
   }
   return(
     <>
-      <Navbar 
-        loggedInUser={props.loggedInUser}
-        onLogout={props.onLogout}
-      />
-        <Container> 
-          <h1>All Recipes</h1>
-          {recipes.length > 0 ? 
-          <Row>
-            <Col>
-              <ListGroup className="recipe-list-group">
-                {recipeListLeft}
-              </ListGroup>
-            </Col>
-            <Col>
-              <ListGroup className="recipe-list-group-right">
-                {recipeListRight}
-              </ListGroup>
-            </Col> 
-          </Row>:
-          <Spinner variant="success" animation="border" role="status" id="spinner-centered" className="spinner-home-carousel"><span className="sr-only">Loading...</span></Spinner>
-          }
-        </Container>
+      <Container> 
+        <h1>All Recipes</h1>
+        {recipes.length > 0 ? 
+        <Row>
+          <Col>
+            <ListGroup className="recipe-list-group">
+              {recipeListLeft}
+            </ListGroup>
+          </Col>
+          <Col>
+            <ListGroup className="recipe-list-group-right">
+              {recipeListRight}
+            </ListGroup>
+          </Col> 
+        </Row>:
+        <Spinner variant="success" animation="border" role="status" id="spinner-centered" className="spinner-home-carousel"><span className="sr-only">Loading...</span></Spinner>
+        }
+      </Container>
     </>
   );
 }

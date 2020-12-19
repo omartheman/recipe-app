@@ -1,7 +1,9 @@
 18 Dec Fri
 
-Add Create account confirm
-
+Add custom titles to homepage carousel
+add featured recipe 
+fix login dropdown link action
+fix login dropdown so it stays after click
 
 17 Dec Thu
 

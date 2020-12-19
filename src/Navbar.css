@@ -3,11 +3,11 @@ nav {
   height: 60px;
 }
 .dropdown:hover .dropdown-menu {
-  display: block;
+  /* Display navbar on hover, except it doesn't work because click activation interferes */
+  /* display: block; */
 }
 .navbar-log-in-dropdown {
   display: flex;
-
 }
 .dropdown-item.active, .dropdown-item:active {
   color: black !important;

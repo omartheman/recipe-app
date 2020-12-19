@@ -1,5 +1,4 @@
 import React from 'react';
-import Navbar from './NavbarContainer';
 import {Container, Form, Button} from 'react-bootstrap';
 import axios from 'axios';
 import global_url_variable from './global_url_variable';
@@ -88,13 +87,8 @@ class CreateAccount extends React.Component{
   }
   render(){
     console.log('this.state', this.state)
-    const {loggedInUser, onLogout} = this.props;
     return(
       <>
-        <Navbar
-          loggedInUser={loggedInUser}
-          onLogout={onLogout}
-        />
         <Container className="create-account-form-container">
           <h1>Create Account</h1>
           <Form action="auth" onSubmit={this.handleCreateAccSubmit}>

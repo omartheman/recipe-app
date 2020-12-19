@@ -89,53 +89,74 @@ class App extends React.Component{
     return(
       <Switch>
         <Route path="/recipeapp/recipe-upload-success" render={() => (
-          <RecipeUploadSuccess
-            loggedInUser={loggedInUser}
-            onLogout={this.handleLogout}
-          />
+          <>
+            {navbar}
+            <RecipeUploadSuccess
+              loggedInUser={loggedInUser}
+              onLogout={this.handleLogout}
+            />
+          </>
         )} />
         <Route path="/recipeapp/recipe/:recipeId" render={(props) => (
-          <RecipePage
-            {...props}
-            loggedInUser={loggedInUser}
-            onLogout={this.handleLogout}
-          />
+          <>
+            {navbar}
+            <RecipePage
+              {...props}
+              loggedInUser={loggedInUser}
+              onLogout={this.handleLogout}
+            />
+          </>
         )} />
         <Route path="/recipeapp/all-recipes" render={() => (
-          <AllRecipes
-            loggedInUser={loggedInUser}
-            onLogout={this.handleLogout}
-          />
+          <>
+            {navbar}
+            <AllRecipes
+              loggedInUser={loggedInUser}
+              onLogout={this.handleLogout}
+            />
+          </>
         )} />
         <Route path="/recipeapp/myrecipes" render={() => (
-          <MyRecipes
-            loggedInUser={loggedInUser}
-            onLogout={this.handleLogout}
-          />
+          <>
+            {navbar}
+            <MyRecipes
+              loggedInUser={loggedInUser}
+              onLogout={this.handleLogout}
+            />
+          </>
         )} />
         <Route path="/recipeapp/recipe-upload" render={() => (
-          <RecipeUpload
-            loggedInUser={loggedInUser}
-            onLogout={this.handleLogout}
-          />
+          <>
+            {navbar}
+            <RecipeUpload
+              loggedInUser={loggedInUser}
+              onLogout={this.handleLogout}
+            />
+          </>
         )} />
         <Route path="/recipeapp/login" render={() => (
-          <Login 
-            loggedInUser={loggedInUser}
-            onLogout={this.handleLogout}
-            onLoginFormChange={this.handleLoginFormChange}
-            loginSubmit={this.handleLoginSubmit}
-            username={username}
-            password={password}
-          />
+          <>
+            {navbar}
+            <Login 
+              loggedInUser={loggedInUser}
+              onLogout={this.handleLogout}
+              onLoginFormChange={this.handleLoginFormChange}
+              loginSubmit={this.handleLoginSubmit}
+              username={username}
+              password={password}
+            />
+          </>
         )} />
         <Route path="/recipeapp/create-account" render={() => (
-          <CreateAccount
-            loggedInUser={loggedInUser}
-            onLogout={this.handleLogout}
-            onLoginFormChange={this.handleLoginFormChange}
-            setNewLoggedInUser={this.handleNewLoggedInUser}
-          />
+          <>
+            {navbar}
+            <CreateAccount
+              loggedInUser={loggedInUser}
+              onLogout={this.handleLogout}
+              onLoginFormChange={this.handleLoginFormChange}
+              setNewLoggedInUser={this.handleNewLoggedInUser}
+            />
+          </>
         )} />
         <Route path="/recipeapp" render={() => (
           <>

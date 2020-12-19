@@ -25,7 +25,6 @@ function RecipeUploadSuccess () {
   return(
     <>
       {redirect}
-      <Navbar /> 
       <Container>
         <h1>Success!</h1>
         <h2>Congratulations, your awesome new recipe was uploaded!</h2>

@@ -40,28 +40,24 @@ const MyRecipes = (props) => {
   }
   return(
     <>
-      <Navbar 
-        loggedInUser={props.loggedInUser}
-        onLogout={props.onLogout}
-        />
-        <Container>
-          <h1>My Recipes</h1>
-          {recipes.length > 0 ? 
-          <Row>
-            <Col>
-              <ListGroup className="recipe-list-group">
-                {recipeListLeft}
-              </ListGroup>
-            </Col>
-            <Col>
-              <ListGroup className="recipe-list-group-right">
-                {recipeListRight}
-              </ListGroup>
-            </Col>
-          </Row>:
-          <Spinner variant="success" animation="border" role="status" id="spinner-centered" className="spinner-home-carousel"><span className="sr-only">Loading...</span></Spinner>
-          }
-        </Container>
+      <Container>
+        <h1>My Recipes</h1>
+        {recipes.length > 0 ? 
+        <Row>
+          <Col>
+            <ListGroup className="recipe-list-group">
+              {recipeListLeft}
+            </ListGroup>
+          </Col>
+          <Col>
+            <ListGroup className="recipe-list-group-right">
+              {recipeListRight}
+            </ListGroup>
+          </Col>
+        </Row>:
+        <Spinner variant="success" animation="border" role="status" id="spinner-centered" className="spinner-home-carousel"><span className="sr-only">Loading...</span></Spinner>
+        }
+      </Container>
     </>
   );
 }
