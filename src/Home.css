@@ -4,3 +4,30 @@
 .react-multi-carousel-dot-list {
   margin-bottom: 20px;
 }
+.carousel-title {
+  display: none;
+  background: rgba(253, 253, 253, 0.671);
+  border-radius: 30px;
+  margin: 0 20px 10px;
+  padding: 5px 10px;
+  font-size: 17px;
+  position: absolute;
+    bottom: 0;
+  text-align: center;
+  z-index: 1;
+}
+.carousel-link-home:hover .carousel-title {
+  display: block;
+  opacity: 0;
+  animation: fade_in 0.6s forwards;
+}
+.carousel-title-link:hover {
+  text-decoration: none;
+}
+@keyframes fade_in {
+  from {
+    opacity: 0;
+  } to {
+    opacity: 1;
+  }
+}

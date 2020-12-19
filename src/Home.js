@@ -17,11 +17,14 @@ import image5 from './images/imageFile_dateVal_1607898827213_bootstrap_sample_si
 import image6 from './images/imageFile_dateVal_1607898827213_bootstrap_sample_site.png';
 const arr = [ image1, image2, image3, image4, image5, image6];
 let carouselItems = arr.map( (x, i) => (
-  <div key={i} className="carousel-img-container">
-    <Link to="#" className="carousel-link-home">
-        <img className="carousel-img" src={x} alt='alt' />
-    </Link>
-  </div>
+  <>
+    <div key={i} className="carousel-img-container">
+      <Link to="#" className="carousel-link-home">
+          <h3 className="carousel-title">Heyder </h3>
+          <img className="carousel-img" src={x} alt='alt' />
+      </Link>
+    </div>
+  </>
 ));
 
 const url = global_url_variable;
@@ -47,7 +50,7 @@ class Home extends React.Component {
           .then(res => {
             console.log('carousel res',res)
             console.log('carousel item id', res.data.id)
-            this.setState({imageNames: [...this.state.imageNames, res.data]}, () => {console.log('this.state.imageNames',this.state.imageNames)})
+            this.setState({imageNames: [...this.state.imageNames, [...res.data, x.item]]}, () => {console.log('this.state.imageNames',this.state.imageNames)})
           })
           return null;
         })
@@ -56,15 +59,18 @@ class Home extends React.Component {
   }
   render(){
     let images = this.state.imageNames.map((x, i) => (
-      <div key={i} className="carousel-img-container">
-        <Link to={`/recipeapp/recipe/${x[0]}`}>
-          <img 
-            className="carousel-img" 
-            src={`https://brittanyjewellneal.com/uploaded_files/${x[1]}`} 
-            alt={x[1]} 
-          />
-        </Link>
-      </div>
+      <>
+        <div key={i} className="carousel-img-container">
+          <Link className="carousel-link-home" to={`/recipeapp/recipe/${x[0]}`}>
+            <h3 className="carousel-title">{x[2]}</h3>
+            <img 
+              className="carousel-img" 
+              src={`https://brittanyjewellneal.com/uploaded_files/${x[1]}`} 
+              alt={x[1]} 
+            />
+          </Link>
+        </div>
+      </>
     ))
     if (url === "http://localhost:4000/recipeapp/recipeapp-server/") {
       images = carouselItems;
