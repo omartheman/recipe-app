@@ -1,5 +1,19 @@
 19 dec Sat
 
+add Create Account Success
+
+Featured Reipe alogrithm: 
+  - Check if a week has gone by 
+    - Only perform action on a day interval divisible by 7
+  - Select all recipes 
+  - Pick a random recipe
+  - Save this recipe for a week
+  - repeat
+
+1000 milliseconds in 1 second
+86400 seconds per day 
+
+
 
 18 Dec Fri
 add featured recipe 

@@ -22,11 +22,10 @@ const NavbarContainer = (props) => {
     };
   }, []);
   useEffect(() => {
-    console.log('logged user', '[', loggedInUser,'], type', typeof loggedInUsert)
     if (loggedInUser !== '' && loggedInUser !== null) {
       setLoginDropdown(false);
     }
-  })
+  }, [loggedInUser])
   const handleClickLogout = () => {
     axios.get(urlLogout) 
     .then(res => { 
@@ -38,16 +37,12 @@ const NavbarContainer = (props) => {
   const handleClick = e => {
     if (node.current.contains(e.target)) {
       // inside click
-        console.log(e.target.className)
         setLoginDropdown(prev => !prev);
       return;
     }
     // outside click 
     // ... do whatever on click outside here ...
-    console.log('heyder')
-    console.log(e.target.className.match('login-form-identifier'))
     if (e.target.className.match('login-form-identifier')) {
-      console.log('yp')
       return;
     }
     setLoginDropdown(false);
@@ -75,9 +70,9 @@ const NavbarContainer = (props) => {
           ref={node}
           className="navbar-login-button" 
         >
-          <a href="#" className="navbar-login-button-link">
+          <div href="#" className="navbar-login-button-link">
             Log In
-          </a>
+          </div>
         </div>
         <Nav.Link  className="d-inline navbar-create-acc-button" as={Link} to="/recipeapp/create-account">Create Account</Nav.Link>
       </div>

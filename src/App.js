@@ -34,7 +34,6 @@ class App extends React.Component{
   componentDidMount(){
     axios.get(urlAuth) 
     .then(res => { 
-      console.log(res);
       this.setState({loggedInUser: res.data})
     }).catch(error => {console.log(error)})
   }
@@ -73,8 +72,6 @@ class App extends React.Component{
     this.setState({loggedInUser: null})
   }
   render(){
-    console.log(this.state);
-    console.log('logformchange',this.handleLoginFormChange)
     const {username, password, loggedInUser} = this.state;
     const navbar = 
       <NavbarContainer

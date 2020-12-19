@@ -68,6 +68,27 @@ const storage = multer.diskStorage({
   }
 })
 const imageUpload = multer({storage: storage})
+let pastDayNum = 0;
+let randomRecipe = 0;
+app.get(`${serverRoute}get-featured-recipe`, (req, res) => {
+  console.log(`Got a GET request to /get-featured-recipe;`);
+  const todaysDayNum = Math.floor(Date.now()/1000/8640)%7;
+  console.log('pastDayNum: ', pastDayNum)
+  console.log('todaysDayNum: ', pastDayNum)
+  if (pastDayNum + 7 < todaysDayNum) {
+    console.log('entered IF')
+    pastDayNum = todaysDayNum;
+
+  }
+  connection.query("SELECT * FROM recipes", function (err, result) {
+    if (err) throw err;
+    console.log(result);
+    res.send(result);
+  });
+  
+  //store the old date value.
+  //If 7 days have passed since old date value, set a new one. 
+})
 
 app.post(`${serverRoute}get-images-home-carousel`, (req, res) => {
   console.log(req.body);

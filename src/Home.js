@@ -17,18 +17,17 @@ import image5 from './images/imageFile_dateVal_1607898827213_bootstrap_sample_si
 import image6 from './images/imageFile_dateVal_1607898827213_bootstrap_sample_site.png';
 const arr = [ image1, image2, image3, image4, image5, image6];
 let carouselItems = arr.map( (x, i) => (
-  <>
-    <div key={i} className="carousel-img-container">
-      <Link to="#" className="carousel-link-home">
-          <h3 className="carousel-title">Heyder </h3>
-          <img className="carousel-img" src={x} alt='alt' />
-      </Link>
-    </div>
-  </>
+  <div key={i} className="carousel-img-container">
+    <Link to="#" className="carousel-link-home">
+        <h3 className="carousel-title">Heyder </h3>
+        <img className="carousel-img" src={x} alt='alt' />
+    </Link>
+  </div>
 ));
 
 const url = global_url_variable;
 const urlImagesHomeCarousel = `${url}get-images-home-carousel`;
+const urlFeatured = `${url}get-featured-recipe`;
 
 //Add featured recipe route in app.js
 
@@ -40,24 +39,25 @@ class Home extends React.Component {
   componentDidMount(){
     //RETRIEVE IMAGES
     if (url !== "http://localhost:4000/recipeapp/recipeapp-server/"){
-      console.log('axios running')
       axios.get(url)
       .then(res => {
-        console.log('res recipes',res);
         res.data.map(x => {
           axios.post(urlImagesHomeCarousel, {
             id: x.id, 
             item: x.item,
           })
           .then(res => {
-            console.log('carousel res',res)
-            console.log('carousel item id', res.data.id)
-            this.setState({imageNames: [...this.state.imageNames, [...res.data, x.item]]}, () => {console.log('this.state.imageNames',this.state.imageNames)})
+            this.setState({imageNames: [...this.state.imageNames, [...res.data, x.item]]})
           })
           return null;
         })
       })
+      
     } else { this.setState({imageNames: ['placeholder']}) }
+    axios.get(urlFeatured)
+    .then(res => {
+      console.log('featured res', res);
+    })
   }
   render(){
     let images = this.state.imageNames.map((x, i) => (
@@ -77,7 +77,6 @@ class Home extends React.Component {
     if (url === "http://localhost:4000/recipeapp/recipeapp-server/") {
       images = carouselItems;
     }
-    console.log(images)
     const carousel = () => {
       if (this.state.imageNames.length > 0) {
         return(
