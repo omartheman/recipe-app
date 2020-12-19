@@ -4,15 +4,19 @@
 .react-multi-carousel-dot-list {
   margin-bottom: 20px;
 }
+h1 {
+  opacity: 0;
+  animation: fade_in 0.5s forwards;
+}
 h2 {
-  opacity: 1;
-  transition: 1s;
+  opacity: 0;
+  animation: fade_in 1s forwards;
 }
 h2:hover {
   opacity: 0;
 }
 .carousel-title {
-  background: rgba(253, 253, 253, 0.671);
+  background: rgba(253, 253, 253, 0.781);
   /* border-radius: 30px; */
   color: black;
   margin: 0 20px 0;
@@ -25,7 +29,6 @@ h2:hover {
   opacity: 0;
   transition: 0.4s;
   width: 100%;
-  
 }
 .carousel-link-home:hover .carousel-title {
   margin-bottom: 10px;
@@ -34,4 +37,12 @@ h2:hover {
 }
 .carousel-title-link:hover {
   text-decoration: none;
+}
+@keyframes fade_in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
