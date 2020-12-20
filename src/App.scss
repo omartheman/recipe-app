@@ -2,7 +2,7 @@
   @for $i from 1 through 1000 {
     &:nth-child(#{$i}) {
       opacity: 0;
-      animation: fade_in #{0.3 / ($i - $i / 1.20 )}s forwards;
+      animation: fade_in #{0.3 / (($i+1) - ($i+1) / 1.20 )}s forwards;
       animation-delay: #{($i - $i / 2) * 0.2}s
     }
     &:nth-child:hover(#{$i}) {
@@ -15,6 +15,7 @@
     &:nth-last-of-type(#{$i}) .recipe-item-animation-overlay { 
       animation: fade_in_color #{($i - $i / 1.05) * 1.8}s forwards;
       // animation-delay: #{($i - $i / 2) * 0.2}s
+      opacity: #{1 / ($i/5)}
     }
   }
 }
