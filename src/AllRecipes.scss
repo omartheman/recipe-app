@@ -2,7 +2,8 @@
   @for $i from 1 through 1000 {
     &:nth-child(#{$i}) {
       opacity: 0;
-      animation: fade_in #{$i * .5}s forwards;
+      animation: fade_in_color #{0.3 / ($i - $i / 1.20 )}s forwards;
+      animation-delay: #{($i - $i / 2) * 0.2}s
     }
   }
 }

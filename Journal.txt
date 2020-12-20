@@ -1,8 +1,11 @@
 19 dec Sat
 
+change css files to scss
+add night mode :)
 make sure you can't create a duplicate account
 add Create Account Success
 fix navbar hamburger
+
 
 Featured Reipe alogrithm: 
   - Check if a week has gone by 

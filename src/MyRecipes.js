@@ -26,14 +26,14 @@ const MyRecipes = (props) => {
     recipeListLeft = recipes.map((x, ind) => {
       if (ind % 2 === 0) {
         return(
-          <ListGroup.Item className="recipe-list-group-item" key={ind} variant="primary" as={Link} to={`/recipeapp/recipe/${x.id}`}>{x.item}</ListGroup.Item>
+          <ListGroup.Item className="recipe-list-group-item" key={ind} variant="secondary" as={Link} to={`/recipeapp/recipe/${x.id}`}>{x.item}</ListGroup.Item>
         )
       } else {return null}
     })
     recipeListRight = recipes.map((x, ind) => {
       if (ind % 2 !== 0) {
         return(
-          <ListGroup.Item className="recipe-list-group-item" key={ind} variant="primary" as={Link} to={`/recipeapp/recipe/${x.id}`}>{x.item}</ListGroup.Item>
+          <ListGroup.Item className="recipe-list-group-item" key={ind} variant="secondary" as={Link} to={`/recipeapp/recipe/${x.id}`}>{x.item}</ListGroup.Item>
         )
       } else {return null}
     })
