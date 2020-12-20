@@ -2,7 +2,7 @@ import Navbar from './NavbarContainer';
 import { useState, useEffect } from 'react'; 
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import 'react-awesome-button/dist/styles.css';
-import './RecipeUploadSuccess.css'
+import './RecipeUploadSuccess.scss'
 import { Link, Redirect } from 'react-router-dom';
 
 function RecipeUploadSuccess () {
@@ -121,7 +121,7 @@ function RecipeUploadSuccess () {
     return(
       <>
       {redirect}
-      <Container>
+      <Container className="recipe-upload-success-container">
         <h1>Success!</h1>
         <h2>Congratulations, your awesome new recipe was uploaded!</h2>
         {stars}

@@ -43,8 +43,10 @@ class App extends React.Component{
     this.setState({loggedInUser: newLoggedInUser})
   }
   handleLoginSubmit(e){
+    console.log('login clicked')
     e.preventDefault();
     const {username, password} = this.state;
+    console.log('error not here')
     axios.post(urlAuth,     
       {
         username: username, 
@@ -63,6 +65,7 @@ class App extends React.Component{
     )
   }
   handleLoginFormChange(eTargetAttrVal, item){
+    console.log('loginformchage')
     if (item === 'username'){
       this.setState(eTargetAttrVal);
     } else if (item === 'password') {
