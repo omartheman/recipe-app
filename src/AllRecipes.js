@@ -27,12 +27,20 @@ const AllRecipes = (props) => {
       if (ind % 2 === 0) {
         return(
           <ListGroup.Item 
-            className="recipe-list-group-item"  
+            className="fade-in recipe-list-group-item "  
             key={ind} 
             variant="secondary" 
             as={Link} 
-            to={`/recipeapp/recipe/${x.id}`}>
+            to={`/recipeapp/recipe/${x.id}`}
+          >
+            <span 
+              className="recipe-item-animation-overlay fade-in-color"
+              style={{animationDelay: `${(recipes.length/2 - (recipes.length/2) / 2) * 0.2 + 0.5/(ind+1)}s`}}
+            >
+            </span>
+            <span className="recipe-item-name">
               {x.item}
+            </span>
           </ListGroup.Item>
         )
       } else {return null}
