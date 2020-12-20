@@ -38,6 +38,15 @@ class App extends React.Component{
       this.setState({loggedInUser: res.data})
     }).catch(error => {console.log(error)})
   }
+  componentDidUpdate(){
+    axios.get(urlAuth) 
+    .then(res => { 
+      this.setState({loggedInUser: res.data})
+    }).catch(error => {
+      console.log(error)
+      this.setState({loggedInUser: null})
+    })
+  }
   handleNewLoggedInUser(newLoggedInUser){
     console.log('new logged in user: ',newLoggedInUser)
     this.setState({loggedInUser: newLoggedInUser})
