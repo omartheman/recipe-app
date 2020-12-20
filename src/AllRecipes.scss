@@ -25,7 +25,7 @@
 @mixin animateRecipeListColor {
   @for $i from 1 through 1000 {
     &:nth-last-of-type(#{$i}) .recipe-item-animation-overlay { 
-      animation: fade_in_color #{($i - $i / 1.05) * 1.8}s forwards;
+      animation: fade_in_color #{($i - $i / 1.05) * 2.0}s forwards;
       // animation-delay: #{($i - $i / 2) * 0.2}s
       opacity: #{1 / ($i/5)}
     }
