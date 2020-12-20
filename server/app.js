@@ -1,8 +1,8 @@
 const mode =
 
-"developmentOmar";
-/*
 "productionBritt";
+/*
+"developmentOmar";
 */
 
 const express = require('express');
@@ -16,7 +16,7 @@ const multer = require('multer');
 
 function spacesToUnderscores(item){item=item.replace(/ /g,"_"); return item;}
 function replaceSqlCharacters(str){
-  const newStr = str.replace(/"/g, '_').replace(/'/g, '_').replace(/`/g, '_').replace(/;/g, '_').replace(/\*/g, '_').replace(/#/g, '_').replace(/\$/g, '_');
+  const newStr = str.replace(/"/g, '_').replace(/'/g, '_').replace(/`/g, '_').replace(/;/g, '_').replace(/\*/g, '_').replace(/#/g, '_').replace(/\$/g, '_').replace(/%/g, '_').replace(/\`/g, '_').replace(/@/g, '_').replace(/\?/g, '_').replace(/~/g, '_').replace(/\^/g, '_').replace(/&/g, '_').replace(/\(/g, '_').replace(/\)/g, '_').replace(/\./g, '_').replace(/\,/g, '_').replace(/\\/g, '_').replace(/\//g, '_').replace(/\+/g, '_').replace(/=/g, '_').replace(/\[/g, '_').replace(/\]/g, '_').replace(/{/g, '_').replace(/}/g, '_').replace(/!/g, '_');
   return newStr;
 }
 let corsOrigin;
@@ -90,7 +90,7 @@ app.get(`${serverRoute}get-featured-recipe`, (req, res) => {
     if (err) throw err;
     console.log(result);
     const id = result[randomRecipe].id;
-    const item = spacesToUnderscores(result[randomRecipe].item).toLowerCase();
+    const item = replaceSqlCharacters(spacesToUnderscores(result[randomRecipe].item).toLowerCase());
     const itemTitle = result[randomRecipe].item;
     const description = result[randomRecipe].description;
     const sql = `
@@ -108,7 +108,7 @@ app.get(`${serverRoute}get-featured-recipe`, (req, res) => {
 
 app.post(`${serverRoute}get-images-home-carousel`, (req, res) => {
   console.log(req.body);
-  const item = spacesToUnderscores(req.body.item).toLowerCase();
+  const item = replaceSqlCharacters(spacesToUnderscores(req.body.item).toLowerCase());
   const sql = `
     SELECT * FROM recipe${req.body.id}_${item}_images
     ORDER BY RAND()
@@ -122,7 +122,7 @@ app.post(`${serverRoute}get-images-home-carousel`, (req, res) => {
 
 app.post(`${serverRoute}get-images`, (req, res) => {
   console.log(req.body);
-  const item = spacesToUnderscores(req.body.item).toLowerCase();
+  const item = replaceSqlCharacters(spacesToUnderscores(req.body.item).toLowerCase());
   console.log('spacesToUnderscores item: ', item)
   const sql = `
     SELECT * FROM recipe${req.body.id}_${item}_images;
@@ -175,7 +175,7 @@ app.post(`${serverRoute}image-upload`, imageUpload.array("imageFile"),
 
 app.post(`${serverRoute}get-instructions`, (req, res) => {
   console.log(req.body);
-  const item = spacesToUnderscores(req.body.item);
+  const item = replaceSqlCharacters(spacesToUnderscores(req.body.item));
   console.log('spacesToUnderscores item: ', item)
   const sqlGetIngredients = `
     SELECT * FROM recipe${req.body.id}_${item}_instructions;
@@ -189,7 +189,7 @@ app.post(`${serverRoute}get-instructions`, (req, res) => {
 
 app.post(`${serverRoute}getingredients`, (req, res) => {
   console.log(req.body);
-  const item = spacesToUnderscores(req.body.item);
+  const item = replaceSqlCharacters(spacesToUnderscores(req.body.item));
   console.log('spacesToUnderscores item: ', item)
   const sqlGetIngredients = `
     SELECT * FROM recipe${req.body.id}_${item}_ingredients;
@@ -241,14 +241,19 @@ app.post(`${serverRoute}create-account`, (req, res) => {
   res.send('Got a POST request to create account.');
   var sql = `INSERT INTO accounts (firstName, lastName, email, username, password)
     VALUES(
-      '${req.body.firstName}', 
-      '${req.body.lastName}',
-      '${req.body.email}',
-      '${req.body.username}',
-      '${req.body.password}'
+      ?,
+      ?,
+      ?,
+      ?,
+      ?
   )`;
-  connection.query(sql, 
-    function (err, result) {
+  connection.query(sql, [
+    req.body.firstName, 
+    req.body.lastName,
+    req.body.email,
+    req.body.username,
+    req.body.password
+  ], function (err, result) {
     if (err) throw err;
     console.log(result);
     console.log(result.affectedRows + " record(s) updated");
@@ -347,8 +352,12 @@ app.post(`${serverRoute}recipe-upload`, (req, res) => {
     });
     for (let i = 0; i < req.body.ingredients.length; i++) {
       const sqlAddIngredient = 
-        `INSERT INTO recipe${id}_${item}_ingredients (ingredient, amount) VALUES ('${req.body.ingredients[i]}', '${req.body.amounts[i]}');`;
-      connection.query(sqlAddIngredient, (err, result) => {
+        `INSERT INTO recipe${id}_${item}_ingredients (ingredient, amount) VALUES (?, ?);`
+      ;
+      connection.query(sqlAddIngredient,[
+        req.body.ingredients[i],
+        req.body.amounts[i]
+      ], (err, result) => {
         if (err) throw err; 
       });
     }
@@ -364,14 +373,17 @@ app.post(`${serverRoute}recipe-upload`, (req, res) => {
     for (let i = 0; i < req.body.instructions.length; i++) {
       const sqlAddInstruction = 
         `INSERT INTO recipe${id}_${item}_instructions (instruction) 
-        VALUES ('${req.body.instructions[i]}');`;
-      connection.query(sqlAddInstruction, (err, result) => {
+        VALUES (?);`;
+      connection.query(sqlAddInstruction, [
+        req.body.instructions[i]
+      ], (err, result) => {
         if (err) throw err; 
       });
     }
   });
 });
 
+/*
 app.post(`${serverRoute}`, function(req, res){
   res.send('Got a POST request to update recipes.');
   var sql = `UPDATE recipes SET 
@@ -384,8 +396,8 @@ app.post(`${serverRoute}`, function(req, res){
     if (err) throw err;
     console.log(result.affectedRows + " record(s) updated");
   });
-  
 });
+*/
 
 
 // ===============================================================
