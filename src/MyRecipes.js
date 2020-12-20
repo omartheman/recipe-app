@@ -34,11 +34,6 @@ const MyRecipes = (props) => {
             as={Link} 
             to={`/recipeapp/recipe/${x.id}`}
           >
-            <span 
-              className="recipe-item-animation-overlay fade-in-color"
-              style={{animationDelay: `${(recipes.length/2 - (recipes.length/2) / 2) * 0.2 + 0.5/(ind+1)}s`}}
-            >
-            </span>
             {x.item}
           </ListGroup.Item>
         )
@@ -47,7 +42,7 @@ const MyRecipes = (props) => {
     recipeListRight = recipes.map((x, ind) => {
       if (ind % 2 !== 0) {
         return(
-          <ListGroup.Item className="recipe-list-group-item" key={ind} variant="secondary" as={Link} to={`/recipeapp/recipe/${x.id}`}>{x.item}</ListGroup.Item>
+          <ListGroup.Item className="recipe-list-group-item fade-in" key={ind} variant="secondary" as={Link} to={`/recipeapp/recipe/${x.id}`}>{x.item}</ListGroup.Item>
         )
       } else {return null}
     })
