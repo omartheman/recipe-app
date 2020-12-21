@@ -7,7 +7,7 @@ import Carousel from "react-multi-carousel";
 import { SRLWrapper } from 'simple-react-lightbox';
 import './RecipePage.scss';
 import "react-multi-carousel/lib/styles.css";
-import image1 from './images/imageFile_dateVal_1607883271123_boat_on_lake copy.jpg';
+import image1 from './images/omar-3-profile.jpg';
 import image2 from './images/imageFile_dateVal_1607883271123_boat_on_lake.jpg';
 import image3 from './images/imageFile_dateVal_1607883271125_block-game-thumbnail copy.png';
 import image4 from './images/imageFile_dateVal_1607883271125_block-game-thumbnail.png';
@@ -23,7 +23,9 @@ const urlInstructions = `${url}get-instructions`;
 const arr = [ image1, image2, image3, image4, image5, image6];
 const carouselItems = arr.map( x => (
   <SRLWrapper>
-    <div className="carousel-img-container carousel-img-container-recipe-page"><img className="carousel-img" src={x} alt='alt' /></div>
+    <div className="carousel-img-container carousel-img-container-recipe-page">
+      <img className="carousel-img" src={x} alt='alt' />
+    </div>
   </SRLWrapper>
 ));
 
@@ -96,7 +98,7 @@ const Recipe = (props) => {
         } else {
           setImages(res.data.map(x => (
             <SRLWrapper>
-              <div className="carousel-img-container">
+              <div className="carousel-img-container carousel-img-container-recipe-page">
                 <img 
                   className="carousel-img" 
                   src={`https://brittanyjewellneal.com/uploaded_files/${x.imageName}`} 

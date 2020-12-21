@@ -9,7 +9,7 @@ import axios from 'axios';
 import './Home.scss';
 import { Link } from 'react-router-dom';
 
-import image1 from './images/imageFile_dateVal_1607883271123_boat_on_lake copy.jpg';
+import image1 from './images/omar-3-profile.jpg';
 import image2 from './images/imageFile_dateVal_1607883271123_boat_on_lake.jpg';
 import image3 from './images/imageFile_dateVal_1607883271125_block-game-thumbnail copy.png';
 import image4 from './images/imageFile_dateVal_1607883271125_block-game-thumbnail.png';
@@ -100,7 +100,7 @@ class Home extends React.Component {
             autoPlaySpeed={5000}
             keyBoardControl={true}
             transitionDuration={1000}
-            removeArrowOnDeviceType={["tablet", "mobile"]}
+            // removeArrowOnDeviceType={["tablet", "mobile"]}
             // renderButtonGroupOutside={true} customButtonGroup={<ButtonGroup />}
             // renderDotsOutside={renderButtonGroupOutside}
           >

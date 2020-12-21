@@ -1,3 +1,7 @@
+21 dec Mon
+
+write an article about Sass animation
+
 19 dec Sat
 
 change css files to scss
