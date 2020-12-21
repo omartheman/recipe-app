@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Navbar from './NavbarContainer';
 import { Container, ListGroup, Row, Col, Spinner } from 'react-bootstrap';
 import axios from 'axios';
 import global_url_variable from './global_url_variable';

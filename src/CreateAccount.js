@@ -40,7 +40,7 @@ class CreateAccount extends React.Component{
 
       return;
     }
-    if (username === '' || password == '' || firstName === '' || lastName === '' || email === '') {
+    if (username === '' || password === '' || firstName === '' || lastName === '' || email === '') {
       alert("Please fill in all fields before sumbitting. 🤓")
       if (url !== 'http://localhost:4000/recipeapp/recipeapp-server/'){
         return;

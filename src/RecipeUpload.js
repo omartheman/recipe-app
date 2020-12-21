@@ -54,6 +54,7 @@ class RecipeUpload extends Component {
       newImages.map(newImage => {
         console.log(newImage)
         formData.append("imageFile", newImage, newImage.name);
+        return null;
       })
 
       console.log('formData', formData);

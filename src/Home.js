@@ -79,8 +79,8 @@ class Home extends React.Component {
               </div>
             </>
           )
-        }
-      }
+        } else {return null;}
+      } else {return null;}
     })
     if (url === "http://localhost:4000/recipeapp/recipeapp-server/") {
       images = carouselItems;

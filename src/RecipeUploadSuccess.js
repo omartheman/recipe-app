@@ -1,4 +1,3 @@
-import Navbar from './NavbarContainer';
 import { useState, useEffect } from 'react'; 
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import 'react-awesome-button/dist/styles.css';
@@ -16,7 +15,7 @@ function RecipeUploadSuccess () {
       setStarCount(prev => prev + 1);
       newSVG();
     }
-  })
+  }, [starCount, newSVG])
   const [redirect, setRedirect] = useState(null);
   const [stars, setStars] = useState([]);
   const handleRedirect = (id) => {
@@ -36,21 +35,15 @@ function RecipeUploadSuccess () {
   }
 
   let star_fall_distance;
-  let idClicked;
   let new_star_left;
-  let star_num;
   let star_delay;
-  let star_color;
   let animation_number;
-  let star_color_random_id;
-  let starSVG;
   
-  
+  // eslint-disable-next-line
   function newSVG(){
     new_star_left = Math.random()*97;
     animation_number = Math.ceil(Math.random()*4);
     star_delay = Math.random();
-    star_color_random_id = Math.ceil(Math.random()*2);
     
       console.log('Run createStar, starCount: ', starCount)
       createStar(new_star_left, animation_number, star_fall_distance, star_delay);

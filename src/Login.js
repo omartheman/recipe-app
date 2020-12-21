@@ -1,5 +1,4 @@
 import React from 'react';
-import Navbar from './NavbarContainer';
 import {Container, Form, Button} from 'react-bootstrap';
 import axios from 'axios';
 import global_url_variable from './global_url_variable';
@@ -19,7 +18,7 @@ class Login extends React.Component {
     }) 
   }
   render(){
-    const {loginSubmit, loggedInUser, onLoginFormChange, onLogout} = this.props;
+    const {loginSubmit, loggedInUser, onLoginFormChange} = this.props;
     return(
       <>
         <div>Welcome back {loggedInUser}</div>

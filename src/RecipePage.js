@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Navbar from './NavbarContainer';
 import axios from 'axios';
 import global_url_variable from './global_url_variable';
 import { Container, ListGroup, Row, Col, Spinner } from 'react-bootstrap';
@@ -28,10 +27,6 @@ const carouselItems = arr.map( x => (
     </div>
   </SRLWrapper>
 ));
-
-const carouselButtons = arr.map(x => (
-  <div><img className="carousel-button" src={x} alt='alt' /></div>
-))
 
 const Recipe = (props) => {
   const [recipeId] = useState(Number(props.match.params.recipeId));
@@ -110,7 +105,7 @@ const Recipe = (props) => {
         }
       })
     })
-  }, [recipeId]);
+  }, [recipeId, images]);
   const carousel = () => {
     if (images) {
       return(
@@ -187,28 +182,6 @@ const responsive = {
     breakpoint: { max: 464, min: 0 },
     items: 1
   }
-};
-
-
-
-const CustomDot = ({ onClick, ...rest }) => {
-  const {
-    onMove,
-    index,
-    active,
-    carouselState: { currentSlide, deviceType }
-  } = rest;
-  const carouselItems = [...carouselButtons];
-  // onMove means if dragging or swiping in progress.
-  // active is provided by this lib for checking if the item is active or not.
-  return (
-    <button
-      className={active ? "active" : "inactive"}
-      onClick={() => onClick()}
-    >
-      {React.Children.toArray(carouselItems)[index]}
-    </button>
-  );
 };
 
 export default Recipe;

@@ -55,7 +55,7 @@ const NavbarContainer = (props) => {
         <span>
           The Recipe Cabinet 
         </span>
-        <img src={avocadoTabIcon} />
+        <img src={avocadoTabIcon} alt="Avocado icon."/>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
