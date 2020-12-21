@@ -19,7 +19,7 @@ const arr = [ image1, image2, image3, image4, image5, image6];
 let carouselItems = arr.map( (x, i) => (
   <div key={i} className="carousel-img-container">
     <Link to="#" className="carousel-link-home">
-        <h3 className="carousel-title">Heyder </h3>
+        <h3 className="carousel-title">Heyder</h3>
         <img className="carousel-img" src={x} alt='alt' />
     </Link>
   </div>

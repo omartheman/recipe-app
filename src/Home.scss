@@ -24,7 +24,7 @@ h2:hover {
   background: rgba(253, 253, 253, 0.781);
   /* border-radius: 30px; */
   color: black;
-  margin: 0 20px 0;
+  // margin: 0 20px 0;
   padding: 5px 10px;
   font-size: 17px;
   position: absolute;
@@ -46,7 +46,7 @@ h2:hover {
 .carousel-img {
   border-radius: 3px; 
   cursor: pointer;
-  // height: auto;
+  height: auto;
   // width: 90%;
 }
 .carousel-img-container {
