@@ -9,9 +9,6 @@
 .react-multi-carousel-dot-list {
   margin: 20px 0;
 }
-.carousel-img {
-  height: auto;
-}
 h1 {
   opacity: 0;
   animation: fade_in 0.5s forwards;
@@ -31,7 +28,7 @@ h2:hover {
   padding: 5px 10px;
   font-size: 17px;
   position: absolute;
-    bottom: 0;
+  bottom: 0;
   text-align: center;
   z-index: 1;
   opacity: 0;
@@ -46,30 +43,30 @@ h2:hover {
 .carousel-title-link:hover {
   text-decoration: none;
 }
-
 .carousel-img {
-  cursor: pointer;
-  width: 90%;
   border-radius: 3px; 
+  cursor: pointer;
+  // height: auto;
+  // width: 90%;
 }
 .carousel-img-container {
   display: flex;
   justify-content: center;
 }
 .carousel-img-container-recipe-page {
-  display: flex;
-  justify-content: center;
+  // display: flex;
+  // justify-content: center;
 }
 .carousel-img-container a {
   width: 95%;
-  display: flex;
-  justify-content: center; 
+  // display: flex;
+  // justify-content: center; 
 }
 .carousel-img-container a img {
   width: 100%; 
 }
 .no-carousel-img-container-2 img {
-  width: 100%; 
+  // width: 100%; 
 }
 .react-multi-carousel-dot-list {
   position: static !important;
