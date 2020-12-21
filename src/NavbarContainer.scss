@@ -3,17 +3,20 @@
 }
 nav {
   background-color: rgb(211, 211, 211);
-  height: 60px;
-  height: var(--navHeight);
-  padding: 0 20px !important;
+  // height: 60px;
+  // height: var(--navHeight);
+  // padding: 0 20px !important;
 }
 .dropdown:hover .dropdown-menu {
   /* Display navbar on hover, except it doesn't work because click activation interferes */
   display: block;
 }
 .navbar-log-in-dropdown {
-  display: flex;
   align-items: center;
+  display: flex;
+  @media (max-width: 991px) {
+    display: block;
+  }
   height: 100%;
 }
 .navbar-login-button {
@@ -21,6 +24,14 @@ nav {
   height: 100%;
   display: flex;
   align-items: center;
+  div {
+    padding: 8px 5px 5px 0;
+  }
+  svg {
+    height: 100%;
+    width: 10px;
+    fill: rgb(46, 77, 163);
+  }
 }
 .navbar-login-button-link {
   /* height: 100%; */
@@ -28,7 +39,10 @@ nav {
   color: #007bff;
 }
 .navbar-create-acc-button {
-  padding: 0 15px !important;
+  padding: 0 15px;
+  
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 .navbar-login-button-link:hover {
   color: #0056b3;
@@ -40,7 +54,12 @@ nav {
   border-radius: 4px;
   position: absolute;
   top: calc(var(--navHeight) - 10px);
+
   right: 20px;
+  @media (max-width: 991px) {
+    top: 250px;
+    left: 10px;
+  }
   background-color: rgb(248, 249, 250);
   padding: 20px;
   width: 300px;
@@ -52,8 +71,8 @@ nav {
   font-weight: 500;
   height: 100%;
   img {
-    height: 50%;
-    padding-left: 7px;
+    height: 25px;
+    padding-left: 8px;
   }
 }
 .hidden {
