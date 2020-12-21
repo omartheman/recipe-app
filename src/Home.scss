@@ -46,3 +46,35 @@ h2:hover {
 .carousel-title-link:hover {
   text-decoration: none;
 }
+
+.carousel-img {
+  cursor: pointer;
+  width: 90%;
+  border-radius: 3px; 
+}
+.carousel-img-container {
+  display: flex;
+  justify-content: center;
+}
+.carousel-img-container-recipe-page {
+  display: flex;
+  justify-content: center;
+}
+.carousel-img-container a {
+  width: 95%;
+  display: flex;
+  justify-content: center; 
+}
+.carousel-img-container a img {
+  width: 100%; 
+}
+.no-carousel-img-container-2 img {
+  width: 100%; 
+}
+.react-multi-carousel-dot-list {
+  position: static !important;
+  margin-top: 20px !important; 
+}
+.react-multi-carousel-list ul {
+  margin: auto;
+}
