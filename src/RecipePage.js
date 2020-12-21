@@ -5,7 +5,7 @@ import global_url_variable from './global_url_variable';
 import { Container, ListGroup, Row, Col, Spinner } from 'react-bootstrap';
 import Carousel from "react-multi-carousel";
 import { SRLWrapper } from 'simple-react-lightbox';
-import './RecipePage.css';
+import './RecipePage.scss';
 import "react-multi-carousel/lib/styles.css";
 import image1 from './images/imageFile_dateVal_1607883271123_boat_on_lake copy.jpg';
 import image2 from './images/imageFile_dateVal_1607883271123_boat_on_lake.jpg';
