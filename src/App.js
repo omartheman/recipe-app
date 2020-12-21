@@ -25,27 +25,42 @@ class App extends React.Component{
     this.state = {
       username: '',
       password: '',
-      loggedInUser: null
+      loggedInUser: null,
+      loggedInUserError: false,
+      intervalId: null
     }
     this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
     this.handleLoginFormChange = this.handleLoginFormChange.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
     this.handleNewLoggedInUser = this.handleNewLoggedInUser.bind(this);
+    this.checkLoggedIn = this.checkLoggedIn.bind(this);
   }
   componentDidMount(){
     axios.get(urlAuth) 
     .then(res => { 
       this.setState({loggedInUser: res.data})
     }).catch(error => {console.log(error)})
+    const intervalId = setInterval(this.checkLoggedIn, 3000);
+    this.setState({intervalId: intervalId});
   }
-  componentDidUpdate(){
+  checkLoggedIn(){
     axios.get(urlAuth) 
     .then(res => { 
+      console.log('loggedInUser: ', res.data);
       this.setState({loggedInUser: res.data})
     }).catch(error => {
       console.log(error)
+      console.log('Axios error. User logged out.')
+      if (this.state.loggedInUserError === false) {
+        console.log('Axios error. User logged out.')
+        alert("There was an error with the server. 🤬 Please report your last action to the webmaster.");
+        this.setState({loggedInUserError: true});
+      }
       this.setState({loggedInUser: null})
     })
+  }
+  componentWillUnmount(){
+    clearInterval(this.state.intervalId);
   }
   handleNewLoggedInUser(newLoggedInUser){
     console.log('new logged in user: ',newLoggedInUser)

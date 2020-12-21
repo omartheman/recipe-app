@@ -1,8 +1,8 @@
 const mode =
 
-"developmentOmar";
-/*
 "productionBritt";
+/*
+"developmentOmar";
 */
 
 const express = require('express');
@@ -16,7 +16,7 @@ const multer = require('multer');
 
 function spacesToUnderscores(item){item=item.replace(/ /g,"_"); return item;}
 function replaceSqlCharacters(str){
-  const newStr = str.replace(/"/g, '_').replace(/'/g, '_').replace(/`/g, '_').replace(/;/g, '_').replace(/\*/g, '_').replace(/#/g, '_').replace(/\$/g, '_').replace(/%/g, '_').replace(/\`/g, '_').replace(/@/g, '_').replace(/\?/g, '_').replace(/~/g, '_').replace(/\^/g, '_').replace(/&/g, '_').replace(/\(/g, '_').replace(/\)/g, '_').replace(/\./g, '_').replace(/\,/g, '_').replace(/\\/g, '_').replace(/\//g, '_').replace(/\+/g, '_').replace(/=/g, '_').replace(/\[/g, '_').replace(/\]/g, '_').replace(/{/g, '_').replace(/}/g, '_').replace(/!/g, '_');
+  const newStr = str.replace(/"/g, '_').replace(/'/g, '_').replace(/`/g, '_').replace(/;/g, '_').replace(/\*/g, '_').replace(/#/g, '_').replace(/\$/g, '_').replace(/%/g, '_').replace(/\`/g, '_').replace(/@/g, '_').replace(/\?/g, '_').replace(/~/g, '_').replace(/\^/g, '_').replace(/&/g, '_').replace(/\(/g, '_').replace(/\)/g, '_').replace(/\./g, '_').replace(/\,/g, '_').replace(/\\/g, '_').replace(/\//g, '_').replace(/\+/g, '_').replace(/=/g, '_').replace(/\[/g, '_').replace(/\]/g, '_').replace(/{/g, '_').replace(/}/g, '_').replace(/!/g, '_').replace(/-/g, '_');
   return newStr;
 }
 let corsOrigin;
