@@ -9,12 +9,12 @@
 .button-add {
   margin: 0 auto;
   width: 50%;
-  border-radius: 0 0 2px 2px !important;
+  // border-radius: 0 0 2px 2px !important;
   box-shadow: 0 0 5px 1px grey;
   display: block !important;
+  border-radius: 0 0 10px 10px !important;
   @media (max-width: 575px){
     width: 75%;
-    border-radius: 0 0 10px 10px !important;
   }
 }
 .button-remove {

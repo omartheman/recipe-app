@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
-import './ImageCrop.css';
+import './ImageCrop.scss';
 import { Row, Col, Form } from 'react-bootstrap';
 
 class ImageCrop extends PureComponent {
