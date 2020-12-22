@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import global_url_variable from './global_url_variable';
 import { Container, Form, Button, ListGroup } from 'react-bootstrap';
-import './RecipeUpload.css';
+import './RecipeUpload.scss';
 import 'react-image-crop/dist/ReactCrop.css';
 import ImageCrop from './ImageCrop'; 
 import { Redirect } from 'react-router-dom';
@@ -228,7 +228,7 @@ class RecipeUpload extends Component {
               <h2 id="recipe-info-heading">Recipe Information</h2>
               <Form.Label>Name of Recipe</Form.Label>
               <Form.Control 
-                placeholder="What do you call this masterpeice? 🥘"
+                placeholder="What's this masterpeice called? 🥘"
                 type="text" 
                 id="item"
                 onChange={(e) => {
@@ -250,7 +250,7 @@ class RecipeUpload extends Component {
                 rows={3}
                 type="text" 
                 id="description"
-                placeholder="Tell us a little about your awesome recipe. 🥗"
+                placeholder="Tell us about your awesome recipe. 🥗"
                 onChange={(e) => {
                   this.setState({[e.target.id]: e.target.value})
                 }} 
