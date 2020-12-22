@@ -3,9 +3,24 @@
 }
 .image-crop-title {
   color: #0071ea;
+  margin-top: 8px;
 }
 .image-crop-file-input {
   display: none;
+}
+.image-crop-images-container {
+  .image-crop-image-column {
+    margin-bottom: 20px;
+  }
+  @media (max-width: 767px){
+    .image-crop-image-column:last-of-type {
+      margin-bottom: 20px !important;
+    }
+  }
+}
+.image-shown-below-text {
+  display: inline-block;
+  margin: 5px 10px;
 }
 .cropped-image-column {
   display: flex;

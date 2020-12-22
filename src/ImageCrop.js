@@ -91,13 +91,16 @@ class ImageCrop extends PureComponent {
         <Form.Label htmlFor={`file-upload-${this.props.id_num}`} className="file-upload-new-button btn btn-info">
           Choose Image #{this.props.index_num + 1}
         </Form.Label>
-        {src ? ` Image #${this.props.index_num + 1} shown below` : " No image chosen."}
+        <span className="image-shown-below-text">
+          {src ? ` Image #${this.props.index_num + 1} shown below` : " No image chosen."}
+        </span>
         <Form.File className="image-crop-file-input" id={`file-upload-${this.props.id_num}`} label="Upload Image" type="file" accept="image/*" onChange={this.onSelectFile} />
         {src && 
           <>
             <h3 className="image-crop-title">Please crop your image to the given ratio.</h3>
-            <Row>
-              <Col>
+            <p>Just drag the cropping box to the desired area, and you're done! Cropped image will be saved automatically.</p>
+            <Row className="image-crop-images-container">
+              <Col md className="image-crop-image-column">
                 <h3>Original Image</h3>
                 {src && (
                   <ReactCrop
@@ -110,9 +113,9 @@ class ImageCrop extends PureComponent {
                     />
                     )}
               </Col>
-              <Col>
+              <Col md className="image-crop-image-column">
                 <h3>Cropped Image</h3>
-                <div  className="cropped-image-column">
+                <div className="cropped-image-column">
                   {croppedImageUrl && (
                     <img alt="Crop" style={{ maxWidth: '100%' }} src={croppedImageUrl} />
                   )}
