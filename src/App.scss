@@ -1,0 +1,86 @@
+body {
+  padding-bottom: 160px; 
+}
+h1 {
+  text-align: center;
+  margin-top: 20px !important;
+  opacity: 0;
+  animation: fade_in 0.5s forwards;
+}
+h2 {
+  opacity: 0;
+  animation: fade_in 1s forwards;
+}
+h2:hover {
+  opacity: 0;
+}
+.carousel-title {
+  background: rgba(253, 253, 253, 0.781);
+  /* border-radius: 30px; */
+  color: black;
+  // margin: 0 20px 0;
+  padding: 5px 10px;
+  font-size: 17px;
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+  z-index: 1;
+  @media (max-width: 991px){
+    opacity: 1;
+  }
+  opacity: 0;
+  transition: 0.4s;
+  width: 100%;
+}
+.carousel-link-home:hover .carousel-title {
+  margin-bottom: 10px;
+  display: block;
+  opacity: 1;
+}
+.carousel-title-link:hover {
+  text-decoration: none;
+}
+.carousel-img {
+  border-radius: 3px; 
+  cursor: pointer;
+  height: auto;
+  width: 90%;
+}
+.carousel-img-container {
+  display: flex;
+  justify-content: center;
+}
+.carousel-img-container-recipe-page {
+  // display: flex;
+  // justify-content: center;
+}
+.carousel-img-container a {
+  width: 95%;
+  // display: flex;
+  // justify-content: center; 
+}
+.carousel-img-container a img {
+  width: 100%; 
+}
+.no-carousel-img-container-2 img {
+  // width: 100%; 
+}
+.react-multi-carousel-dot-list {
+  position: static !important;
+  margin-top: 20px !important; 
+}
+.react-multi-carousel-list ul {
+  margin: auto;
+}
+#home .react-multi-carousel-list {
+  margin: 30px 0 0;
+  opacity: 0;
+  animation: fade_in 1s forwards;
+}
+.react-multi-carousel-dot-list {
+  margin: 20px 0;
+}
+#spinner-centered {
+  display: block;
+  margin: 100px auto;
+}
