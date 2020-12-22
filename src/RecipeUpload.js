@@ -336,7 +336,7 @@ class RecipeUpload extends Component {
             </div>
 
             <div className="upload-section">
-              <h2 className="recipe-image-uploads-heading">Upload Images</h2>
+              <h2>Upload Images</h2>
               <ListGroup>
                 {imageFields}
               </ListGroup>
