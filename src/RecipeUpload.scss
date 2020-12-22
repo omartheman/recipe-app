@@ -44,14 +44,19 @@
   display: inline-block;
 }
 .post-recipe-button {
+  border-radius: 1000px !important;
+  box-shadow: 0 0 5px 1px grey;
+  display: block !important; 
+  margin-top: 80px; 
+  margin: 80px auto 0 !important;
+  height: 50px;
   width: 50%;
   @media (max-width: 767px){
     width: 100%;
   }
-  margin-top: 80px; 
-  display: block !important; 
-  margin: 80px auto 0 !important;
-  border-radius: 1000px !important;
+}
+.post-recipe-button:hover {
+  box-shadow: 0 0 10px 2px rgb(0, 188, 235);
 }
 .remove-step-button {
  float: right;
