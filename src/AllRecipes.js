@@ -77,7 +77,7 @@ const AllRecipes = (props) => {
   }
   return(
     <>
-      <Container> 
+      <Container className="all-recipes-container"> 
         <h1>All Recipes</h1>
         {recipes.length > 0 ? 
         <Row>

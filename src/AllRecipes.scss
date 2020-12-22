@@ -31,6 +31,16 @@
     }
   }
 }
+.all-recipes-container {
+  .row {
+    .col:first-of-type {
+      padding-right: 5px;
+    }
+    .col:last-of-type {
+      padding-left: 5px;
+    }
+  }
+}
 .recipe-item-animation-overlay {
   position: absolute;
   width: 100%;
@@ -99,31 +109,3 @@
     // opacity: 1;
   }
 }
-
-// @keyframes fade_in_color {
-//   from {
-//     opacity: 0;
-//   }
-//   0% {
-    
-//     background-color: rgba(209, 154, 154, 0.705);
-//   }
-//   17% {
-//     background-color: rgba(197, 172, 151, 0.705);
-//   }
-//   33% {
-//     background-color: rgba(200, 200, 162, 0.705);
-//   }
-//   50% {
-//     background-color: rgba(160, 204, 165, 0.705);
-//   }
-//   67% {
-//     background-color: rgba(192, 179, 212, 0.705);
-//   }
-//   84% {
-//     background-color: rgba(214, 179, 179, 0.685);
-//   }
-//   to {
-//     opacity: 1;
-//   }
-// }
