@@ -131,6 +131,8 @@ const Recipe = (props) => {
         }
       })
     })
+  // Following error removed because it causes an infinite loop to add dependencies 'images' and 'recipeId'. Removing the empty array argument also causes an infinite loop.
+  // eslint-disable-next-line 
   }, []);
   const carousel = () => {
     if (images) {
