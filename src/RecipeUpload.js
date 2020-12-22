@@ -188,6 +188,7 @@ class RecipeUpload extends Component {
               <Form.Control  
                 value={this.state.amounts[index]}
                 type="text" 
+                placeholder="How much?"
                 amountnumber={index}
                 onChange={(e) => {
                   const amountNum = Number(e.target.attributes.getNamedItem('amountnumber').value);

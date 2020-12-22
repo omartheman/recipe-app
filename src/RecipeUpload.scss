@@ -31,11 +31,20 @@
 }
 .ingredient-amount-container {
   display: flex !important;
+  @media(max-width: 767px){
+    display: block !important;
+  }
   justify-content: space-between; 
   align-items: center;
+  button {
+    float: right;
+  }
 }
 .ingredient-amount-container > div {
   width: 48%;
+  @media(max-width: 767px){
+    width: 100%;
+  }
   display: inline-block;
 }
 .post-recipe-button {
