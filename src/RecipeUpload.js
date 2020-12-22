@@ -340,7 +340,7 @@ class RecipeUpload extends Component {
               <ListGroup>
                 {imageFields}
               </ListGroup>
-              <Button className="button-add-image button-add" variant="success" onClick={this.addImageField}>Add Another Image</Button>
+              <Button className="button-add" variant="success" onClick={this.addImageField}>Add Another Image</Button>
             </div>
 
           </Form>

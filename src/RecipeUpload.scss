@@ -13,13 +13,13 @@
 .button-add {
   margin: 0 auto;
   width: 50%;
-  border-radius: 0 0 3px 3px !important;
+  border-radius: 0 0 2px 2px !important;
+  box-shadow: 0 0 5px 1px grey;
   display: block !important;
-}
-.button-add-image {
-  display: block !important;
-  width: 50%;
-  border-radius: 0 0 3px 3px !important;
+  @media (max-width: 575px){
+    width: 75%;
+    border-radius: 0 0 10px 10px !important;
+  }
 }
 .button-remove {
   border-radius: 1000px !important;
