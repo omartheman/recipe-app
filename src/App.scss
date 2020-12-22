@@ -11,9 +11,6 @@ h2 {
   opacity: 0;
   animation: fade_in 1s forwards;
 }
-h2:hover {
-  opacity: 0;
-}
 .carousel-title {
   background: rgba(253, 253, 253, 0.781);
   /* border-radius: 30px; */
@@ -28,14 +25,14 @@ h2:hover {
   @media (max-width: 991px){
     opacity: 1;
   }
-  opacity: 0;
+  opacity: 1;
   transition: 0.4s;
   width: 100%;
 }
 .carousel-link-home:hover .carousel-title {
-  margin-bottom: 10px;
+  margin-bottom: 0px;
   display: block;
-  opacity: 1;
+  opacity: 0;
 }
 .carousel-title-link:hover {
   text-decoration: none;
