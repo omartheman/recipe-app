@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import global_url_variable from './global_url_variable';
 import { Container, ListGroup, Row, Col, Spinner } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import Carousel from "react-multi-carousel";
 import { SRLWrapper } from 'simple-react-lightbox';
 import './RecipePage.scss';
@@ -20,12 +21,21 @@ const urlImages = `${url}get-images`;
 const urlInstructions = `${url}get-instructions`;
 // image1, image2, image3, image4, image5, image6
 const arr = [ image1, image2, image3, image4, image5, image6];
-const carouselItems = arr.map( x => (
-  <SRLWrapper>
-    <div className="carousel-img-container carousel-img-container-recipe-page">
-      <img className="carousel-img" src={x} alt='alt' />
-    </div>
-  </SRLWrapper>
+const carouselItems = arr.map( (x, i) => (
+  // <SRLWrapper>
+  //   <div className="carousel-img-container carousel-img-container-recipe-page">
+  //     <img className="carousel-img" src={x} alt='alt' />
+  //   </div>
+  // </SRLWrapper>
+  
+  <div key={i} className="carousel-img-container">
+    <Link to="#" className="carousel-link-home">
+      <SRLWrapper>
+        <img className="carousel-img" src={x} alt='alt' />
+      </SRLWrapper>
+    </Link>
+  </div>
+
 ));
 
 const Recipe = (props) => {
@@ -91,21 +101,37 @@ const Recipe = (props) => {
           console.log('caritems',carouselItems)
           setImages(carouselItems)
         } else {
-          setImages(res.data.map(x => (
-            <SRLWrapper>
-              <div className="carousel-img-container carousel-img-container-recipe-page">
-                <img 
-                  className="carousel-img" 
-                  src={`https://brittanyjewellneal.com/uploaded_files/${x.imageName}`} 
-                  alt={x.imageName} 
-                />
+          setImages(res.data.map((x, i) => (
+            // <SRLWrapper>
+              // <div className="carousel-img-container">
+              //   <img 
+              //     className="carousel-img" 
+              //     src={`https://brittanyjewellneal.com/uploaded_files/${x.imageName}`} 
+              //     alt={x.imageName} 
+              //   />
+              // </div>
+
+              // <div key={i} className="carousel-img-container">
+              //   <Link to="#" className="carousel-link-home">
+              //       <h3 className="carousel-title">Heyder</h3>
+              //       <img className="carousel-img" src={`https://brittanyjewellneal.com/uploaded_files/${x.imageName}`} alt='alt' />
+              //   </Link>
+              // </div>
+            // </SRLWrapper>
+
+            
+              <div key={i} className="carousel-img-container">
+                <Link to="#" className="carousel-link-home">
+                  <SRLWrapper>
+                    <img className="carousel-img" src={`https://brittanyjewellneal.com/uploaded_files/${x.imageName}`} alt='Recipe image.' />
+                  </SRLWrapper>
+                </Link>
               </div>
-            </SRLWrapper>
           )));
         }
       })
     })
-  }, [recipeId, images]);
+  }, []);
   const carousel = () => {
     if (images) {
       return(
@@ -133,10 +159,9 @@ const Recipe = (props) => {
     }
   }       
     
-
   return(
     <>
-      <Container>
+      <Container className="recipe-page-container">
         <h1>Recipe: {recipeName}</h1>
         {images ? null :
         <Spinner variant="success" animation="border" role="status" id="spinner-centered"><span className="sr-only">Loading...</span></Spinner>

@@ -43,8 +43,12 @@ const NavbarContainer = (props) => {
     }
     // outside click 
     // ... do whatever on click outside here ...
-    if (e.target.className.match('login-form-identifier')) {
-      return;
+    if (e.target.className){
+      console.log('e.target', e.target)
+      console.log('e.target.className', e.target.className)
+      if (e.target.className.match('login-form-identifier')) {
+        return;
+      }
     }
     setLoginDropdown(false);
   };
