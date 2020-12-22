@@ -258,19 +258,19 @@ class RecipeUpload extends Component {
               
               <div className="upload-section">
                 <h2>Ingredients</h2>
-                <Button className="button-add" onClick={this.addIngredient} variant="success">Add Ingredient</Button>
                 <ListGroup>
                   {ingredientFields}
                 </ListGroup>
+                <Button className="button-add" onClick={this.addIngredient} variant="success">Add Ingredient</Button>
               </div>
             </div>
 
             <div className="upload-section">
               <h2>Steps</h2>
-              <Button className="button-add" onClick={this.addInstruction} variant="success">Add Step</Button>
               <ListGroup>
                 {instructionFields}
               </ListGroup>
+              <Button className="button-add" onClick={this.addInstruction} variant="success">Add Step</Button>
             </div>
 
             <div className="upload-section">
@@ -278,7 +278,7 @@ class RecipeUpload extends Component {
               <ListGroup>
                 {imageFields}
               </ListGroup>
-              <Button className="button-add-image button-add" variant="success" onClick={this.addImageField}>Add Image</Button>
+              <Button className="button-add-image button-add" variant="success" onClick={this.addImageField}>Add Another Image</Button>
             </div>
 
           </Form>
