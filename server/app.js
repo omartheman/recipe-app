@@ -236,6 +236,17 @@ app.get(`${serverRoute}myrecipes`, (req, res) => {
   });  
 });
 
+app.post(`${serverRoute}check-existing-usernames`, (req, res) => {
+  console.log('Got a POST request to /check-existing-usernames.')
+  console.log(req.body.username)
+  const sql = `SELECT * FROM accounts WHERE username = ?;`;
+  connection.query(sql, [req.body.username], (err, result) => {
+    if (err) throw err;
+    console.log('matched usernames: ',result);
+    res.send(result);
+  });
+});
+
 app.post(`${serverRoute}create-account`, (req, res) => {
   console.log('Create account post working.')
   res.send('Got a POST request to create account.');
@@ -246,7 +257,7 @@ app.post(`${serverRoute}create-account`, (req, res) => {
       ?,
       ?,
       ?
-  )`;
+  );`;
   connection.query(sql, [
     req.body.firstName, 
     req.body.lastName,
@@ -277,7 +288,7 @@ app.post(`${serverRoute}auth`, function(req, res) {
   const username = req.body.username;
   const password = req.body.password;
   if (username && password) {
-    connection.query(`SELECT * FROM accounts WHERE username = ? AND password = ?`, [username, password], function(error, results, fields) {
+    connection.query(`SELECT * FROM accounts WHERE username = ? AND password = ?;`, [username, password], function(error, results, fields) {
       if (results.length > 0) {
         console.log('results in app.post', results);
         req.session.loggedin = true;

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container, Form, Button} from 'react-bootstrap';
+import { Alert, Container, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import global_url_variable from './global_url_variable';
 import './CreateAccount.css';
@@ -8,6 +8,7 @@ import { Redirect } from 'react-router-dom';
 const url = global_url_variable;
 const urlAuth = `${url}auth`;
 const urlCreateAcc = `${url}create-account`;
+const urlCheckExistingUsernames = `${url}check-existing-usernames`;
 axios.defaults.headers.common['Cache-Control'] = 'no-cache';
 axios.defaults.withCredentials = true;
 
@@ -22,7 +23,8 @@ class CreateAccount extends React.Component{
       lastName: '',
       email:'',
       emailConfirm: '',
-      redirect: false
+      redirect: false,
+      errorMessage: null
     }
     this.handleCreateAccSubmit = this.handleCreateAccSubmit.bind(this);
     this.handleCreateAccFormChange = this.handleCreateAccFormChange.bind(this);
@@ -32,54 +34,65 @@ class CreateAccount extends React.Component{
     const {username, password, passwordConfirm, firstName, lastName, email, emailConfirm} = this.state;
     
     if (password !== passwordConfirm) {
-      alert("Please check passwords, they don't match! 🤯");
+      this.setState({errorMessage: 
+        "Please check passwords, they don't match! 🤯"
+      })
       return;
     } 
     if (email !== emailConfirm) {
-      alert("Please check your email inputs, they don't match! 😵");
-
+      this.setState({errorMessage: 
+        "Please check your email inputs, they don't match! 😵"
+      })
       return;
     }
     if (username === '' || password === '' || firstName === '' || lastName === '' || email === '') {
-      alert("Please fill in all fields before sumbitting. 🤓")
-      if (url !== 'http://localhost:4000/recipeapp/recipeapp-server/'){
-        return;
-      }
+      this.setState({errorMessage: 
+        "Please fill in all fields before submitting. 🤓"
+      })
+      return;
     }
     e.preventDefault();
-    axios.post(urlCreateAcc,     
-      {
-        username: username, 
-        password: password,
-        firstName: firstName,
-        lastName: lastName,
-        email: email
+    axios.post(urlCheckExistingUsernames, {username})
+    .then(res => {
+      console.log('check username result: ', res);
+      if (res.data.length > 0) {
+        this.setState({errorMessage: "That username already exists! 🤷"})
+        return;
       }
-    )
-    .then(response => {
-      console.log('axios response: ', response)
-    }).catch(error => {console.log(error)})
-    .then(response => {
-      const {username, password} = this.state;
-      axios.post(urlAuth,     
+      axios.post(urlCreateAcc,     
         {
           username: username, 
-          password: password 
+          password: password,
+          firstName: firstName,
+          lastName: lastName,
+          email: email
         }
       )
       .then(response => {
-        this.props.setNewLoggedInUser(username);
         console.log('axios response: ', response)
       }).catch(error => {console.log(error)})
-      .then( 
-        axios.get(urlAuth) 
-        .then(res => { 
-          console.log(res);
-          this.setState({loggedInUser: res.data})
+      .then(response => {
+        const {username, password} = this.state;
+        axios.post(urlAuth,     
+          {
+            username: username, 
+            password: password 
+          }
+        )
+        .then(response => {
+          this.props.setNewLoggedInUser(username);
+          console.log('axios response: ', response)
         }).catch(error => {console.log(error)})
-      )
-      .then(this.setState({redirect: true}))
-    })
+        .then( 
+          axios.get(urlAuth) 
+          .then(res => { 
+            console.log(res);
+            this.setState({loggedInUser: res.data})
+          }).catch(error => {console.log(error)})
+        )
+        .then(this.setState({redirect: true}))
+      })
+    }).catch(error => {console.log(error)})
   }
 
   handleCreateAccFormChange(eTargetAttrVal, item){
@@ -138,7 +151,6 @@ class CreateAccount extends React.Component{
                 type="email" 
                 placeholder="Please confirm email." 
                 required
-                id="email"
                 onChange={(e) => {
                   this.setState({emailConfirm: e.target.value});
                 }}
@@ -171,23 +183,25 @@ class CreateAccount extends React.Component{
             />
             <Form.Label>Confirm Password</Form.Label>
             <Form.Control 
-              type="password-confirm" 
+              type="password" 
               placeholder="Confirm password 😁" 
               required
               onChange={(e) => {
                 this.setState({passwordConfirm: e.target.value});
               }} 
             />
-
-            <Button 
-              variant="primary" 
-              type="submit"
-              onClick={this.handleCreateAccSubmit}
-              className="submit-button-general"
-            >
-              Submit
-            </Button>
           </Form.Group>
+          {this.state.errorMessage && 
+            <Alert variant="warning">{this.state.errorMessage}</Alert>
+          }
+          <Button 
+            variant="primary" 
+            type="submit"
+            onClick={this.handleCreateAccSubmit}
+            className="submit-button-general"
+          >
+            Sign Me Up!
+          </Button>
         </Container>
       </>
     )

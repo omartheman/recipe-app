@@ -1,3 +1,7 @@
+22 dec tue
+
+add error message for "Username already taken"
+
 21 dec Mon
 
 invisible Recipe Upload if not logged in
