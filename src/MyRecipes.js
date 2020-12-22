@@ -20,6 +20,36 @@ const MyRecipes = (props) => {
       setRecipes([...res.data]);
     });
   }, []);
+  function useWindowSize() {
+    // Initialize state with undefined width/height so server and client renders match
+    // Learn more here: https://joshwcomeau.com/react/the-perils-of-rehydration/
+    const [windowSize, setWindowSize] = useState({
+      width: undefined,
+      height: undefined,
+    });
+
+    useEffect(() => {
+      // Handler to call on window resize
+      function handleResize() {
+        // Set window width/height to state
+        setWindowSize({
+          width: window.innerWidth,
+          height: window.innerHeight,
+        });
+      }
+      
+      // Add event listener
+      window.addEventListener("resize", handleResize);
+      
+      // Call handler right away so state gets updated with initial window size
+      handleResize();
+      
+      // Remove event listener on cleanup
+      return () => window.removeEventListener("resize", handleResize);
+    }, []); // Empty array ensures that effect is only run on mount
+
+    return windowSize;
+  };
   let recipeListLeft;
   let recipeListRight;
   if (recipes.length > 0) {
@@ -46,11 +76,24 @@ const MyRecipes = (props) => {
       } else {return null}
     })
   }
+  
+  const recipeListMobile = recipes.map((x, ind) => (
+    <ListGroup.Item 
+      className="recipe-list-group-item fade-in"  
+      key={ind} 
+      variant="secondary" 
+      as={Link} 
+      to={`/recipeapp/recipe/${x.id}`}
+    >
+      {x.item}
+    </ListGroup.Item>
+  )); //End of recipeListMobile variable definition
+  const size = useWindowSize();
   return(
     <>
       <Container>
         <h1>My Recipes</h1>
-        {recipes.length > 0 ? 
+        {(recipes.length > 0 && size.width > 610) &&
         <Row>
           <Col>
             <ListGroup className="recipe-list-group">
@@ -62,8 +105,15 @@ const MyRecipes = (props) => {
               {recipeListRight}
             </ListGroup>
           </Col>
-        </Row>:
-        <Spinner variant="success" animation="border" role="status" id="spinner-centered" className="spinner-home-carousel"><span className="sr-only">Loading...</span></Spinner>
+        </Row>
+        }
+        {(recipes.length > 0 && size.width <= 610) &&
+          <ListGroup>
+            {recipeListMobile}
+          </ListGroup>
+        }
+        {recipes.length === 0 &&
+          <Spinner variant="success" animation="border" role="status" id="spinner-centered" className="spinner-home-carousel"><span className="sr-only">Loading...</span></Spinner>
         }
       </Container>
     </>

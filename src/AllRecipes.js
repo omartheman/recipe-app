@@ -50,7 +50,7 @@ const AllRecipes = (props) => {
     }, []); // Empty array ensures that effect is only run on mount
 
     return windowSize;
-  }
+  };
   console.log(useWindowSize());
   let recipeListLeft;
   let recipeListRight;
@@ -133,7 +133,7 @@ const AllRecipes = (props) => {
       </span>
       {x.item}
     </ListGroup.Item>
-  )) //End of recipeListMobile variable definition
+  )); //End of recipeListMobile variable definition
   const size = useWindowSize();
   return(
     <>
