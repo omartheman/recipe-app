@@ -114,15 +114,14 @@ class Home extends React.Component {
     return(
       <div>
         <Container id="home">
+          <h1>Home</h1>
           {carousel()} 
           <Row>
             <Col lg>
               <HomeMainCont />
             </Col>
             <Col lg>
-              <FeaturedRecipe 
-              
-              />
+              <FeaturedRecipe />
             </Col>
           </Row>
         </Container>
