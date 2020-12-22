@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, ListGroup, Row, Col, Spinner } from 'react-bootstrap';
 import axios from 'axios';
 import global_url_variable from './global_url_variable';
-import './MyRecipes.css';
+import './MyRecipes.scss';
 import { Link } from 'react-router-dom';
 import './AllRecipes.scss';
 
@@ -91,6 +91,12 @@ const AllRecipes = (props) => {
         return(
           <ListGroup.Item 
             className="recipe-list-group-item fade-in" 
+            style={
+              recipes.length/2 <= 5 ?
+                {animationDelay: `${(ind/2+1 - (ind/2+1) / 2) * 0.2}s`}
+                :
+                {animationDelay: `${(ind/2+1 - (ind/2+1) / 2) * 0.1}s`}
+            }
             key={ind} 
             variant="secondary" 
             as={Link} 
@@ -98,7 +104,12 @@ const AllRecipes = (props) => {
           >
             <span 
               className="recipe-item-animation-overlay fade-in-color"
-              style={{animationDelay: `${(recipes.length/2 - (recipes.length/2) / 2) * 0.2 + 0.5/(ind+1)}s`}}
+              style={
+                recipes.length/2 <= 5 ?
+                {animationDelay: `${(recipes.length/2 - (recipes.length/2) / 2) * 0.2 + 0.5/(ind+1)}s`}
+                :
+                {animationDelay: `${(recipes.length/2 - (recipes.length/2) / 2) * 0.1 + 0.5/(ind+1)}s`}
+              }
             >
             </span>
             {x.item}

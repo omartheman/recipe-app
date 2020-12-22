@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Container, ListGroup, Row, Col, Spinner } from 'react-bootstrap';
 import axios from 'axios';
 import global_url_variable from './global_url_variable';
-import './MyRecipes.css';
+import './MyRecipes.scss';
 import { Link } from 'react-router-dom';
-import './App.scss';
+import './App.css';
 
 const url = global_url_variable;
 const urlMyRecipes = `${url}myrecipes`;
@@ -91,7 +91,7 @@ const MyRecipes = (props) => {
   const size = useWindowSize();
   return(
     <>
-      <Container>
+      <Container className="all-recipes-container">
         <h1>My Recipes</h1>
         {(recipes.length > 0 && size.width > 610) &&
         <Row>
