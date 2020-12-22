@@ -40,14 +40,71 @@ class RecipeUpload extends Component {
     this.removeImageField = this.removeImageField.bind(this);
     this.addInstruction = this.addInstruction.bind(this);
   }
+  componentDidMount(){
+    // axios.get(urlAuth)
+    // .then(res => {
+    //   if (res.data === '' || !res.data){
+    //       alert("You're not logged in. 👻 You must be logged in to upload!")
+    //       return;
+    //   }
+    // })
+  }
+  componentDidUpdate(){
+    console.log('state', this.state)
+  }
   handlePostRecipe(){
+    
     axios.get(urlAuth)
     .then(res => {
-      // if (res.data === ''){
-        //   alert("You're not logged in. You must be logged in to upload!")
-        //   return;
+      // if (res.data === '' || !res.data){
+      //     alert("You're not logged in. You must be logged in to upload!")
+      //     return;
       // }
+      
+      /*
+      recipes: [],
+      item: '',
+      cook: '',
+      description: '',
+      ingredients: [''],
+      amounts: [''],
+      blobFile: null,
+      originalFileName: null,
+      newImages: [],
+      numImageFields: 1,
+      imageFields: [0],
+      instructions: [''],
+      redirect: false
+      */
       const {item, cook, description, ingredients, amounts, newImages, instructions} = this.state;
+      if (item === '' || cook === '' || description === '' || ingredients.length === 1 || instructions.length === 1 || newImages.length === 0) {
+        for (let i = 0; i < ingredients.length; i++){
+          if (ingredients[i] === '') {
+            alert("Please fill in all ingredient fields before sumbitting. 🥕")
+            return;
+          }
+        }
+        for (let i = 0; i < amounts.length; i++){
+          if (amounts[i] === '') {
+            alert("🍜 Please give an amount for each ingredient before submitting.")
+            return;
+          }
+        }
+        for (let i = 0; i < instructions.length; i++){
+          if (instructions[i] === '') {
+            alert("🍆 Please fill in all instruction fields before submitting.")
+            return;
+          }
+        }
+        if (newImages.length === 0) {
+          alert("Please add at least one image. 🥝 Even if it's just from Google.")
+          return;
+        }
+        alert("Please fill in all fields before sumbitting. 🤓")
+        // if (url !== 'http://localhost:4000/recipeapp/recipeapp-server/'){
+          return;
+        // }
+      }
 
       console.log('newimages', newImages)
       let formData = new FormData();
