@@ -1,6 +1,8 @@
 22 dec tue
 
-add error message for "Username already taken"
+add "To Try" functionality. 
+  -ALl you need to upload is pic OR link
+  -
 
 21 dec Mon
 

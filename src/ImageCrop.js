@@ -86,10 +86,11 @@ class ImageCrop extends PureComponent {
   }
   render() {
     const { crop, croppedImageUrl, src } = this.state;
+    console.log('image num ', this.props.index_num)
     return (
       <div className="">
         <Form.Label htmlFor={`file-upload-${this.props.id_num}`} className="file-upload-new-button btn btn-info">
-          Choose Image #{this.props.index_num + 1}
+          Choose Image
         </Form.Label>
         <span className="image-shown-below-text">
           {src ? ` Image #${this.props.index_num + 1} shown below` : " No image chosen."}

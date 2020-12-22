@@ -66,6 +66,7 @@ const NavbarContainer = (props) => {
         <Nav.Link as={Link} to="/recipeapp/">Home</Nav.Link>
         <Nav.Link as={Link} to="/recipeapp/recipe-upload">Recipe Upload</Nav.Link>
         <Nav.Link as={Link} to="/recipeapp/all-recipes">All Recipes</Nav.Link>
+        <Nav.Link as={Link} to="/recipeapp/to-try">To Try</Nav.Link>
         <Nav.Link className={loggedInUser === null || loggedInUser === '' ? "hidden" : null} as={Link} to="/recipeapp/myrecipes">My Recipes</Nav.Link>
         <NavDropdown 
           title={`Hello, ${loggedInUser}!`} 
