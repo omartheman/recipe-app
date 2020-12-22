@@ -2,7 +2,7 @@ import './App.css';
 import React, { Component } from 'react';
 import axios from 'axios';
 import global_url_variable from './global_url_variable';
-import { Container, Form, Button, ListGroup } from 'react-bootstrap';
+import { Alert, Container, Form, Button, ListGroup } from 'react-bootstrap';
 import './RecipeUpload.scss';
 import 'react-image-crop/dist/ReactCrop.css';
 import ImageCrop from './ImageCrop'; 
@@ -31,7 +31,8 @@ class RecipeUpload extends Component {
       numImageFields: 1,
       imageFields: [0],
       instructions: [''],
-      redirect: false
+      redirect: false,
+      errorMessage: null
     }
     this.handlePostRecipe = this.handlePostRecipe.bind(this);
     this.addIngredient = this.addIngredient.bind(this);
@@ -344,6 +345,10 @@ class RecipeUpload extends Component {
             </div>
 
           </Form>
+          
+          {this.state.errorMessage && 
+            <Alert>{this.state.errorMessage}</Alert>
+          }
           <Button variant="primary" className="post-recipe-button" onClick={this.handlePostRecipe}>Post Your New Recipe!</Button>
         </Container>
       </> 

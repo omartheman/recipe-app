@@ -16,6 +16,9 @@
   @media (max-width: 575px){
     width: 75%;
   }
+  &:hover {
+    box-shadow: 0 0 15px 2px rgb(54, 175, 64);
+  }
 }
 .button-remove {
   border-radius: 1000px !important;
