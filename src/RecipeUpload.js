@@ -140,13 +140,15 @@ class RecipeUpload extends Component {
     const instructionFields = instructions.map((inst, index) => {
       return(
           <ListGroup.Item variant="info" key={index}>
-              <Button 
-                className="remove-step-button button-remove"
-                variant="danger"
-                onClick={() => {this.removeInstruction(index)}}
-              >
-                X
-              </Button>
+              { this.state.instructions.length > 1 && 
+                <Button 
+                  className="remove-step-button button-remove"
+                  variant="danger"
+                  onClick={() => {this.removeInstruction(index)}}
+                >
+                  X
+                </Button>
+              }
               <Form.Label><h3>Step {index + 1}:</h3></Form.Label>
               <Form.Control  
                 as="textarea"
@@ -200,13 +202,15 @@ class RecipeUpload extends Component {
                 }}
               />
             </div>
-            <Button 
-              className="button-remove" 
-              variant="danger"
-              onClick={() => {this.removeIngredient(index)}}
-            >
-              X
-            </Button>
+            { this.state.ingredients.length > 1 && 
+              <Button 
+                className="button-remove" 
+                variant="danger"
+                onClick={() => {this.removeIngredient(index)}}
+              >
+                X
+              </Button>
+            }
           </ListGroup.Item>
       );
     })
