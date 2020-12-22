@@ -1,11 +1,3 @@
-
-.recipe-upload-form h2 {
-  // position: absolute !important;
-}
-#recipe-info-heading {
-  // position: static !important;
-  margin-bottom: 20px;
-}
 .button-add {
   margin: 0 auto;
   width: 50%;
@@ -50,23 +42,30 @@
   border-radius: 1000px !important;
   box-shadow: 0 0 5px 1px grey;
   display: block !important; 
-  margin-top: 80px; 
-  margin: 80px auto 0 !important;
+  margin: 20px auto !important;
   height: 50px;
-  width: 50%;
+  width: 40%;
   @media (max-width: 767px){
     width: 100%;
   }
-}
-.post-recipe-button:hover {
-  box-shadow: 0 0 10px 2px rgb(0, 188, 235);
+  &:hover {
+    box-shadow: 0 0 10px 2px rgb(0, 188, 235);
+  }
 }
 .remove-step-button {
  float: right;
  margin-bottom: 10px; 
 }
-.upload-section {
-  margin-top: 50px;
+.recipe-upload-container {
+  .alert {
+    margin: 0 20px;
+    box-shadow: 0 0 10px 2px rgb(141, 141, 141);
+    text-align: center;
+  }
 }
-.upload-section > .list-group {
+#recipe-info-heading {
+  margin-bottom: 20px;
+}
+.upload-section {
+  margin: 50px 0 80px;
 }

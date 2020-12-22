@@ -81,30 +81,39 @@ class RecipeUpload extends Component {
       if (item === '' || cook === '' || description === '' || ingredients.length === 1 || instructions.length === 1 || newImages.length === 0) {
         for (let i = 0; i < ingredients.length; i++){
           if (ingredients[i] === '') {
-            alert("Please fill in all ingredient fields before sumbitting. 🥕")
+            this.setState({errorMessage:
+              "Please fill in all ingredient fields before submitting. 🥕"
+            })
             return;
           }
         }
         for (let i = 0; i < amounts.length; i++){
           if (amounts[i] === '') {
-            alert("🍜 Please give an amount for each ingredient before submitting.")
+            this.setState({errorMessage:
+              "🍜 Please give an amount for each ingredient before submitting."
+            })
             return;
           }
         }
         for (let i = 0; i < instructions.length; i++){
           if (instructions[i] === '') {
-            alert("🍆 Please fill in all instruction fields before submitting.")
+            this.setState({errorMessage:
+              "🍆 Please fill in all instruction fields before submitting."
+            })
             return;
           }
         }
         if (newImages.length === 0) {
-          alert("Please add at least one image. 🥝 Even if it's just from Google.")
+          this.setState({errorMessage:
+            "Please add at least one image. 🥝 Even if it's just from Google."
+          })
           return;
         }
-        alert("Please fill in all fields before sumbitting. 🤓")
-        // if (url !== 'http://localhost:4000/recipeapp/recipeapp-server/'){
+        
+        this.setState({errorMessage:
+          "Please fill in all fields before submitting. 🍉"
+        })
           return;
-        // }
       }
 
       console.log('newimages', newImages)
@@ -284,7 +293,7 @@ class RecipeUpload extends Component {
     return ( 
       <> 
         {redirect ? <Redirect to="/recipeapp/recipe-upload-success" /> : null}
-        <Container>
+        <Container className="recipe-upload-container">
           <h1>Recipe Upload</h1>
           <Form autoComplete="off" className="recipe-upload-form">
             <div className="upload-section">
@@ -347,7 +356,7 @@ class RecipeUpload extends Component {
           </Form>
           
           {this.state.errorMessage && 
-            <Alert>{this.state.errorMessage}</Alert>
+            <Alert variant="warning">{this.state.errorMessage}</Alert>
           }
           <Button variant="primary" className="post-recipe-button" onClick={this.handlePostRecipe}>Post Your New Recipe!</Button>
         </Container>
