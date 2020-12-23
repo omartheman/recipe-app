@@ -59,11 +59,22 @@ function ToTry(props) {
       })
     })
   }
-  const deleteToTry = () => {
-    console.log('delete')
-    axios.delete(urlToTryDelete, {data: {test: 'value'}})
+  const deleteToTry = (e) => {
+    const id = e.target.getAttribute('id_num');
+    axios.delete(urlToTryDelete, {
+      data: {
+        id: id, 
+        loggedInUser: props.loggedInUser
+      }
+    })
     .then(res => {
       console.log(res);
+      axios.post(urlToTryGet, {
+        loggedInUser: props.loggedInUser
+      })
+      .then(res => {
+        setTryItems(res.data);
+      })
     })
   }
   let tryList = null;
@@ -90,6 +101,7 @@ function ToTry(props) {
                 variant="outline-danger" 
                 className="to-try-delete-button"
                 onClick={deleteToTry}
+                id_num={x.id}
               >
                 X
               </Button>

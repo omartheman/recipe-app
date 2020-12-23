@@ -137,6 +137,14 @@ app.post(`${serverRoute}get-images`, (req, res) => {
 app.delete(`${serverRoute}to-try-delete`, (req, res) => {
   console.log('to try delete')
   console.log(req.body);
+  const user = replaceSqlCharacters(spacesToUnderscores(req.body.loggedInUser));
+  const sql = `
+    DELETE FROM to_try_${user} WHERE id = ${req.body.id};
+  `;
+  connection.query(sql, (err, result) => {
+    if (err) throw err; 
+    res.send(result);
+  });
 });
 
 app.post(`${serverRoute}to-try-get`, (req, res) => {
