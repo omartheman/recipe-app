@@ -1,3 +1,10 @@
+23 dec Wed
+
+Add bigger image on recipe page for single images
+add info about cook etc on All Recipes rows 
+Add search function to 'to try' and 'all recipes' 
+add tags to recipe upload 
+
 22 dec tue
 
 retrieve all data from user_to_try and display it in "to try" page. 

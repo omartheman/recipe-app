@@ -109,11 +109,12 @@ class RecipeUpload extends Component {
           })
           return;
         }
-        
-        this.setState({errorMessage:
-          "Please fill in all fields before submitting. 🍉"
-        })
-          return;
+        if (item === '' || cook === '' || description === ''){
+          this.setState({errorMessage:
+            "Please fill in all fields before submitting. 🍉"
+          })
+            return;
+        }
       }
 
       console.log('newimages', newImages)

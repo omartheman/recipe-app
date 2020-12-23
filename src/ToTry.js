@@ -7,7 +7,7 @@ import axios from 'axios';
 import global_url_variable from './global_url_variable';
 
 const url = global_url_variable;
-const urlToTry = `${url}to-try`
+const urlToTryUpload = `${url}to-try-upload`
 const urlToTryGet = `${url}to-try-get`
 
 function ToTry(props) {
@@ -48,7 +48,7 @@ function ToTry(props) {
     formData.append('link', link);
     formData.append('item', item);
 
-    axios.post(urlToTry, formData)
+    axios.post(urlToTryUpload, formData)
     .then(res => {
       console.log('Response in To Try Post: ', res)
       console.log('getting new items')
@@ -62,25 +62,30 @@ function ToTry(props) {
   }
   let tryList = null;
   if (tryItems) {
-    tryList = tryItems.map((x, i) => 
-      <ListGroup.Item variant="secondary" key={i}>
-        <Row>
-          <Col>
-            {x.item}
-          </Col>
-          <Col>
-            {x.link}
-          </Col>
-          <Col>
-            Tags
-          </Col>
-          <Col>
-            image
-            <Button variant="outline-danger" className="to-try-delete-button">X</Button>
-          </Col>
-        </Row>
-      </ListGroup.Item>
-    );
+    if (tryItems.length > 0) {
+
+      tryList = tryItems.map((x, i) => 
+        <ListGroup.Item variant="secondary" key={i}>
+          <Row>
+            <Col>
+              {x.item}
+            </Col>
+            <Col>
+            <a href={x.link} target="_blank">
+              {x.link}
+            </a>
+            </Col>
+            <Col>
+              Tags
+            </Col>
+            <Col>
+              image
+              <Button variant="outline-danger" className="to-try-delete-button">X</Button>
+            </Col>
+          </Row>
+        </ListGroup.Item>
+      );
+    }
   }
   const handleItemInput = (e) => {
     setItem(e.target.value);

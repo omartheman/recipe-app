@@ -1,10 +1,24 @@
+IF (SELECT 1 = 1 FROM to_try_test WHERE id=*) THEN
+BEGIN
+    SELECT * FROM to_try_test
+END;
+
+
+
+      CREATE TABLE IF NOT EXISTS to_try_test (
+      id int(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+      item varchar(255),
+      imageName varchar(255),
+      link varchar(255)
+    );
+
 --Create table for recipes To Try
-	CREATE TABLE IF NOT EXISTS ?_to_try
-	id AUTO_INCREMENT PRIMARY KEY,
+	CREATE TABLE IF NOT EXISTS to_try_test (
+	id int(20) AUTO_INCREMENT PRIMARY KEY,
 	item varchar(255),
 	imageName varchar(255),
-	link varchar(255);
-
+	link varchar(255)
+	);
 --order alphabetically
 	SELECT * FROM recipes WHERE user = '${req.session.username}' ORDER BY user;
 ======================

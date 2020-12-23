@@ -138,23 +138,33 @@ app.post(`${serverRoute}to-try-get`, (req, res) => {
   console.log('to try get user:', req.body.loggedInUser)
   if (req.body.loggedInUser){
     const user = replaceSqlCharacters(spacesToUnderscores(req.body.loggedInUser));
-    const sql = `SELECT * FROM ${user}_to_try;`;
-    connection.query(sql, (err, result) => {
-      if (err) throw err; 
-      console.log(result);
-      res.send(result);
+    const sqlCreateToTryTable = `
+      CREATE TABLE IF NOT EXISTS to_try_${user} (
+        id int(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        item varchar(255),
+        imageName varchar(255),
+        link varchar(255)
+    );`;
+    connection.query(sqlCreateToTryTable, (err, result) => {
+      if (err) throw err;
+      const sql = `SELECT * FROM to_try_${user};`;
+      connection.query(sql, (err, result) => {
+        if (err) throw err; 
+        console.log(result);
+        res.send(result);
+      });
     });
-  }
+  };
 });
 
-app.post(`${serverRoute}to-try`, imageUpload.array("imageFile"),
+app.post(`${serverRoute}to-try-upload`, imageUpload.array("imageFile"),
   (req, res) => {
     console.log('req.files: ', req.files);
     console.log('"To Try" request body', req.body);
     console.log('logged user /', req.body.loggedInUser,'/');
     const user = replaceSqlCharacters(spacesToUnderscores(req.body.loggedInUser));
     const sql = `
-      CREATE TABLE IF NOT EXISTS ${user}_to_try (
+      CREATE TABLE IF NOT EXISTS to_try_${user} (
       id int(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
       item varchar(255),
       imageName varchar(255),
@@ -166,7 +176,7 @@ app.post(`${serverRoute}to-try`, imageUpload.array("imageFile"),
       if (req.files[0] && req.body.link) {
         console.log(result);
         const sqlSaveToTry = `
-          INSERT INTO ${user}_to_try (item, imageName, link)
+          INSERT INTO to_try_${user} (item, imageName, link)
           VALUES (?, ?, ?)
         `;
         connection.query(sqlSaveToTry, [
@@ -181,7 +191,7 @@ app.post(`${serverRoute}to-try`, imageUpload.array("imageFile"),
       } else if (req.body.link) {
         console.log(result);
         const sqlSaveToTry = `
-          INSERT INTO ${user}_to_try (item, link)
+          INSERT INTO to_try_${user} (item, link)
           VALUES (?, ?)
         `;
         connection.query(sqlSaveToTry, [
@@ -195,7 +205,7 @@ app.post(`${serverRoute}to-try`, imageUpload.array("imageFile"),
       } else if (req.files[0]){
         console.log(result);
         const sqlSaveToTry = `
-          INSERT INTO ${user}_to_try (item, link)
+          INSERT INTO to_try_${user} (item, link)
           VALUES (?, ?)
         `;
         connection.query(sqlSaveToTry, [
