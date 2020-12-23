@@ -1,8 +1,8 @@
 const mode =
 
-"productionBritt";
-/*
 "developmentOmar";
+/*
+"productionBritt";
 */
 
 const express = require('express');
@@ -133,6 +133,83 @@ app.post(`${serverRoute}get-images`, (req, res) => {
     res.send(result);
   })
 })
+
+app.post(`${serverRoute}to-try-get`, (req, res) => {
+  console.log('to try get user:', req.body.loggedInUser)
+  if (req.body.loggedInUser){
+    const user = replaceSqlCharacters(spacesToUnderscores(req.body.loggedInUser));
+    const sql = `SELECT * FROM ${user}_to_try;`;
+    connection.query(sql, (err, result) => {
+      if (err) throw err; 
+      console.log(result);
+      res.send(result);
+    });
+  }
+});
+
+app.post(`${serverRoute}to-try`, imageUpload.array("imageFile"),
+  (req, res) => {
+    console.log('req.files: ', req.files);
+    console.log('"To Try" request body', req.body);
+    console.log('logged user /', req.body.loggedInUser,'/');
+    const user = replaceSqlCharacters(spacesToUnderscores(req.body.loggedInUser));
+    const sql = `
+      CREATE TABLE IF NOT EXISTS ${user}_to_try (
+      id int(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+      item varchar(255),
+      imageName varchar(255),
+      link varchar(255)
+    );`;
+    console.log('modified username', user)
+    connection.query(sql, (err, result) => {
+      if (err) throw err; 
+      if (req.files[0] && req.body.link) {
+        console.log(result);
+        const sqlSaveToTry = `
+          INSERT INTO ${user}_to_try (item, imageName, link)
+          VALUES (?, ?, ?)
+        `;
+        connection.query(sqlSaveToTry, [
+          req.body.item, 
+          req.files[0].filename,
+          req.body.link
+        ]), (err, result) => {
+          if (err) throw err; 
+          console.log(result);
+          res.send(result);
+        }
+      } else if (req.body.link) {
+        console.log(result);
+        const sqlSaveToTry = `
+          INSERT INTO ${user}_to_try (item, link)
+          VALUES (?, ?)
+        `;
+        connection.query(sqlSaveToTry, [
+          req.body.item, 
+          req.body.link
+        ]), (err, result) => {
+          if (err) throw err; 
+          console.log(result);
+          res.send(result);
+        };
+      } else if (req.files[0]){
+        console.log(result);
+        const sqlSaveToTry = `
+          INSERT INTO ${user}_to_try (item, link)
+          VALUES (?, ?)
+        `;
+        connection.query(sqlSaveToTry, [
+          req.body.item, 
+          req.body.link
+        ]), (err, result) => {
+          if (err) throw err; 
+          console.log(result);
+          res.send(result);
+        };
+      }
+      res.send(result);
+    });
+});
 
 app.post(`${serverRoute}image-upload`, imageUpload.array("imageFile"),
   (req, res) => {

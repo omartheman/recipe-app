@@ -1,4 +1,9 @@
-
+--Create table for recipes To Try
+	CREATE TABLE IF NOT EXISTS ?_to_try
+	id AUTO_INCREMENT PRIMARY KEY,
+	item varchar(255),
+	imageName varchar(255),
+	link varchar(255);
 
 --order alphabetically
 	SELECT * FROM recipes WHERE user = '${req.session.username}' ORDER BY user;

@@ -10,4 +10,22 @@
   form {
     margin: 40px 0;
   }
+  .to-try-upload-images-title {
+    text-align: left; 
+    margin: 20px 0 !important;
+  }
+  .to-try-upload-titles {
+
+  }
+}
+.to-try-delete-button {
+  border-radius: 100px !important;
+  float: right;
+  margin: 0 !important;
+}
+.to-try-message-required {
+  color: rgb(195, 0, 0);
+}
+.to-try-message-optional {
+  color: rgb(20, 102, 0);
 }

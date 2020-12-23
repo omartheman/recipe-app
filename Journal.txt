@@ -1,8 +1,12 @@
 22 dec tue
 
+retrieve all data from user_to_try and display it in "to try" page. 
+
 add "To Try" functionality. 
   -ALl you need to upload is pic OR link
-  -
+
+Make it so link and image are stored in state. 
+add image file conversion from recipe upload axios post 
 
 21 dec Mon
 
