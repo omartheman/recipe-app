@@ -1,7 +1,6 @@
 import './ToTry.scss';
 import { useState, useEffect } from 'react'; 
 import { Alert, Button, Container, Form, ListGroup, Row, Col } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import ImageCrop from './ImageCrop'; 
 import axios from 'axios';
 import global_url_variable from './global_url_variable';
@@ -9,13 +8,13 @@ import global_url_variable from './global_url_variable';
 const url = global_url_variable;
 const urlToTryUpload = `${url}to-try-upload`
 const urlToTryGet = `${url}to-try-get`
+const urlToTryDelete = `${url}to-try-delete`
 
 function ToTry(props) {
   const [item, setItem] = useState(null);
   const [link, setLink] = useState(null);
   const [image, setImage] = useState(null);
   const [loginAlert, setLoginAlert] = useState(null);
-  const [tryLinks, setTryLinks] = useState(null);
   const [tryItems, setTryItems] = useState(null);
   useEffect(()=>{
     console.log(item)
@@ -60,6 +59,13 @@ function ToTry(props) {
       })
     })
   }
+  const deleteToTry = () => {
+    console.log('delete')
+    axios.delete(urlToTryDelete, {data: {test: 'value'}})
+    .then(res => {
+      console.log(res);
+    })
+  }
   let tryList = null;
   if (tryItems) {
     if (tryItems.length > 0) {
@@ -80,7 +86,13 @@ function ToTry(props) {
             </Col>
             <Col>
               image
-              <Button variant="outline-danger" className="to-try-delete-button">X</Button>
+              <Button 
+                variant="outline-danger" 
+                className="to-try-delete-button"
+                onClick={deleteToTry}
+              >
+                X
+              </Button>
             </Col>
           </Row>
         </ListGroup.Item>
@@ -113,7 +125,7 @@ function ToTry(props) {
               </ListGroup>
           </div>
           {loginAlert &&
-            <Alert variant="warning">You must be logged in to submit!</Alert>
+            <Alert variant="warning" className="to-try-login-alert alert-warning">You must be logged in to submit!</Alert>
           }
           <Button onClick={postRecipeToTry}>Submit</Button>
         </Form>
@@ -125,6 +137,9 @@ function ToTry(props) {
               </Col>
               <Col>
                 <strong>Link</strong>
+              </Col>
+              <Col>
+                <strong>Tags</strong>
               </Col>
               <Col>
                 <strong>Image</strong>

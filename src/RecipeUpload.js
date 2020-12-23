@@ -54,30 +54,10 @@ class RecipeUpload extends Component {
     console.log('state', this.state)
   }
   handlePostRecipe(){
-    
     axios.get(urlAuth)
     .then(res => {
-      // if (res.data === '' || !res.data){
-      //     alert("You're not logged in. You must be logged in to upload!")
-      //     return;
-      // }
-      
-      /*
-      recipes: [],
-      item: '',
-      cook: '',
-      description: '',
-      ingredients: [''],
-      amounts: [''],
-      blobFile: null,
-      originalFileName: null,
-      newImages: [],
-      numImageFields: 1,
-      imageFields: [0],
-      instructions: [''],
-      redirect: false
-      */
       const {item, cook, description, ingredients, amounts, newImages, instructions} = this.state;
+      console.log('postin')
       if (item === '' || cook === '' || description === '' || ingredients.length === 1 || instructions.length === 1 || newImages.length === 0) {
         for (let i = 0; i < ingredients.length; i++){
           if (ingredients[i] === '') {
@@ -357,7 +337,7 @@ class RecipeUpload extends Component {
           </Form>
           
           {this.state.errorMessage && 
-            <Alert variant="warning">{this.state.errorMessage}</Alert>
+            <Alert className="alert-warning" variant="warning">{this.state.errorMessage}</Alert>
           }
           <Button variant="primary" className="post-recipe-button" onClick={this.handlePostRecipe}>Post Your New Recipe!</Button>
         </Container>

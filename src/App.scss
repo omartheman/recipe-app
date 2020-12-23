@@ -11,6 +11,10 @@ h2 {
   opacity: 0;
   animation: fade_in 1s forwards;
 }
+.alert-warning {
+  box-shadow: 0 0 10px 2px rgb(172, 172, 172);
+  text-align: center;
+}
 .carousel-title {
   background: rgba(253, 253, 253, 0.781);
   /* border-radius: 30px; */

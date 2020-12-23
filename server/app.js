@@ -45,7 +45,7 @@ if (mode === 'productionBritt') {
 app.use(express.static(__dirname + '../..'));
 app.use(cors({
   origin:[corsOrigin],
-  methods:['GET','POST'],
+  methods:['GET','POST', 'DELETE'],
   credentials: true }));// enable set cookie
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -133,6 +133,11 @@ app.post(`${serverRoute}get-images`, (req, res) => {
     res.send(result);
   })
 })
+
+app.delete(`${serverRoute}to-try-delete`, (req, res) => {
+  console.log('to try delete')
+  console.log(req.body);
+});
 
 app.post(`${serverRoute}to-try-get`, (req, res) => {
   console.log('to try get user:', req.body.loggedInUser)
