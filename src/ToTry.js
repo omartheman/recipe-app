@@ -5,6 +5,7 @@ import ImageCrop from './ImageCrop';
 import NavbarContainer from './NavbarContainer';
 import axios from 'axios';
 import global_url_variable from './global_url_variable';
+import { SRLWrapper } from 'simple-react-lightbox';
 
 const url = global_url_variable;
 const urlToTryUpload = `${url}to-try-upload`
@@ -17,6 +18,7 @@ function ToTry(props) {
   const [image, setImage] = useState(null);
   const [loginAlert, setLoginAlert] = useState(null);
   const [tryItems, setTryItems] = useState(null);
+  const [deletePrimer, setDeletePrimer] = useState(null);
   const [confirmMsg, setConfirmMsg] = useState(false);
 
   useEffect(()=>{
@@ -62,11 +64,10 @@ function ToTry(props) {
       })
     })
   }
-  const deleteToTry = (e) => {
-    const id = e.target.getAttribute('id_num');
+  const deleteToTry = () => {
     axios.delete(urlToTryDelete, {
       data: {
-        id: id, 
+        id: deletePrimer.id, 
         loggedInUser: props.loggedInUser
       }
     })
@@ -99,11 +100,20 @@ function ToTry(props) {
               Tags
             </Col>
             <Col>
-              image
+              <SRLWrapper>
+                <img 
+                  className="to-try-img"
+                  src={`https://brittanyjewellneal.com/uploaded_files/${x.imageName}`} 
+                  alt={x.imageName} 
+                />
+              </SRLWrapper>
               <Button 
                 variant="outline-danger" 
                 className="to-try-delete-button"
-                onClick={() => {setConfirmMsg(true)}}
+                onClick={() => {
+                  setDeletePrimer({id: x.id, item: x.item});
+                  setConfirmMsg(true);
+                }}
                 id_num={x.id}
               >
                 X
@@ -121,21 +131,31 @@ function ToTry(props) {
     <>
       {confirmMsg && 
       <div className="to-try-delete-msg">
-        <h3>Are you sure you want to delete item: xxx?</h3>
-        <div>
-          <Button 
-            variant="danger" 
-            onClick={
-              () => {setConfirmMsg(false)}
-            }
-          >
-            Yes, Delete It.
-          </Button>
-          <Button variant="success">No! Don't Delete It!</Button>
-        </div>
+        <Container>
+
+          <h3>Are you sure you want to delete item: {deletePrimer.item}?</h3>
+          <div className="to-try-delete-msg-btn-container">
+            <Button 
+              variant="success"
+              onClick={() => {
+                setConfirmMsg(false);
+              }}
+            >
+              No! Don't Delete It!
+            </Button>
+            <Button 
+              variant="danger" 
+              onClick={() => {
+                setConfirmMsg(false);
+                deleteToTry();
+              }}
+            >
+              Yes, Delete It.
+            </Button>
+          </div>
+        </Container>
       </div>
       }
-      
       <NavbarContainer
         loginSubmit={props.loginSubmit}
         onLoginFormChange={props.onLoginFormChange}
@@ -156,7 +176,7 @@ function ToTry(props) {
           <div className="to-try-message-optional">(Optional)</div>
           <Form.Control type="text" onChange={handleLinkInput} />
           <div className="">
-              <h3 className="to-try-upload-images-title to-try-upload-titles">Upload Image:</h3>
+              <h3 className="to-try-upload-images-title">Upload Image:</h3>
               <ListGroup>
                 <div className="to-try-message-optional">(Optional)</div>
                 <ListGroup.Item variant="primary">

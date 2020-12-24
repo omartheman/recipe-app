@@ -7,6 +7,9 @@ nav {
   // height: var(--navHeight);
   // padding: 0 20px !important;
 }
+#basic-nav-dropdown {
+  font-weight: 600;
+}
 .dropdown:hover .dropdown-menu {
   /* Display navbar on hover, except it doesn't work because click activation interferes */
   display: block;
