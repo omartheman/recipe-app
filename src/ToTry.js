@@ -86,20 +86,21 @@ function ToTry(props) {
     if (tryItems.length > 0) {
 
       tryList = tryItems.map((x, i) => 
-        <ListGroup.Item variant="secondary" key={i}>
+        <ListGroup.Item variant="secondary" key={i} className="to-try-item-row">
           <Row>
             <Col>
-              {x.item}
+              <span className="to-try-col-titles-mobile">Item:</span> {x.item}
             </Col>
             <Col>
+            <span className="to-try-col-titles-mobile">Link: </span>
             <a href={x.link} target="_blank" rel="noreferrer">
               {x.link}
             </a>
             </Col>
             <Col>
-              Tags
+              <span className="to-try-col-titles-mobile">Tags:</span> Tags
             </Col>
-            <Col>
+            <Col className="to-try-img-delete-btn-col">
               <SRLWrapper>
                 <img 
                   className="to-try-img"
@@ -132,7 +133,6 @@ function ToTry(props) {
       {confirmMsg && 
       <div className="to-try-delete-msg">
         <Container>
-
           <h3>Are you sure you want to delete item: {deletePrimer.item}?</h3>
           <div className="to-try-delete-msg-btn-container">
             <Button 
@@ -189,7 +189,7 @@ function ToTry(props) {
           }
           <Button onClick={postRecipeToTry}>Submit</Button>
         </Form>
-        <ListGroup>
+        <ListGroup className="to-try-list-container">
           <ListGroup.Item variant="secondary">
             <Row>
               <Col>
