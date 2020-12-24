@@ -35,11 +35,41 @@ function ToTry(props) {
   const handleLinkInput = (e) => {
     setLink(e.target.value)
   }
+  function useWindowSize() {
+    // Initialize state with undefined width/height so server and client renders match
+    // Learn more here: https://joshwcomeau.com/react/the-perils-of-rehydration/
+    const [windowSize, setWindowSize] = useState({
+      width: undefined,
+      height: undefined,
+    });
+    useEffect(() => {
+      // Handler to call on window resize
+      function handleResize() {
+        // Set window width/height to state
+        setWindowSize({
+          width: window.innerWidth,
+          height: window.innerHeight,
+        });
+      }
+      // Add event listener
+      window.addEventListener("resize", handleResize);
+      // Call handler right away so state gets updated with initial window size
+      handleResize();
+      // Remove event listener on cleanup
+      return () => window.removeEventListener("resize", handleResize);
+    }, []); // Empty array ensures that effect is only run on mount
+    return windowSize;
+  };
+  const size = useWindowSize();
   const handleImageCrop = (blobFile, index) => {
     const newImage = new File([blobFile], blobFile.name, {type: blobFile.type});
     setImage([newImage])
   }
   const postRecipeToTry = () => {
+    if (!item || item ==='') {
+      alert('item')
+      return;
+    }
     setShowInputs(false);
     let formData = new FormData();
     if (!props.loggedInUser || props.loggedInUser === ''){
@@ -90,6 +120,19 @@ function ToTry(props) {
           <Row>
             <Col>
               <span className="to-try-col-titles-mobile">Item:</span> {x.item}
+              {size.width < 992 && 
+                <Button 
+                  variant="outline-danger" 
+                  className="to-try-delete-button"
+                  onClick={() => {
+                    setDeletePrimer({id: x.id, item: x.item});
+                    setConfirmMsg(true);
+                  }}
+                  id_num={x.id}
+                >
+                  X
+                </Button>
+              }
             </Col>
             <Col>
             <span className="to-try-col-titles-mobile">Link: </span>
@@ -104,21 +147,27 @@ function ToTry(props) {
               <SRLWrapper>
                 <img 
                   className="to-try-img"
-                  src={`https://brittanyjewellneal.com/uploaded_files/${x.imageName}`} 
+                  src={
+                    url !== 'http://localhost:4000/recipeapp/recipeapp-server/' ?
+                    `https://brittanyjewellneal.com/uploaded_files/${x.imageName}`
+                    : 'https://images.unsplash.com/photo-1606851361443-fd99450eda8c?ixid=MXwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80'
+                  } 
                   alt={x.imageName} 
                 />
               </SRLWrapper>
-              <Button 
-                variant="outline-danger" 
-                className="to-try-delete-button"
-                onClick={() => {
-                  setDeletePrimer({id: x.id, item: x.item});
-                  setConfirmMsg(true);
-                }}
-                id_num={x.id}
-              >
-                X
-              </Button>
+              {size.width >= 992 && 
+                <Button 
+                  variant="outline-danger" 
+                  className="to-try-delete-button"
+                  onClick={() => {
+                    setDeletePrimer({id: x.id, item: x.item});
+                    setConfirmMsg(true);
+                  }}
+                  id_num={x.id}
+                >
+                  X
+                </Button>
+              }
             </Col>
           </Row>
         </ListGroup.Item>
@@ -128,32 +177,6 @@ function ToTry(props) {
   const handleItemInput = (e) => {
     setItem(e.target.value);
   }
-  function useWindowSize() {
-    // Initialize state with undefined width/height so server and client renders match
-    // Learn more here: https://joshwcomeau.com/react/the-perils-of-rehydration/
-    const [windowSize, setWindowSize] = useState({
-      width: undefined,
-      height: undefined,
-    });
-    useEffect(() => {
-      // Handler to call on window resize
-      function handleResize() {
-        // Set window width/height to state
-        setWindowSize({
-          width: window.innerWidth,
-          height: window.innerHeight,
-        });
-      }
-      // Add event listener
-      window.addEventListener("resize", handleResize);
-      // Call handler right away so state gets updated with initial window size
-      handleResize();
-      // Remove event listener on cleanup
-      return () => window.removeEventListener("resize", handleResize);
-    }, []); // Empty array ensures that effect is only run on mount
-    return windowSize;
-  };
-  const size = useWindowSize();
   return(
     <>
       {confirmMsg && 
@@ -241,6 +264,54 @@ function ToTry(props) {
             </ListGroup.Item>
           }
           {tryItems && tryList}
+
+
+          
+        <ListGroup.Item variant="secondary" className="to-try-item-row">
+          <Row>
+            <Col>
+              <span className="to-try-col-titles-mobile">Item:</span> Item
+              {
+                size.width < 992 && 
+                <Button 
+                  variant="outline-danger" 
+                  className="to-try-delete-button"
+                >
+                  X
+                </Button>
+              }
+            </Col>
+            <Col>
+            <span className="to-try-col-titles-mobile">Link: </span>
+            <a href='#' target="_blank" rel="noreferrer">
+              Link
+            </a>
+            </Col>
+            <Col>
+              <span className="to-try-col-titles-mobile">Tags:</span> Tags
+            </Col>
+            <Col className="to-try-img-delete-btn-col">
+              <SRLWrapper>
+                <img 
+                  className="to-try-img"
+                  src={'https://images.unsplash.com/photo-1606851361443-fd99450eda8c?ixid=MXwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80'
+                  } 
+                  alt={'alt'} 
+                />
+              </SRLWrapper>
+              {
+                size.width >= 992 && 
+                <Button 
+                  variant="outline-danger" 
+                  className="to-try-delete-button"
+                >
+                  X
+                </Button>
+              }
+            </Col>
+          </Row>
+        </ListGroup.Item>
+
         </ListGroup> 
       </Container>
     </>

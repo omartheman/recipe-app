@@ -39,12 +39,18 @@ if (mode === 'productionBritt') {
     database: 'recipe_app_test'
   });
   corsOrigin = 'http://localhost:3000';
+  netServForMobileReactDev = 'http://192.168.1.88:3000';
   imageUploadPath = 'C:/Users/HP EliteBook 8470p/Documents/Coding/recipe-app/uploaded_files';
 }
 
 app.use(express.static(__dirname + '../..'));
 app.use(cors({
-  origin:[corsOrigin],
+  origin:[
+    corsOrigin, 
+    netServForMobileReactDev,
+    'http://192.168.1.87:3000',
+    'http://192.168.1.254'
+  ],
   methods:['GET','POST', 'DELETE'],
   credentials: true }));// enable set cookie
 app.use(bodyParser.urlencoded({ extended: false }));

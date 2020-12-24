@@ -23,7 +23,16 @@
 .to-try-delete-button {
   border-radius: 100px !important;
   float: right;
+  height: fit-content;
   margin: 0 !important;
+  padding-top: 10px;
+  @media (max-width: 991px){
+    position: absolute; 
+    bottom: 0;
+    right: 10px;
+    top: -5px;
+    height: 38px;
+  }
 }
 .to-try-delete-msg {
   background: rgba(26, 26, 26, 0.931);
@@ -55,8 +64,17 @@
 .to-try-img {
   border-radius: 3px; 
   width: auto;
-  max-width: 200px; 
+  max-width: 75%; 
+  @media (max-width: 1199px){
+    width: 100%;
+  }
   cursor: pointer;
+  float: left; 
+}
+@media (max-width: 991px){
+  .to-try-img {
+    max-width: 100%;
+  }
 }
 .to-try-list-container {
   word-break: break-word;
@@ -70,10 +88,6 @@
 .to-try-message-optional {
   color: rgb(20, 102, 0);
 }
-.to-try-img-delete-btn-col {
-  display: flex;
-  justify-content: space-between;
-}
 .to-try-col-titles-mobile {
   display: none;
 }
@@ -84,6 +98,7 @@
 @media (max-width: 991px){
   .to-try-item-row .row {
     flex-direction: column;
+    // height: fit-content;
     div.col {
       margin-top: 10px;
       margin-bottom: 10px;
@@ -92,5 +107,10 @@
       display: inline;
       font-weight: 700;
     }
+  }
+} 
+@media screen and (max-width: 991px) and (min-width: 576px) {
+  .to-try-item-row {
+    font-size: 20px;
   }
 }

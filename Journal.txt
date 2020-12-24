@@ -1,4 +1,13 @@
+24 dec thu
+
+write article about how to connect to react app server on mobile 
+//add ip to cors
+
 23 dec Wed
+
+add spinner to "to try" after upload
+make 'to try' required field required. 
+replace 'null' in link with something. 
 
 add id number to state to store id values for to try items. 
 
