@@ -20,7 +20,7 @@ function ToTry(props) {
   const [tryItems, setTryItems] = useState(null);
   const [deletePrimer, setDeletePrimer] = useState(null);
   const [confirmMsg, setConfirmMsg] = useState(false);
-
+  const [showInputs, setShowInputs] = useState(false);
   useEffect(()=>{
     console.log(item)
   })
@@ -40,6 +40,7 @@ function ToTry(props) {
     setImage([newImage])
   }
   const postRecipeToTry = () => {
+    setShowInputs(false);
     let formData = new FormData();
     if (!props.loggedInUser || props.loggedInUser === ''){
       setLoginAlert('You must be logged in to add recipe.');
@@ -84,7 +85,6 @@ function ToTry(props) {
   let tryList = null;
   if (tryItems) {
     if (tryItems.length > 0) {
-
       tryList = tryItems.map((x, i) => 
         <ListGroup.Item variant="secondary" key={i} className="to-try-item-row">
           <Row>
@@ -192,29 +192,35 @@ function ToTry(props) {
       />
       <Container className="to-try-container">
         <h1>To Try</h1>
-        <h2>Save a recipe for the future! Add a picture and/or link here.</h2>
-        <Button>Add a Recipe To Try</Button>
-        <Form>
-          <Form.Label><h3>Recipe Name:</h3></Form.Label>
-          <div className="to-try-message-required">(Required)</div>
-          <Form.Control type="text" onChange={handleItemInput} />
-          <Form.Label><h3>Recipe Link:</h3></Form.Label>
-          <div className="to-try-message-optional">(Optional)</div>
-          <Form.Control type="text" onChange={handleLinkInput} />
-          <div className="">
-              <h3 className="to-try-upload-images-title">Upload Image:</h3>
-              <ListGroup>
-                <div className="to-try-message-optional">(Optional)</div>
-                <ListGroup.Item variant="primary">
-                  <ImageCrop onImageCrop={handleImageCrop} />
-                </ListGroup.Item>
-              </ListGroup>
-          </div>
-          {loginAlert &&
-            <Alert variant="warning" className="to-try-login-alert alert-warning">You must be logged in to submit!</Alert>
-          }
-          <Button onClick={postRecipeToTry}>Submit</Button>
-        </Form>
+        <h2>A list for future culinary endeavors.</h2>
+        {showInputs ?  
+          <>
+            <Button variant="warning" onClick={() => {setShowInputs(false)}}>Actually, Don't Add Now.</Button>
+            <Form>
+              <Form.Label><h3>Recipe Name:</h3></Form.Label>
+              <div className="to-try-message-required">(Required)</div>
+              <Form.Control type="text" onChange={handleItemInput} />
+              <Form.Label><h3>Recipe Link:</h3></Form.Label>
+              <div className="to-try-message-optional">(Optional)</div>
+              <Form.Control type="text" onChange={handleLinkInput} />
+              <div className="">
+                  <h3 className="to-try-upload-images-title">Upload Image:</h3>
+                  <ListGroup>
+                    <div className="to-try-message-optional">(Optional)</div>
+                    <ListGroup.Item variant="primary">
+                      <ImageCrop onImageCrop={handleImageCrop} />
+                    </ListGroup.Item>
+                  </ListGroup>
+              </div>
+              {loginAlert &&
+                <Alert variant="warning" className="to-try-login-alert alert-warning">You must be logged in to submit!</Alert>
+              }
+              <Button onClick={postRecipeToTry} className="to-try-submit-btn">Submit</Button>
+            </Form>
+          </>
+          : 
+          <Button onClick={() => {setShowInputs(true)}}>Add a Recipe To Try</Button>
+        }
         <ListGroup className="to-try-list-container">
           {size.width >= 991 && 
             <ListGroup.Item variant="secondary">
