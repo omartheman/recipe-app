@@ -266,51 +266,52 @@ function ToTry(props) {
           {tryItems && tryList}
 
 
-          
-        <ListGroup.Item variant="secondary" className="to-try-item-row">
-          <Row>
-            <Col>
-              <span className="to-try-col-titles-mobile">Item:</span> Item
-              {
-                size.width < 992 && 
-                <Button 
-                  variant="outline-danger" 
-                  className="to-try-delete-button"
-                >
-                  X
-                </Button>
-              }
-            </Col>
-            <Col>
-            <span className="to-try-col-titles-mobile">Link: </span>
-            <a href='#' target="_blank" rel="noreferrer">
-              Link
-            </a>
-            </Col>
-            <Col>
-              <span className="to-try-col-titles-mobile">Tags:</span> Tags
-            </Col>
-            <Col className="to-try-img-delete-btn-col">
-              <SRLWrapper>
-                <img 
-                  className="to-try-img"
-                  src={'https://images.unsplash.com/photo-1606851361443-fd99450eda8c?ixid=MXwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80'
-                  } 
-                  alt={'alt'} 
-                />
-              </SRLWrapper>
-              {
-                size.width >= 992 && 
-                <Button 
-                  variant="outline-danger" 
-                  className="to-try-delete-button"
-                >
-                  X
-                </Button>
-              }
-            </Col>
-          </Row>
-        </ListGroup.Item>
+        {url === 'http://localhost:4000/recipeapp/recipeapp-server/' &&
+          <ListGroup.Item variant="secondary" className="to-try-item-row">
+            <Row>
+              <Col>
+                <span className="to-try-col-titles-mobile">Item:</span> Item
+                {
+                  size.width < 992 && 
+                  <Button 
+                    variant="outline-danger" 
+                    className="to-try-delete-button"
+                  >
+                    X
+                  </Button>
+                }
+              </Col>
+              <Col>
+              <span className="to-try-col-titles-mobile">Link: </span>
+              <a href='#' target="_blank" rel="noreferrer">
+                Link
+              </a>
+              </Col>
+              <Col>
+                <span className="to-try-col-titles-mobile">Tags:</span> Tags
+              </Col>
+              <Col className="to-try-img-delete-btn-col">
+                <SRLWrapper>
+                  <img 
+                    className="to-try-img"
+                    src={'https://images.unsplash.com/photo-1606851361443-fd99450eda8c?ixid=MXwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80'
+                    } 
+                    alt={'alt'} 
+                  />
+                </SRLWrapper>
+                {
+                  size.width >= 992 && 
+                  <Button 
+                    variant="outline-danger" 
+                    className="to-try-delete-button"
+                  >
+                    X
+                  </Button>
+                }
+              </Col>
+            </Row>
+          </ListGroup.Item>
+        }
 
         </ListGroup> 
       </Container>
