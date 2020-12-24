@@ -2,6 +2,7 @@ import './ToTry.scss';
 import { useState, useEffect } from 'react'; 
 import { Alert, Button, Container, Form, ListGroup, Row, Col } from 'react-bootstrap';
 import ImageCrop from './ImageCrop'; 
+import NavbarContainer from './NavbarContainer';
 import axios from 'axios';
 import global_url_variable from './global_url_variable';
 
@@ -16,6 +17,8 @@ function ToTry(props) {
   const [image, setImage] = useState(null);
   const [loginAlert, setLoginAlert] = useState(null);
   const [tryItems, setTryItems] = useState(null);
+  const [confirmMsg, setConfirmMsg] = useState(false);
+
   useEffect(()=>{
     console.log(item)
   })
@@ -88,7 +91,7 @@ function ToTry(props) {
               {x.item}
             </Col>
             <Col>
-            <a href={x.link} target="_blank">
+            <a href={x.link} target="_blank" rel="noreferrer">
               {x.link}
             </a>
             </Col>
@@ -100,7 +103,7 @@ function ToTry(props) {
               <Button 
                 variant="outline-danger" 
                 className="to-try-delete-button"
-                onClick={deleteToTry}
+                onClick={() => {setConfirmMsg(true)}}
                 id_num={x.id}
               >
                 X
@@ -116,6 +119,31 @@ function ToTry(props) {
   }
   return(
     <>
+      {confirmMsg && 
+      <div className="to-try-delete-msg">
+        <h3>Are you sure you want to delete item: xxx?</h3>
+        <div>
+          <Button 
+            variant="danger" 
+            onClick={
+              () => {setConfirmMsg(false)}
+            }
+          >
+            Yes, Delete It.
+          </Button>
+          <Button variant="success">No! Don't Delete It!</Button>
+        </div>
+      </div>
+      }
+      
+      <NavbarContainer
+        loginSubmit={props.loginSubmit}
+        onLoginFormChange={props.onLoginFormChange}
+        loggedInUser={props.loggedInUser}
+        onLogout={props.onLogout}
+        username={props.username}
+        password={props.password}
+      />
       <Container className="to-try-container">
         <h1>To Try</h1>
         <h2>Save a recipe for the future! Add a picture and/or link here.</h2>

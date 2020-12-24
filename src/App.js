@@ -119,10 +119,13 @@ class App extends React.Component{
       <Switch>
         <Route path="/recipeapp/to-try" render={() => (
           <>
-            {navbar}
             <ToTry
               loggedInUser={loggedInUser}
               onLogout={this.handleLogout}
+              loginSubmit={this.handleLoginSubmit}
+              onLoginFormChange={this.handleLoginFormChange}
+              username={username}
+              password={password}
             />
           </>
         )} />
