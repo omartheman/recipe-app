@@ -16,7 +16,7 @@ function ToTry(props) {
   const [item, setItem] = useState(null);
   const [link, setLink] = useState(null);
   const [image, setImage] = useState(null);
-  const [loginAlert, setLoginAlert] = useState(null);
+  const [toTryAlert, setToTryAlert] = useState(null);
   const [tryItems, setTryItems] = useState(null);
   const [deletePrimer, setDeletePrimer] = useState(null);
   const [confirmMsg, setConfirmMsg] = useState(false);
@@ -66,16 +66,19 @@ function ToTry(props) {
     setImage([newImage])
   }
   const postRecipeToTry = () => {
+    if (!props.loggedInUser || props.loggedInUser === ''){
+      setToTryAlert('You must be logged in to add recipe.');
+      setTimeout(() => {
+        setToTryAlert(null);
+      }, 3000);
+      return; 
+    }
     if (!item || item ==='') {
-      alert('item')
+      setToTryAlert('Please give the recipe name.');
       return;
     }
     setShowInputs(false);
     let formData = new FormData();
-    if (!props.loggedInUser || props.loggedInUser === ''){
-      setLoginAlert('You must be logged in to add recipe.');
-      return; 
-    }
     if (image) {
       formData.append('imageFile', image[0], image[0].name);
     }
@@ -144,17 +147,19 @@ function ToTry(props) {
               <span className="to-try-col-titles-mobile">Tags:</span> Tags
             </Col>
             <Col className="to-try-img-delete-btn-col">
-              <SRLWrapper>
-                <img 
-                  className="to-try-img"
-                  src={
-                    url !== 'http://localhost:4000/recipeapp/recipeapp-server/' ?
-                    `https://brittanyjewellneal.com/uploaded_files/${x.imageName}`
-                    : 'https://images.unsplash.com/photo-1606851361443-fd99450eda8c?ixid=MXwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80'
-                  } 
-                  alt={x.imageName} 
-                />
-              </SRLWrapper>
+              {x.imageName &&
+                <SRLWrapper>
+                  <img 
+                    className="to-try-img"
+                    src={
+                      url !== 'http://localhost:4000/recipeapp/recipeapp-server/' ?
+                      `https://brittanyjewellneal.com/uploaded_files/${x.imageName}`
+                      : 'https://images.unsplash.com/photo-1606851361443-fd99450eda8c?ixid=MXwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80'
+                    } 
+                    alt={x.imageName} 
+                  />
+                </SRLWrapper>
+              }
               {size.width >= 992 && 
                 <Button 
                   variant="outline-danger" 
@@ -235,8 +240,8 @@ function ToTry(props) {
                     </ListGroup.Item>
                   </ListGroup>
               </div>
-              {loginAlert &&
-                <Alert variant="warning" className="to-try-login-alert alert-warning">You must be logged in to submit!</Alert>
+              {toTryAlert &&
+                <Alert variant="warning" className="to-try-login-alert alert-warning">{toTryAlert}</Alert>
               }
               <Button onClick={postRecipeToTry} className="to-try-submit-btn">Submit</Button>
             </Form>
@@ -245,7 +250,7 @@ function ToTry(props) {
           <Button onClick={() => {setShowInputs(true)}}>Add a Recipe To Try</Button>
         }
         <ListGroup className="to-try-list-container">
-          {size.width >= 991 && 
+          {(size.width >= 991 && props.loggedInUser && props.loggedInUser !== '') &&
             <ListGroup.Item variant="secondary">
               <Row>
                 <Col>
@@ -263,55 +268,60 @@ function ToTry(props) {
               </Row>
             </ListGroup.Item>
           }
-          {tryItems && tryList}
-
-
-        {url === 'http://localhost:4000/recipeapp/recipeapp-server/' &&
-          <ListGroup.Item variant="secondary" className="to-try-item-row">
-            <Row>
-              <Col>
-                <span className="to-try-col-titles-mobile">Item:</span> Item
-                {
-                  size.width < 992 && 
-                  <Button 
-                    variant="outline-danger" 
-                    className="to-try-delete-button"
-                  >
-                    X
-                  </Button>
-                }
-              </Col>
-              <Col>
-              <span className="to-try-col-titles-mobile">Link: </span>
-              <a href='#' target="_blank" rel="noreferrer">
-                Link
-              </a>
-              </Col>
-              <Col>
-                <span className="to-try-col-titles-mobile">Tags:</span> Tags
-              </Col>
-              <Col className="to-try-img-delete-btn-col">
-                <SRLWrapper>
-                  <img 
-                    className="to-try-img"
-                    src={'https://images.unsplash.com/photo-1606851361443-fd99450eda8c?ixid=MXwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80'
-                    } 
-                    alt={'alt'} 
-                  />
-                </SRLWrapper>
-                {
-                  size.width >= 992 && 
-                  <Button 
-                    variant="outline-danger" 
-                    className="to-try-delete-button"
-                  >
-                    X
-                  </Button>
-                }
-              </Col>
-            </Row>
-          </ListGroup.Item>
-        }
+          {(!props.loggedInUser || props.loggedInUser === '' ) &&
+            <Alert variant="caution" className="alert-warning">Please log in to view your 'To Try' list.</Alert>
+          }
+          {(props.loggedInUser && props.loggedInUser !== '' ) &&
+            <>
+              {tryItems && tryList}
+            </>
+          }
+          {url === 'http://localhost:4000/recipeapp/recipeapp-server/' &&
+            <ListGroup.Item variant="secondary" className="to-try-item-row">
+              <Row>
+                <Col>
+                  <span className="to-try-col-titles-mobile">Item:</span> Item
+                  {
+                    size.width < 992 && 
+                    <Button 
+                      variant="outline-danger" 
+                      className="to-try-delete-button"
+                    >
+                      X
+                    </Button>
+                  }
+                </Col>
+                <Col>
+                <span className="to-try-col-titles-mobile">Link: </span>
+                <a href='#' target="_blank" rel="noreferrer">
+                  Link
+                </a>
+                </Col>
+                <Col>
+                  <span className="to-try-col-titles-mobile">Tags:</span> Tags
+                </Col>
+                <Col className="to-try-img-delete-btn-col">
+                  <SRLWrapper>
+                    <img 
+                      className="to-try-img"
+                      src={'https://images.unsplash.com/photo-1606851361443-fd99450eda8c?ixid=MXwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80'
+                      } 
+                      alt={'alt'} 
+                    />
+                  </SRLWrapper>
+                  {
+                    size.width >= 992 && 
+                    <Button 
+                      variant="outline-danger" 
+                      className="to-try-delete-button"
+                    >
+                      X
+                    </Button>
+                  }
+                </Col>
+              </Row>
+            </ListGroup.Item>
+          }
 
         </ListGroup> 
       </Container>

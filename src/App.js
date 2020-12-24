@@ -42,7 +42,7 @@ class App extends React.Component{
     .then(res => { 
       this.setState({loggedInUser: res.data})
     }).catch(error => {console.log(error)})
-    const intervalId = setInterval(this.checkLoggedIn, 3000);
+    const intervalId = setInterval(this.checkLoggedIn, 2000);
     this.setState({intervalId: intervalId});
   }
   checkLoggedIn(){
