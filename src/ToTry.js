@@ -139,15 +139,24 @@ function ToTry(props) {
             </Col>
             <Col>
             <span className="to-try-col-titles-mobile">Link: </span>
-            <a href={x.link} target="_blank" rel="noreferrer">
-              {x.link}
-            </a>
+            {(x.link && x.link !== 'null') ?
+              <a href={x.link} target="_blank" rel="noreferrer">
+                {x.link}
+              </a>
+              :
+              <span>No link.</span>
+            }
             </Col>
             <Col>
-              <span className="to-try-col-titles-mobile">Tags:</span> Tags
+            <span className="to-try-col-titles-mobile">Tags: </span> 
+              {x.tags ? 
+                <span>(Tags)</span>
+                :
+                <span>No tags.</span>
+              }
             </Col>
             <Col className="to-try-img-delete-btn-col">
-              {x.imageName &&
+              {x.imageName ?
                 <SRLWrapper>
                   <img 
                     className="to-try-img"
@@ -159,6 +168,10 @@ function ToTry(props) {
                     alt={x.imageName} 
                   />
                 </SRLWrapper>
+                :
+                <span>
+                  No image.
+                </span>
               }
               {size.width >= 992 && 
                 <Button 
