@@ -5,17 +5,17 @@
     text-align: center; 
   }
   h3 {
-    margin-top: 20px;
+    margin: 0 !important;
     font-size: 25px !important;
   }
-  button {
+  .to-try-add-button {
     display: block;
     margin: 20px auto;
   }
-  .to-try-upload-images-title {
-    text-align: left; 
-    margin: 20px 0 !important;
-  }
+  // .to-try-upload-images-title {
+  //   text-align: left; 
+  //   margin: 20px 0 !important;
+  // }
   .to-try-upload-titles {
     margin-top: 30px;
   }
@@ -91,8 +91,11 @@
   display: none;
 }
 .to-try-submit-btn {
-  margin-bottom: 40px !important;
-  width: 30%;
+  display: block;
+  margin: 40px 0 40px;
+  @media (max-width: 767px){
+    width: 100%;
+  }
 }
 @media (max-width: 991px){
   .to-try-item-row .row {

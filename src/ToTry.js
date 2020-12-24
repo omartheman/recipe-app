@@ -223,7 +223,7 @@ function ToTry(props) {
         <h2>A list for future culinary endeavors.</h2>
         {showInputs ?  
           <>
-            <Button variant="warning" onClick={() => {setShowInputs(false)}}>Actually, Don't Add Now.</Button>
+            <Button className="to-try-add-button" variant="warning" onClick={() => {setShowInputs(false)}}>Actually, Don't Add Now.</Button>
             <Form>
               <Form.Label><h3>Recipe Name:</h3></Form.Label>
               <div className="to-try-message-required">(Required)</div>
@@ -231,23 +231,23 @@ function ToTry(props) {
               <Form.Label><h3>Recipe Link:</h3></Form.Label>
               <div className="to-try-message-optional">(Optional)</div>
               <Form.Control type="text" onChange={handleLinkInput} />
-              <div className="">
-                  <h3 className="to-try-upload-images-title">Upload Image:</h3>
+              <div>
+                  <Form.Label>
+                    <h3 className="to-try-upload-images-title">Upload Image:</h3>
+                  </Form.Label>
                   <ListGroup>
                     <div className="to-try-message-optional">(Optional)</div>
-                    <ListGroup.Item variant="primary">
                       <ImageCrop onImageCrop={handleImageCrop} />
-                    </ListGroup.Item>
                   </ListGroup>
               </div>
               {toTryAlert &&
                 <Alert variant="warning" className="to-try-login-alert alert-warning">{toTryAlert}</Alert>
               }
-              <Button onClick={postRecipeToTry} className="to-try-submit-btn">Submit</Button>
+              <Button onClick={postRecipeToTry} className="to-try-submit-btn">Submit My "To Try"</Button>
             </Form>
           </>
           : 
-          <Button onClick={() => {setShowInputs(true)}}>Add a Recipe To Try</Button>
+          <Button className="to-try-add-button" onClick={() => {setShowInputs(true)}}>Add a Recipe To Try</Button>
         }
         <ListGroup className="to-try-list-container">
           {(size.width >= 991 && props.loggedInUser && props.loggedInUser !== '') &&
