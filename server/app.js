@@ -22,6 +22,7 @@ function replaceSqlCharacters(str){
 let corsOrigin;
 let connection;
 let imageUploadPath;
+let netServForMobileReactDev;
 if (mode === 'productionBritt') {
   connection = mysql.createConnection({
     host: 'localhost', 
@@ -162,7 +163,8 @@ app.post(`${serverRoute}to-try-get`, (req, res) => {
         id int(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
         item varchar(255),
         imageName varchar(255),
-        link varchar(255)
+        link varchar(255),
+        tags varchar(255)
     );`;
     connection.query(sqlCreateToTryTable, (err, result) => {
       if (err) throw err;
@@ -187,12 +189,29 @@ app.post(`${serverRoute}to-try-upload`, imageUpload.array("imageFile"),
       id int(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
       item varchar(255),
       imageName varchar(255),
-      link varchar(255)
+      link varchar(255),
+      tags varchar(255)
     );`;
     console.log('modified username', user)
     connection.query(sql, (err, result) => {
       if (err) throw err; 
-      if (req.files[0] && req.body.link) {
+      if (req.files[0] && req.body.link && req.body.tags) {
+        console.log(result);
+        const sqlSaveToTry = `
+          INSERT INTO to_try_${user} (item, imageName, link, tags)
+          VALUES (?, ?, ?, ?)
+        `;
+        connection.query(sqlSaveToTry, [
+          req.body.item, 
+          req.files[0].filename,
+          req.body.link,
+          req.body.tags
+        ]), (err, result) => {
+          if (err) throw err; 
+          console.log(result);
+          res.send(result);
+        }
+      } else if (req.files[0] && req.body.link) {
         console.log(result);
         const sqlSaveToTry = `
           INSERT INTO to_try_${user} (item, imageName, link)

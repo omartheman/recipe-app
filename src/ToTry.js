@@ -16,6 +16,7 @@ function ToTry(props) {
   const [item, setItem] = useState(null);
   const [link, setLink] = useState(null);
   const [image, setImage] = useState(null);
+  const [tags, setTags] = useState(null);
   const [toTryAlert, setToTryAlert] = useState(null);
   const [tryItems, setTryItems] = useState(null);
   const [deletePrimer, setDeletePrimer] = useState(null);
@@ -64,7 +65,7 @@ function ToTry(props) {
   const handleImageCrop = (blobFile, index) => {
     const newImage = new File([blobFile], blobFile.name, {type: blobFile.type});
     setImage([newImage])
-  }
+  };
   const postRecipeToTry = () => {
     if (!props.loggedInUser || props.loggedInUser === ''){
       setToTryAlert('You must be logged in to add recipe.');
@@ -85,6 +86,7 @@ function ToTry(props) {
     formData.append('loggedInUser', props.loggedInUser);
     formData.append('link', link);
     formData.append('item', item);
+    formData.append('tags', tags);
 
     axios.post(urlToTryUpload, formData)
     .then(res => {
@@ -97,7 +99,7 @@ function ToTry(props) {
         setTryItems(res.data);
       })
     })
-  }
+  };
   const deleteToTry = () => {
     axios.delete(urlToTryDelete, {
       data: {
@@ -150,7 +152,7 @@ function ToTry(props) {
             <Col>
             <span className="to-try-col-titles-mobile">Tags: </span> 
               {x.tags ? 
-                <span>(Tags)</span>
+                <span>{x.tags}</span>
                 :
                 <span>No tags.</span>
               }
@@ -194,6 +196,9 @@ function ToTry(props) {
   }
   const handleItemInput = (e) => {
     setItem(e.target.value);
+  }
+  const handleTagsInput = (e) => {
+    setTags(e.target.value);
   }
   return(
     <>
@@ -244,14 +249,17 @@ function ToTry(props) {
               <Form.Label><h3>Recipe Link:</h3></Form.Label>
               <div className="to-try-message-optional">(Optional)</div>
               <Form.Control type="text" onChange={handleLinkInput} />
+              <Form.Label><h3>Tags:</h3></Form.Label>
+              <div className="to-try-message-optional">(Optional)</div>
+              <Form.Control type="text" onChange={handleTagsInput} placeholder='Separate tags with commas (e.g. "fish, vegetables, thanksgiving")'/>
               <div>
-                  <Form.Label>
-                    <h3 className="to-try-upload-images-title">Upload Image:</h3>
-                  </Form.Label>
-                  <ListGroup>
-                    <div className="to-try-message-optional">(Optional)</div>
-                      <ImageCrop onImageCrop={handleImageCrop} />
-                  </ListGroup>
+                <Form.Label>
+                  <h3 className="to-try-upload-images-title">Upload Image:</h3>
+                </Form.Label>
+                <ListGroup>
+                  <div className="to-try-message-optional">(Optional)</div>
+                    <ImageCrop onImageCrop={handleImageCrop} />
+                </ListGroup>
               </div>
               {toTryAlert &&
                 <Alert variant="warning" className="to-try-login-alert alert-warning">{toTryAlert}</Alert>
