@@ -195,65 +195,24 @@ app.post(`${serverRoute}to-try-upload`, imageUpload.array("imageFile"),
     console.log('modified username', user)
     connection.query(sql, (err, result) => {
       if (err) throw err; 
-      if (req.files[0] && req.body.link && req.body.tags) {
+      console.log(result);
+      const sqlSaveToTry = `
+        INSERT INTO to_try_${user} (item, imageName, link, tags)
+        VALUES (?, ?, ?, ?)
+      `;
+      function fileName(){
+        if (req.files[0]){
+          return req.files[0].filename;
+        } else {return null;}
+      }
+      connection.query(sqlSaveToTry, [
+        req.body.item, 
+        fileName(),
+        req.body.link,
+        req.body.tags
+      ]), (err, result) => {
+        if (err) throw err; 
         console.log(result);
-        const sqlSaveToTry = `
-          INSERT INTO to_try_${user} (item, imageName, link, tags)
-          VALUES (?, ?, ?, ?)
-        `;
-        connection.query(sqlSaveToTry, [
-          req.body.item, 
-          req.files[0].filename,
-          req.body.link,
-          req.body.tags
-        ]), (err, result) => {
-          if (err) throw err; 
-          console.log(result);
-          res.send(result);
-        }
-      } else if (req.files[0] && req.body.link) {
-        console.log(result);
-        const sqlSaveToTry = `
-          INSERT INTO to_try_${user} (item, imageName, link)
-          VALUES (?, ?, ?)
-        `;
-        connection.query(sqlSaveToTry, [
-          req.body.item, 
-          req.files[0].filename,
-          req.body.link
-        ]), (err, result) => {
-          if (err) throw err; 
-          console.log(result);
-          res.send(result);
-        }
-      } else if (req.body.link) {
-        console.log(result);
-        const sqlSaveToTry = `
-          INSERT INTO to_try_${user} (item, link)
-          VALUES (?, ?)
-        `;
-        connection.query(sqlSaveToTry, [
-          req.body.item, 
-          req.body.link
-        ]), (err, result) => {
-          if (err) throw err; 
-          console.log(result);
-          res.send(result);
-        };
-      } else if (req.files[0]){
-        console.log(result);
-        const sqlSaveToTry = `
-          INSERT INTO to_try_${user} (item, link)
-          VALUES (?, ?)
-        `;
-        connection.query(sqlSaveToTry, [
-          req.body.item, 
-          req.body.link
-        ]), (err, result) => {
-          if (err) throw err; 
-          console.log(result);
-          res.send(result);
-        };
       }
       res.send(result);
     });
