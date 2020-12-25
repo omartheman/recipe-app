@@ -20,14 +20,8 @@ const urlIngredients = `${url}getingredients`;
 const urlImages = `${url}get-images`;
 const urlInstructions = `${url}get-instructions`;
 // image1, image2, image3, image4, image5, image6
-const arr = [ image1, image2, image3, image4, image5, image6];
+const arr = [ image1];
 const carouselItems = arr.map( (x, i) => (
-  // <SRLWrapper>
-  //   <div className="carousel-img-container carousel-img-container-recipe-page">
-  //     <img className="carousel-img" src={x} alt='alt' />
-  //   </div>
-  // </SRLWrapper>
-  
   <div key={i} className="carousel-img-container">
     <Link to="#" className="carousel-link-home">
       <SRLWrapper>
@@ -35,7 +29,6 @@ const carouselItems = arr.map( (x, i) => (
       </SRLWrapper>
     </Link>
   </div>
-
 ));
 
 const Recipe = (props) => {
@@ -46,6 +39,7 @@ const Recipe = (props) => {
   const [ingredients, setIngredients] = useState(null);
   const [images, setImages] = useState(null);
   const [instructions, setInstructions] = useState(null);
+  const [singleImage, setSingleImage] = useState(null);
   //we need to retrieve data about specific recipe
   useEffect(() => {
     console.log('images',images)
@@ -98,35 +92,40 @@ const Recipe = (props) => {
       .then(res => {
         console.log(res.data);
         if (url === "http://localhost:4000/recipeapp/recipeapp-server/") {
-          console.log('caritems',carouselItems)
-          setImages(carouselItems)
-        } else {
-          setImages(res.data.map((x, i) => (
-            // <SRLWrapper>
-              // <div className="carousel-img-container">
-              //   <img 
-              //     className="carousel-img" 
-              //     src={`https://brittanyjewellneal.com/uploaded_files/${x.imageName}`} 
-              //     alt={x.imageName} 
-              //   />
-              // </div>
-
-              // <div key={i} className="carousel-img-container">
-              //   <Link to="#" className="carousel-link-home">
-              //       <h3 className="carousel-title">Heyder</h3>
-              //       <img className="carousel-img" src={`https://brittanyjewellneal.com/uploaded_files/${x.imageName}`} alt='alt' />
-              //   </Link>
-              // </div>
-            // </SRLWrapper>
-
-            
-              <div key={i} className="carousel-img-container">
+          if (carouselItems.length > 1) {
+            setImages(carouselItems)
+          } else {
+            console.log('one is the loneliest')
+            setImages([
+              <div className="recipe-page-single-image-container">
                 <Link to="#" className="carousel-link-home">
                   <SRLWrapper>
-                    <img className="carousel-img" src={`https://brittanyjewellneal.com/uploaded_files/${x.imageName}`} alt='Recipe image.' />
+                    <img className="recipe-page-single-image" src={image1} alt='Recipe image.' />
                   </SRLWrapper>
                 </Link>
               </div>
+            ]);
+          }
+          console.log('caritems',carouselItems)
+        } else if (res.data.length === 1) {
+          setImages(
+            <div className="recipe-page-single-image-container">
+              <Link to="#" className="carousel-link-home">
+                <SRLWrapper>
+                  <img className="recipe-page-single-image" src={`https://brittanyjewellneal.com/uploaded_files/${res.data[0].imageName}`} alt='Recipe image.' />
+                </SRLWrapper>
+              </Link>
+            </div>
+          );
+        } else {
+          setImages(res.data.map((x, i) => (
+            <div key={i} className="carousel-img-container">
+              <Link to="#" className="carousel-link-home">
+                <SRLWrapper>
+                  <img className="carousel-img" src={`https://brittanyjewellneal.com/uploaded_files/${x.imageName}`} alt='Recipe image.' />
+                </SRLWrapper>
+              </Link>
+            </div>
           )));
         }
       })
@@ -135,7 +134,7 @@ const Recipe = (props) => {
   // eslint-disable-next-line 
   }, []);
   const carousel = () => {
-    if (images) {
+    if (images && images.length > 1) {
       return(
         <Carousel 
           responsive={responsive}
@@ -156,19 +155,23 @@ const Recipe = (props) => {
           {images}
         </Carousel> 
       );
-    } else {
-      return null;
-    }
+    } else if (images) {
+      console.log('images === 1. value of "images": ', images)
+      return images;
+    } else {return null;}
   }       
     
   return(
     <>
       <Container className="recipe-page-container">
         <h1>Recipe: {recipeName}</h1>
+
+
         {images ? null :
         <Spinner variant="success" animation="border" role="status" id="spinner-centered"><span className="sr-only">Loading...</span></Spinner>
         }
         {carousel()}
+
         <h2>Recipe Details</h2>
         <ListGroup>
           <ListGroup.Item>
