@@ -1,8 +1,8 @@
 const mode =
 
-"developmentOmar";
-/*
 "productionBritt";
+/*
+"developmentOmar";
 */
 
 const express = require('express');
@@ -168,7 +168,8 @@ app.post(`${serverRoute}to-try-get`, (req, res) => {
     );`;
     connection.query(sqlCreateToTryTable, (err, result) => {
       if (err) throw err;
-      const sql = `SELECT * FROM to_try_${user};`;
+      const sql = `SELECT * FROM to_try_${user} ORDER BY item;`; 
+      
       connection.query(sql, (err, result) => {
         if (err) throw err; 
         console.log(result);
