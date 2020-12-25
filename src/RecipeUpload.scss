@@ -62,6 +62,21 @@
     margin: 0 20px;
   }
 }
+.recipe-upload-delete-image-button {
+  float: right;
+  @media (max-width: 470px){
+    display: block !important;
+    float: none;
+    margin-bottom: 10px; 
+    margin-right: 10px;
+    width: 100%;
+  }
+}
+@media (max-width: 470px){
+  .file-upload-new-button {
+    display: block !important;
+  }
+}
 #recipe-info-heading {
   margin-bottom: 20px;
 }
