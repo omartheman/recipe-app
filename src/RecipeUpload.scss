@@ -64,7 +64,9 @@
 }
 .recipe-upload-delete-image-button {
   float: right;
-  @media (max-width: 470px){
+  position: absolute;
+  right: 20px;
+  @media (max-width: 530px){
     display: block !important;
     float: none;
     margin-bottom: 10px; 
@@ -72,8 +74,31 @@
     width: 100%;
   }
 }
-@media (max-width: 470px){
+@media (max-width: 530px){
   .file-upload-new-button {
+    display: block !important;
+  }
+  .image-upload-container {
+    float: none;
+    width: 100%;
+  }
+  .file-upload-new-button {
+    display: block !important;
+    width: 100%;
+  }
+}
+@media (min-width: 529px){
+  .image-upload-container {
+    float: left;
+    // width: fit-content;
+  }
+}
+@media (max-width: 530px){
+  .recipe-upload-delete-image-button {
+    position: static;
+    right: auto;
+  }
+  .image-shown-below-text {
     display: block !important;
   }
 }

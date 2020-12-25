@@ -88,7 +88,7 @@ class ImageCrop extends PureComponent {
     const { crop, croppedImageUrl, src } = this.state;
     console.log('image num ', this.props.index_num)
     return (
-      <div className="">
+      <div className="image-upload-container">
         <Form.Label htmlFor={`file-upload-${this.props.id_num}`} className="file-upload-new-button btn btn-info">
           Choose Image
         </Form.Label>
