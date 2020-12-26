@@ -16,6 +16,9 @@ class ImageCrop extends PureComponent {
     blobFile: null,
     originalFileName: null
   };
+  componentDidUpdate(){
+    console.log('imagecrop state' , this.state )
+  }
   onSelectFile = e => {
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
@@ -46,15 +49,17 @@ class ImageCrop extends PureComponent {
         crop,
         this.state.originalFileName
       );
-      this.setState({ croppedImageUrl }, ()=>{console.log('cropped',this.state.croppedImageUrl)});
+      console.log('imageref: ', this.imageRef, crop)
+      this.setState({ croppedImageUrl }, ()=>{console.log('ImageCrop, URL cropped: ',this.state.croppedImageUrl)});
     }
   }
   getCroppedImg(image, crop, fileName) {
+    console.log('getcroppedimag crop: ', crop)
     const canvas = document.createElement('canvas');
     const scaleX = image.naturalWidth / image.width;
     const scaleY = image.naturalHeight / image.height;
-    canvas.width = crop.width;
-    canvas.height = crop.height;
+    canvas.width = 900;
+    canvas.height = 600;
     const ctx = canvas.getContext('2d');
     ctx.drawImage(
       image,
@@ -64,8 +69,8 @@ class ImageCrop extends PureComponent {
       crop.height * scaleY,
       0,
       0,
-      crop.width,
-      crop.height
+      900,
+      600
     );
     return new Promise((resolve, reject) => {
       canvas.toBlob(blob => {
@@ -105,14 +110,14 @@ class ImageCrop extends PureComponent {
                 <h3>Original Image</h3>
                 {src && (
                   <ReactCrop
-                  src={src}
-                  crop={crop}
-                  ruleOfThirds
+                    src={src}
+                    crop={crop}
+                    ruleOfThirds
                     onImageLoaded={this.onImageLoaded}
                     onComplete={this.onCropComplete}
                     onChange={this.onCropChange}
-                    />
-                    )}
+                  />
+                )}
               </Col>
               <Col md className="image-crop-image-column">
                 <h3>Cropped Image</h3>
