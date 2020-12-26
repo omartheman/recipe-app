@@ -9,8 +9,8 @@ class ImageCrop extends PureComponent {
     src: null,
     crop: {
       unit: '%',
-      width: 30,
-      aspect: 3 / 2,
+      width: 100,
+      aspect: 3 / 2
     },
     croppedImageUrl: null,
     blobFile: null,
