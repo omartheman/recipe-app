@@ -1,8 +1,8 @@
 const mode =
 
-"developmentOmar";
-/*
 "productionBritt";
+/*
+"developmentOmar";
 */
 
 const express = require('express');
@@ -163,7 +163,7 @@ app.post(`${serverRoute}to-try-get`, (req, res) => {
         id int(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
         item varchar(255),
         imageName varchar(255),
-        link varchar(255),
+        link varchar(500),
         tags varchar(255)
     );`;
     connection.query(sqlCreateToTryTable, (err, result) => {
@@ -190,7 +190,7 @@ app.post(`${serverRoute}to-try-upload`, imageUpload.array("imageFile"),
       id int(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
       item varchar(255),
       imageName varchar(255),
-      link varchar(255),
+      link varchar(500),
       tags varchar(255)
     );`;
     console.log('modified username', user)
@@ -234,8 +234,8 @@ app.post(`${serverRoute}image-upload`, imageUpload.array("imageFile"),
       item = replaceSqlCharacters(spacesToUnderscores(item).toLowerCase());
       const sqlCreateImagesTable = `
         CREATE TABLE recipe${id}_${item}_images (
-        id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-        imageName varchar(255) NOT NULL
+        id int(50) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        imageName varchar(500) NOT NULL
       );`;
       connection.query(sqlCreateImagesTable, (err, result) => {
         if (err) throw err; 
@@ -439,8 +439,8 @@ app.post(`${serverRoute}recipe-upload`, (req, res) => {
     const sqlCreateIngredientsTable = `
       CREATE TABLE recipe${id}_${item}_ingredients (
         id INT NOT NULL AUTO_INCREMENT,
-        ingredient varchar(50) NOT NULL,
-        amount varchar(50) NOT NULL,
+        ingredient varchar(500) NOT NULL,
+        amount varchar(500) NOT NULL,
         PRIMARY KEY (ID) 
     );`;
     connection.query(sqlCreateIngredientsTable, (err, result) => {
@@ -461,7 +461,7 @@ app.post(`${serverRoute}recipe-upload`, (req, res) => {
     const sqlCreateInstructionsTable = `
       CREATE TABLE recipe${id}_${item}_instructions (
         id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-        instruction varchar(50) NOT NULL
+        instruction varchar(1000) NOT NULL
     );`;
     connection.query(sqlCreateInstructionsTable, (err, result) => {
       if (err) throw err; 
