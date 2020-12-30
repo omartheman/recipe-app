@@ -461,7 +461,7 @@ app.post(`${serverRoute}recipe-upload`, (req, res) => {
     const sqlCreateInstructionsTable = `
       CREATE TABLE recipe${id}_${item}_instructions (
         id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-        instruction varchar(1000) NOT NULL
+        instruction varchar(3000) NOT NULL
     );`;
     connection.query(sqlCreateInstructionsTable, (err, result) => {
       if (err) throw err; 
