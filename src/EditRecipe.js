@@ -8,6 +8,7 @@ import { SRLWrapper } from 'simple-react-lightbox';
 import './RecipePage.scss';
 import "react-multi-carousel/lib/styles.css";
 import './EditRecipe.scss';
+import ImageCrop from './ImageCrop';
 import image1 from './images/omar-3-profile.jpg';
 import image2 from './images/imageFile_dateVal_1607883271123_boat_on_lake.jpg';
 import image3 from './images/imageFile_dateVal_1607883271125_block-game-thumbnail copy.png';
@@ -43,6 +44,14 @@ const Recipe = (props) => {
   const [images, setImages] = useState(null);
   const [instructions, setInstructions] = useState(null);
   const [singleImage, setSingleImage] = useState(null);
+
+  const [blobFile, setBlobFile] = useState(null);
+  const [originalFileName, setOriginalFileName] = useState(null);
+  const [newImages, setNewImages] = useState([]);
+  const [numImageFields, setNumImageFields] = useState(1);
+  const [imageFields, setImageFields] = useState([0]);
+  const [handleRemoveImageSpinnerId, setHandleRemoveImageSpinnerId] = useState(null);
+
   //we need to retrieve data about specific recipe
   useEffect(() => {
     console.log('images',images)
@@ -225,6 +234,61 @@ const Recipe = (props) => {
       </Row>
     )) 
   }
+  function handleImageCrop(blobFile, index){
+    const newImage = new File([blobFile], blobFile.name, {type: blobFile.type});
+    const handleNewImages = newImages;
+    handleNewImages[index] = newImage;
+    setNewImages(handleNewImages);
+  }
+  function addImageField(){
+    setImageFields([...imageFields, numImageFields]);
+    let newNumImageFields = numImageFields;
+    newNumImageFields++;
+    setNumImageFields(prev => {
+      console.log(prev);
+      console.log('prev++', prev++);
+      return(newNumImageFields);
+    }); 
+  }
+  function removeImageField(ind){
+    const newImageFields = imageFields;
+    c('imagefields', newImageFields)
+    newImageFields.splice(ind, 1);
+    setImageFields(newImageFields);
+
+    const handleNewImages = newImages; 
+    images.splice(ind, 1);
+    setNewImages(handleNewImages);
+  }
+  const handleRemoveImageSpinner = (id) => {
+    console.log('idnum', id);
+    setHandleRemoveImageSpinnerId(id);
+    return(id);
+  } 
+  const imageFieldsList = imageFields.map((idNum, ind) =>  (
+    <ListGroup.Item key={idNum} variant="primary">
+      <ImageCrop id_num={idNum} index_num={ind} onImageCrop={handleImageCrop}/>
+      { imageFields.length > 1 && 
+        <>
+          {handleRemoveImageSpinnerId === idNum ?
+            <Spinner variant="success" animation="border" role="status" id="spinner-centered"><span className="sr-only">Loading...</span></Spinner>
+            :
+            <Button 
+              className="recipe-upload-delete-image-button" 
+              variant="outline-danger" 
+              id_num={idNum}
+              onClick={() => {
+                handleRemoveImageSpinner(idNum);
+                removeImageField(ind)
+              }}
+            >
+                Remove Image #{ind + 1}
+            </Button>
+          }
+        </>
+      }
+    </ListGroup.Item>
+  ));
   return(
     <>
       <Container className="edit-recipe-page-container">
@@ -238,6 +302,13 @@ const Recipe = (props) => {
           }}
         />
 
+        <div className="upload-section">
+          <h2>Upload Images</h2>
+          <ListGroup>
+            {imageFieldsList}
+          </ListGroup>
+          <Button className="button-add" variant="success" onClick={addImageField}>Add Another Image</Button>
+        </div>
         {images ? null :
         <Spinner variant="success" animation="border" role="status" id="spinner-centered"><span className="sr-only">Loading...</span></Spinner>
         }

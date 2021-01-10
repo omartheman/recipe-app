@@ -25,12 +25,12 @@ class RecipeUpload extends Component {
       description: '',
       ingredients: [''],
       amounts: [''],
+      instructions: [''],
       blobFile: null,
       originalFileName: null,
       newImages: [],
       numImageFields: 1,
       imageFields: [0],
-      instructions: [''],
       redirect: false,
       errorMessage: null
     }
