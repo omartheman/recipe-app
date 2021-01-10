@@ -7,6 +7,7 @@ import Carousel from "react-multi-carousel";
 import { SRLWrapper } from 'simple-react-lightbox';
 import './RecipePage.scss';
 import "react-multi-carousel/lib/styles.css";
+import './EditRecipe.scss';
 import image1 from './images/omar-3-profile.jpg';
 import image2 from './images/imageFile_dateVal_1607883271123_boat_on_lake.jpg';
 import image3 from './images/imageFile_dateVal_1607883271125_block-game-thumbnail copy.png';
@@ -20,14 +21,13 @@ const urlIngredients = `${url}getingredients`;
 const urlImages = `${url}get-images`;
 const urlInstructions = `${url}get-instructions`;
 // image1, image2, image3, image4, image5, image6
-const arr = [ image1];
+const arr = [ image1, image2];
 const carouselItems = arr.map( (x, i) => (
-  <div key={i} className="carousel-img-container">
-    <Link to="#" className="carousel-link-home">
-      <SRLWrapper>
-        <img className="carousel-img" src={x} alt='alt' />
-      </SRLWrapper>
-    </Link>
+  <div key={i} className="edit-recipe-img-container">
+    <SRLWrapper>
+      <img className="edit-recipe-img" src={x} alt='Recipe image.' />
+    </SRLWrapper>
+    <Button variant="danger">Remove Image</Button>
   </div>
 ));
 
@@ -227,14 +227,21 @@ const Recipe = (props) => {
   }
   return(
     <>
-      <Container className="recipe-page-container">
-        <h1>Recipe: {recipeName}</h1>
-
+      <Container className="edit-recipe-page-container">
+        <h1>Recipe Name:</h1>
+        <Form.Control 
+          className="edit-recipe-recipe-name-field"
+          type="text"
+          value={recipeName}
+          onChange={(e) => {
+            setRecipeName(e.target.value);
+          }}
+        />
 
         {images ? null :
         <Spinner variant="success" animation="border" role="status" id="spinner-centered"><span className="sr-only">Loading...</span></Spinner>
         }
-        {carousel()}
+        {images}
 
         <h2>Recipe Details</h2>
         Cook:
@@ -252,9 +259,9 @@ const Recipe = (props) => {
         {ingredientsList}
         <h2>Instructions</h2>
         {instructionsList}
-
-        <Button className="recipe-page-edit-recipe-button" variant="success" as={Link} to={`/recipeapp/edit-recipe/${recipeId}`}>Save Changes</Button>
-        <Button className="recipe-page-edit-recipe-button" variant="warning" as={Link} to={`/recipeapp/edit-recipe/${recipeId}`}>Cancel Changes</Button>
+        
+          <Button className="edit-recipe-page-edit-recipe-button" variant="success" as={Link} to={`/recipeapp/edit-recipe/${recipeId}`}>Save Changes</Button>
+          <Button className="edit-recipe-page-edit-recipe-button" variant="warning" as={Link} to={`/recipeapp/edit-recipe/${recipeId}`}>Cancel Changes</Button>
       </Container>
     </>
   );

@@ -1,0 +1,30 @@
+.edit-recipe-page-container {
+  h1 {
+    text-align: left !important;
+    font-size: 30px !important;
+  }
+}
+.edit-recipe-img {
+  display: block;
+  cursor: pointer;
+  padding-bottom: 10px;
+  width: 400px; 
+  max-width: 100%;
+}
+.edit-recipe-recipe-name-field {
+  margin-bottom: 30px;
+}
+.edit-recipe-img-container {
+  button {
+    display: block;
+    margin-bottom: 30px;
+  }
+}
+.edit-recipe-page-edit-recipe-button {
+  width: fit-content !important;
+  display: block !important;
+  margin-bottom: 30px;
+}
+.edit-recipe-page-edit-recipe-button:first-of-type {
+  margin-top: 30px;
+}
