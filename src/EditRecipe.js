@@ -31,6 +31,9 @@ const carouselItems = arr.map( (x, i) => (
   </div>
 ));
 
+function c(text, value){
+  console.log(`${text}: ${value}`)
+}
 const Recipe = (props) => {
   const [recipeId] = useState(Number(props.match.params.recipeId));
   const [recipeName, setRecipeName] = useState(null);
@@ -40,6 +43,7 @@ const Recipe = (props) => {
   const [images, setImages] = useState(null);
   const [instructions, setInstructions] = useState(null);
   const [singleImage, setSingleImage] = useState(null);
+  const [newIngredients, setNewIngredients] = useState([]);
   //we need to retrieve data about specific recipe
   useEffect(() => {
     console.log('images',images)
@@ -61,25 +65,9 @@ const Recipe = (props) => {
         item: itemLow
       })
       .then(res => {
+        console.log('ingredients')
         console.log(res.data);
-        setIngredients(res.data.map((x, i) => (
-          <ListGroup.Item key={i}>
-            <Row>
-              <Col>
-                <Form.Control 
-                  type='text'
-                  id_val={i}
-                  value={x.ingredient}
-                  onChange={(e) => {
-                    
-                  }}
-                />
-                {x.ingredient}
-              </Col>
-              <Col>{x.amount}</Col>
-            </Row>
-          </ListGroup.Item>
-        )));
+        setIngredients(res.data);
       })
       //RETRIEVE INSTRUCTIONS
       axios.post(urlInstructions, {
@@ -169,7 +157,37 @@ const Recipe = (props) => {
       console.log('images === 1. value of "images": ', images)
       return images;
     } else {return null;}
-  }       
+  }      
+  let ingredientsList;
+  if (ingredients) {
+    ingredientsList = ingredients.map((x, i) => (
+      <ListGroup.Item key={i}>
+        <Row>
+          <Col>
+            <Form.Control 
+              type='text'
+              id_val={i}
+              value={ingredients[i].ingredient}
+              onChange={(e) => {
+                const i = e.target.getAttribute('id_val');
+                const editedIngredients = ingredients.slice();
+                console.log('edited', editedIngredients)
+                editedIngredients[i] = {
+                  ...editedIngredients[i],
+                  ingredient: e.target.value 
+                }
+                setIngredients(editedIngredients);
+                console.log(ingredients)
+                c('new', ingredients)
+              }}
+            />
+          </Col>
+          <Col>{x.amount}</Col>
+        </Row>
+      </ListGroup.Item>
+    )) 
+
+  }
   return(
     <>
       <Container className="recipe-page-container">
@@ -194,8 +212,7 @@ const Recipe = (props) => {
         <Form.Control type="text" value={description} onChange={(e) => {setDescription(e.target.value)}} />
         
         <h2>Ingredients</h2>
-        {ingredients} 
-
+        {ingredientsList}
         <h2>Instructions</h2>
         {instructions}
 

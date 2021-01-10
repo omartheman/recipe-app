@@ -1,20 +1,15 @@
+const ingredients = [
+  {item:'banana'}, 
+  {item:'avocado'}, 
+  {item:'pear'}
+];
 
-var prevScrollpos = window.pageYOffset;
-window.onscroll = function() {
-  var currentScrollPos = window.pageYOffset;
-// 	show navbar if scrolling up
-  if (prevScrollpos >= currentScrollPos) {
-    console.log('prev', prevScrollpos, 'curr', currentScrollPos)
-    document.getElementById("masthead").style.top = "0";
-    console.log('show');
-    // document.getElementById("masthead").classList.remove('hidden');
-    
-  } 
-// 	hide navbar if scrolling down
-  else {    
-    document.getElementById("masthead").style.top = "-90px";
-    console.log('hide');														
-    // document.getElementById("masthead").classList.add('hidden');
-  }
-  prevScrollpos = currentScrollPos;
-}
+const newIngredients = ingredients.slice();
+
+newIngredients[1] = {
+  ...newIngredients[1],
+  item: 'orange'
+};
+
+console.log('ingredients', ingredients);
+console.log('newIngredients', newIngredients);
