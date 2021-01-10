@@ -10,9 +10,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-    <SimpleReactLightbox>
-      <App />
-    </SimpleReactLightbox>
+      <SimpleReactLightbox>
+        <App />
+      </SimpleReactLightbox>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

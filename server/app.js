@@ -1,8 +1,8 @@
 const mode =
 
-"productionBritt";
-/*
 "developmentOmar";
+/*
+"productionBritt";
 */
 
 const express = require('express');
@@ -53,7 +53,8 @@ app.use(cors({
     'http://192.168.1.254'
   ],
   methods:['GET','POST', 'DELETE'],
-  credentials: true }));// enable set cookie
+  credentials: true 
+}));// enable set cookie
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -498,14 +499,15 @@ app.post(`${serverRoute}`, function(req, res){
 
 // ===============================================================
 // LINK REACT ROUTER AND EXPRESS APP
-const path = require('path');
-// Serve the static files from the React app
-app.use(express.static(path.join(__dirname, '../recipeapp')));
-
 // Handles any requests that don't match the ones above
 app.get('/recipeapp*', (req, res) =>{
     res.sendFile(path.join(__dirname + '/../recipeapp/index.html'));
 });
+
+const path = require('path');
+// Serve the static files from the React app
+app.use(express.static(path.join(__dirname, '../recipeapp')));
+
 // ===============================================================
 const port = process.env.PORT || 4000 || 27016 || 27015 || 27017;
  

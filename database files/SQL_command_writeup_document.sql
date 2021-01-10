@@ -1,3 +1,9 @@
+ALTER TABLE accounts 
+ADD firstName varchar(500);
+
+ALTER TABLE accounts 
+ADD lastName varchar(500);
+
 IF (SELECT 1 = 1 FROM to_try_test WHERE id=*) THEN
 BEGIN
     SELECT * FROM to_try_test
@@ -5,12 +11,12 @@ END;
 
 
 
-      CREATE TABLE IF NOT EXISTS to_try_test (
-      id int(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-      item varchar(255),
-      imageName varchar(255),
-      link varchar(255)
-    );
+CREATE TABLE IF NOT EXISTS to_try_test (
+id int(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+item varchar(255),
+imageName varchar(255),
+link varchar(255)
+);
 
 --Create table for recipes To Try
 	CREATE TABLE IF NOT EXISTS to_try_test (
@@ -78,12 +84,22 @@ ADD COLUMN lastName varChar(20) AFTER firstName;
 
 //create login
 
+CREATE TABLE 'accounts' (
+	'id' INT(50) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	'username' VARCHAR(500) NOT NULL,
+	'password' VARCHAR(500) NOT NULL,
+	'email' VARCHAR(500) NOT NULL
+) DEFAULT CHARSET=utf8;
 CREATE TABLE IF NOT EXISTS `accounts` (
-	`id` int(11) NOT NULL,
-	`username` varchar(50) NOT NULL,
-	`password` varchar(255) NOT NULL,
-	`email` varchar(100) NOT NULL
+	`id` int(50) NOT NULL,
+	`username` varchar(500) NOT NULL,
+	`password` varchar(500) NOT NULL,
+	`email` varchar(500) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+
+ALTER TABLE accounts MODIFY COLUMN email varchar(500) NOT NULL;
+ALTER TABLE accounts MODIFY COLUMN password varchar(500) NOT NULL;
 
 INSERT INTO `accounts` (`id`, `username`, `password`, `email`) VALUES (1, 'britt', 'neal', 'test@test.com');
 
