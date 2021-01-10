@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import global_url_variable from './global_url_variable';
-import { Button, Container, ListGroup, Row, Col, Spinner } from 'react-bootstrap';
+import { Button, Container, Form, ListGroup, Row, Col, Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Carousel from "react-multi-carousel";
 import { SRLWrapper } from 'simple-react-lightbox';
@@ -65,7 +65,17 @@ const Recipe = (props) => {
         setIngredients(res.data.map((x, i) => (
           <ListGroup.Item key={i}>
             <Row>
-              <Col>{x.ingredient}</Col>
+              <Col>
+                <Form.Control 
+                  type='text'
+                  id_val={i}
+                  value={x.ingredient}
+                  onChange={(e) => {
+                    
+                  }}
+                />
+                {x.ingredient}
+              </Col>
               <Col>{x.amount}</Col>
             </Row>
           </ListGroup.Item>
@@ -160,7 +170,6 @@ const Recipe = (props) => {
       return images;
     } else {return null;}
   }       
-    
   return(
     <>
       <Container className="recipe-page-container">
@@ -173,23 +182,25 @@ const Recipe = (props) => {
         {carousel()}
 
         <h2>Recipe Details</h2>
-        <ListGroup>
-          <ListGroup.Item>
-            Cook: {cook}
-          </ListGroup.Item>
-          <ListGroup.Item>
-            Description: {description}
-          </ListGroup.Item>
-        </ListGroup>
+        Cook:
+        <Form.Control 
+          type="text" 
+          value={cook} 
+          onChange={(e) => {
+            setCook(e.target.value)}
+          }
+        />
+        Description: 
+        <Form.Control type="text" value={description} onChange={(e) => {setDescription(e.target.value)}} />
+        
         <h2>Ingredients</h2>
-        <ListGroup>
-          {ingredients}
-        </ListGroup>
+        {ingredients} 
+
         <h2>Instructions</h2>
-        <ListGroup>
-          {instructions}
-        </ListGroup>
-        <Button className="recipe-page-edit-recipe-button" as={Link} to={`/recipeapp/edit-recipe/${recipeId}`}>Edit Recipe</Button>
+        {instructions}
+
+        <Button className="recipe-page-edit-recipe-button" variant="success" as={Link} to={`/recipeapp/edit-recipe/${recipeId}`}>Save Changes</Button>
+        <Button className="recipe-page-edit-recipe-button" variant="warning" as={Link} to={`/recipeapp/edit-recipe/${recipeId}`}>Cancel Changes</Button>
       </Container>
     </>
   );

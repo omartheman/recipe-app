@@ -15,6 +15,7 @@ import AllRecipes from './AllRecipes';
 import NavbarContainer from './NavbarContainer';
 import CreateAccountSuccess from './CreateAccountSuccess';
 import ToTry from './ToTry';
+import EditRecipe from './EditRecipe';
 
 const url = global_url_variable;
 const urlAuth = `${url}auth`;
@@ -151,6 +152,16 @@ class App extends React.Component{
           <>
             {navbar}
             <RecipePage
+              {...props}
+              loggedInUser={loggedInUser}
+              onLogout={this.handleLogout}
+            />
+          </>
+        )} />
+        <Route path="/recipeapp/edit-recipe/:recipeId" render={(props) => (
+          <>
+            {navbar}
+            <EditRecipe
               {...props}
               loggedInUser={loggedInUser}
               onLogout={this.handleLogout}
