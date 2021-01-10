@@ -43,7 +43,6 @@ const Recipe = (props) => {
   const [images, setImages] = useState(null);
   const [instructions, setInstructions] = useState(null);
   const [singleImage, setSingleImage] = useState(null);
-  const [newIngredients, setNewIngredients] = useState([]);
   //we need to retrieve data about specific recipe
   useEffect(() => {
     console.log('images',images)
@@ -76,11 +75,7 @@ const Recipe = (props) => {
       })
       .then(res => {
         console.log(res.data);
-        setInstructions(res.data.map((x, i) => (
-          <ListGroup.Item key={i}>
-            {x.instruction}
-          </ListGroup.Item>
-        )));
+        setInstructions(res.data);
       })
       //RETRIEVE IMAGES
       axios.post(urlImages, {
@@ -158,35 +153,77 @@ const Recipe = (props) => {
       return images;
     } else {return null;}
   }      
+
   let ingredientsList;
   if (ingredients) {
     ingredientsList = ingredients.map((x, i) => (
-      <ListGroup.Item key={i}>
-        <Row>
-          <Col>
-            <Form.Control 
-              type='text'
-              id_val={i}
-              value={ingredients[i].ingredient}
-              onChange={(e) => {
-                const i = e.target.getAttribute('id_val');
-                const editedIngredients = ingredients.slice();
-                console.log('edited', editedIngredients)
-                editedIngredients[i] = {
-                  ...editedIngredients[i],
-                  ingredient: e.target.value 
-                }
-                setIngredients(editedIngredients);
-                console.log(ingredients)
-                c('new', ingredients)
-              }}
-            />
-          </Col>
-          <Col>{x.amount}</Col>
-        </Row>
-      </ListGroup.Item>
+      <Row key={i}>
+        <Col>
+          <Form.Control 
+            type='text'
+            id_val={i}
+            value={ingredients[i].ingredient}
+            onChange={(e) => {
+              const i = e.target.getAttribute('id_val');
+              const editedIngredients = ingredients.slice();
+              console.log('edited', editedIngredients)
+              editedIngredients[i] = {
+                ...editedIngredients[i],
+                ingredient: e.target.value 
+              }
+              setIngredients(editedIngredients);
+              console.log(ingredients)
+              c('new', ingredients)
+            }}
+          />
+        </Col>
+        <Col>
+          <Form.Control 
+            type='text'
+            id_val={i}
+            value={ingredients[i].amount}
+            onChange={(e) => {
+              const i = e.target.getAttribute('id_val');
+              const editedIngredients = ingredients.slice();
+              console.log('edited', editedIngredients)
+              editedIngredients[i] = {
+                ...editedIngredients[i],
+                amount: e.target.value 
+              }
+              setIngredients(editedIngredients);
+              console.log(ingredients)
+              c('new', ingredients)
+            }}
+          />
+        </Col>
+      </Row>
     )) 
-
+  }
+  let instructionsList;
+  if (instructions) {
+    instructionsList = instructions.map((x, i) => (
+      <Row key={i}>
+        <Col>
+          <Form.Control 
+            type='text'
+            id_val={i}
+            value={instructions[i].instruction}
+            onChange={(e) => {
+              const i = e.target.getAttribute('id_val');
+              const editedInstructions = instructions.slice();
+              console.log('edited', editedInstructions)
+              editedInstructions[i] = {
+                ...editedInstructions[i],
+                instruction: e.target.value 
+              }
+              setInstructions(editedInstructions);
+              console.log(instructions)
+              c('new', instructions)
+            }}
+          />
+        </Col>
+      </Row>
+    )) 
   }
   return(
     <>
@@ -214,7 +251,7 @@ const Recipe = (props) => {
         <h2>Ingredients</h2>
         {ingredientsList}
         <h2>Instructions</h2>
-        {instructions}
+        {instructionsList}
 
         <Button className="recipe-page-edit-recipe-button" variant="success" as={Link} to={`/recipeapp/edit-recipe/${recipeId}`}>Save Changes</Button>
         <Button className="recipe-page-edit-recipe-button" variant="warning" as={Link} to={`/recipeapp/edit-recipe/${recipeId}`}>Cancel Changes</Button>
