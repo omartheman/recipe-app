@@ -23,14 +23,6 @@ const urlImages = `${url}get-images`;
 const urlInstructions = `${url}get-instructions`;
 // image1, image2, image3, image4, image5, image6
 const arr = [ image1, image2];
-const carouselItems = arr.map( (x, i) => (
-  <div key={i} className="edit-recipe-img-container">
-    <SRLWrapper>
-      <img className="edit-recipe-img" src={x} alt='Recipe image.' />
-    </SRLWrapper>
-    <Button variant="danger">Remove Image</Button>
-  </div>
-));
 
 function c(text, value){
   console.log(`${text}: ${value}`)
@@ -54,7 +46,39 @@ const Recipe = (props) => {
 
   const [imageData, setImageData] = useState(null);
 
+  const carouselItems = arr.map((x, i) => (
+    <div key={i} className="edit-recipe-img-container">
+      <SRLWrapper>
+        <img className="edit-recipe-img" src={x} alt='Recipe image.' />
+      </SRLWrapper>
+      <Button 
+        variant="danger" 
+        id_num={x.id ? x.id : null}
+        onClick={(e) => {
+          const id = e.target.getAttribute('id_num');
+          console.log('id', id)
+          deleteImage(id);
+        }}
+      >
+        Delete Image
+      </Button>
+    </div>
+  ));
+  function deleteImage(id){
+    let newArr = [];
+    imageData.forEach((x, i, a) => {
+      if (x.id !== id){
+        newArr.push(x);
+      }
+    })
+    console.log('newArr', newArr)
+    setImageData(newArr);
+  }
+
   //we need to retrieve data about specific recipe
+  useEffect(() => {
+    console.log('imagedata', imageData)
+  }, [imageData])
   useEffect(() => {
     axios.post(urlRecipe, {
       id: recipeId
@@ -131,6 +155,8 @@ const Recipe = (props) => {
   // Following error removed because it causes an infinite loop to add dependencies 'images' and 'recipeId'. Removing the empty array argument also causes an infinite loop.
   // eslint-disable-next-line 
   }, []);
+
+  
   const carousel = () => {
     if (images && images.length > 1) {
       return(
