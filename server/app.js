@@ -130,16 +130,18 @@ app.post(`${serverRoute}get-images-home-carousel`, (req, res) => {
 
 app.post(`${serverRoute}get-images`, (req, res) => {
   console.log(req.body);
-  const item = replaceSqlCharacters(spacesToUnderscores(req.body.item).toLowerCase());
-  console.log('spacesToUnderscores item: ', item)
-  const sql = `
-    SELECT * FROM recipe${req.body.id}_${item}_images;
-  `;
-  connection.query(sql, (err, result) => {
-    if (err) throw err;
-    console.log('Result GET images: ', result);
-    res.send(result);
-  })
+  if (req.body.item){
+    const item = replaceSqlCharacters(spacesToUnderscores(req.body.item).toLowerCase());
+    console.log('spacesToUnderscores item: ', item)
+    const sql = `
+      SELECT * FROM recipe${req.body.id}_${item}_images;
+    `;
+    connection.query(sql, (err, result) => {
+      if (err) throw err;
+      console.log('Result GET images: ', result);
+      res.send(result);
+    })
+  }
 })
 
 app.delete(`${serverRoute}to-try-delete`, (req, res) => {
@@ -219,6 +221,39 @@ app.post(`${serverRoute}to-try-upload`, imageUpload.array("imageFile"),
       res.send(result);
     });
 });
+
+app.post(`${serverRoute}image-delete`, (req, res) => {
+    const id = req.body.id;
+    console.log('req.body  img delete', req.body);
+    const item = replaceSqlCharacters(spacesToUnderscores(req.body.item).toLowerCase());
+    const sql = 
+      `DELETE FROM recipe${id}_${item}_images;
+    `;
+    //dummy sql
+    const sql2 = `select * from accounts;`;
+    connection.query(sql, (err, result) => {
+      if (err) throw err; 
+      console.log(result);
+      console.log('add image after delete')
+      console.log('req.body.imagess', req.body.images)
+      req.body.images.forEach(x => {
+        console.log('foreach')
+        const sqlAdd = `
+          INSERT INTO recipe${id}_${item}_images 
+          (imageName)
+          VALUES (?);
+        `;
+        console.log('sqladd', sqlAdd);
+        console.log('x.imagename', x.imageName)
+        connection.query(sqlAdd, [x.imageName], (err, result) => {
+          if (err) throw err;
+          console.log(result);
+        })
+      })
+      res.send(result);
+    });
+  }
+)
 
 app.post(`${serverRoute}image-upload`, imageUpload.array("imageFile"),
   (req, res) => {

@@ -20,6 +20,7 @@ const url = global_url_variable;
 const urlRecipe = `${url}getrecipe`;
 const urlIngredients = `${url}getingredients`;
 const urlImages = `${url}get-images`;
+const urlImageDelete = `${url}image-delete`;
 const urlInstructions = `${url}get-instructions`;
 // image1, image2, image3, image4, image5, image6
 const arr = [ image1, image2];
@@ -44,7 +45,7 @@ const Recipe = (props) => {
   const [imageFields, setImageFields] = useState([0]);
   const [handleRemoveImageSpinnerId, setHandleRemoveImageSpinnerId] = useState(null);
 
-  const [imageData, setImageData] = useState(null);
+  const [imageData, setImageData] = useState();
 
   const carouselItems = arr.map((x, i) => (
     <div key={i} className="edit-recipe-img-container">
@@ -53,7 +54,7 @@ const Recipe = (props) => {
       </SRLWrapper>
       <Button 
         variant="danger" 
-        id_num={x.id ? x.id : null}
+        id_num={x.id ? x.id : 143}
         onClick={(e) => {
           const id = e.target.getAttribute('id_num');
           console.log('id', id)
@@ -65,26 +66,47 @@ const Recipe = (props) => {
     </div>
   ));
   function deleteImage(id){
+    console.log('imageData', imageData)
     let newArr = [];
-    imageData.forEach((x, i, a) => {
-      if (x.id !== id){
-        newArr.push(x);
-      }
-    })
+    if (imageData){
+      imageData.forEach((x, i, a) => {
+        console.log('x',x)
+        console.log('x.id', x.id)
+        if (x.id !== Number(id)){
+          newArr.push(x);
+        }
+      })
+    }
     console.log('newArr', newArr)
     setImageData(newArr);
+    console.log('recipe name', recipeName)
+    if (recipeName){
+      axios.post(urlImageDelete, {
+        id: recipeId, 
+        item: recipeName,
+        images: newArr
+      })
+      .then(res => {
+        retrieveData();
+      })
+    }
   }
-
+  
   //we need to retrieve data about specific recipe
+  // useEffect(() => {
+  //   console.log('imagedata', imageData)
+  // }, [imageData])
   useEffect(() => {
-    console.log('imagedata', imageData)
-  }, [imageData])
-  useEffect(() => {
+    retrieveData();
+  }, [recipeId]);
+
+  const retrieveData = () => {
     axios.post(urlRecipe, {
       id: recipeId
     })
     .then(res => {
       setRecipeName(res.data[0].item);
+      console.log('axios recipeName', res.data[0].item)
       setCook(res.data[0].cook);
       setDescription(res.data[0].description);
       return res;
@@ -152,10 +174,10 @@ const Recipe = (props) => {
         }
       })
     })
-  // Following error removed because it causes an infinite loop to add dependencies 'images' and 'recipeId'. Removing the empty array argument also causes an infinite loop.
-  // eslint-disable-next-line 
-  }, []);
+    // Following error removed because it causes an infinite loop to add dependencies 'images' and 'recipeId'. Removing the empty array argument also causes an infinite loop.
+    // eslint-disable-next-line 
 
+  }
   
   const carousel = () => {
     if (images && images.length > 1) {
