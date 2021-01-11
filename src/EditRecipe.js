@@ -52,14 +52,14 @@ const Recipe = (props) => {
   const [imageFields, setImageFields] = useState([0]);
   const [handleRemoveImageSpinnerId, setHandleRemoveImageSpinnerId] = useState(null);
 
+  const [imageData, setImageData] = useState(null);
+
   //we need to retrieve data about specific recipe
   useEffect(() => {
-    console.log('images',images)
     axios.post(urlRecipe, {
       id: recipeId
     })
     .then(res => {
-      console.log('res',res.data);
       setRecipeName(res.data[0].item);
       setCook(res.data[0].cook);
       setDescription(res.data[0].description);
@@ -73,8 +73,6 @@ const Recipe = (props) => {
         item: itemLow
       })
       .then(res => {
-        console.log('ingredients')
-        console.log(res.data);
         setIngredients(res.data);
       })
       //RETRIEVE INSTRUCTIONS
@@ -83,7 +81,6 @@ const Recipe = (props) => {
         item: itemLow
       })
       .then(res => {
-        console.log(res.data);
         setInstructions(res.data);
       })
       //RETRIEVE IMAGES
@@ -92,12 +89,12 @@ const Recipe = (props) => {
         item: itemLow
       })
       .then(res => {
-        console.log(res.data);
+        console.log('original image data', res.data)
+        setImageData(res.data);
         if (url === "http://localhost:4000/recipeapp/recipeapp-server/") {
           if (carouselItems.length > 1) {
             setImages(carouselItems)
           } else {
-            console.log('one is the loneliest')
             setImages([
               <div className="recipe-page-single-image-container">
                 <Link to="#" className="carousel-link-home">
@@ -108,7 +105,6 @@ const Recipe = (props) => {
               </div>
             ]);
           }
-          console.log('caritems',carouselItems)
         } else if (res.data.length === 1) {
           setImages(
             <div className="recipe-page-single-image-container">
@@ -158,7 +154,6 @@ const Recipe = (props) => {
         </Carousel> 
       );
     } else if (images) {
-      console.log('images === 1. value of "images": ', images)
       return images;
     } else {return null;}
   }      
@@ -175,14 +170,11 @@ const Recipe = (props) => {
             onChange={(e) => {
               const i = e.target.getAttribute('id_val');
               const editedIngredients = ingredients.slice();
-              console.log('edited', editedIngredients)
               editedIngredients[i] = {
                 ...editedIngredients[i],
                 ingredient: e.target.value 
               }
               setIngredients(editedIngredients);
-              console.log(ingredients)
-              c('new', ingredients)
             }}
           />
         </Col>
@@ -194,14 +186,11 @@ const Recipe = (props) => {
             onChange={(e) => {
               const i = e.target.getAttribute('id_val');
               const editedIngredients = ingredients.slice();
-              console.log('edited', editedIngredients)
               editedIngredients[i] = {
                 ...editedIngredients[i],
                 amount: e.target.value 
               }
               setIngredients(editedIngredients);
-              console.log(ingredients)
-              c('new', ingredients)
             }}
           />
         </Col>
@@ -220,22 +209,22 @@ const Recipe = (props) => {
             onChange={(e) => {
               const i = e.target.getAttribute('id_val');
               const editedInstructions = instructions.slice();
-              console.log('edited', editedInstructions)
               editedInstructions[i] = {
                 ...editedInstructions[i],
                 instruction: e.target.value 
               }
               setInstructions(editedInstructions);
-              console.log(instructions)
-              c('new', instructions)
             }}
           />
         </Col>
       </Row>
     )) 
   }
+  //STOP HERE need to figure out a way to send both the original image names to the server, but also the new image names. 
+  //If we delete images, 
   function handleImageCrop(blobFile, index){
     const newImage = new File([blobFile], blobFile.name, {type: blobFile.type});
+    console.log('handleImageCrop name',blobFile.name)
     const handleNewImages = newImages;
     handleNewImages[index] = newImage;
     setNewImages(handleNewImages);
@@ -245,8 +234,6 @@ const Recipe = (props) => {
     let newNumImageFields = numImageFields;
     newNumImageFields++;
     setNumImageFields(prev => {
-      console.log(prev);
-      console.log('prev++', prev++);
       return(newNumImageFields);
     }); 
   }
@@ -261,7 +248,6 @@ const Recipe = (props) => {
     setNewImages(handleNewImages);
   }
   const handleRemoveImageSpinner = (id) => {
-    console.log('idnum', id);
     setHandleRemoveImageSpinnerId(id);
     return(id);
   } 
@@ -289,6 +275,12 @@ const Recipe = (props) => {
       }
     </ListGroup.Item>
   ));
+  const newImagesSubmit = () => {
+    c('newimages', images)
+    console.log(images)
+    console.log(imageData);
+  }
+  newImagesSubmit();
   return(
     <>
       <Container className="edit-recipe-page-container">

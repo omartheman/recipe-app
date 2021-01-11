@@ -480,23 +480,6 @@ app.post(`${serverRoute}recipe-upload`, (req, res) => {
   });
 });
 
-/*
-app.post(`${serverRoute}`, function(req, res){
-  res.send('Got a POST request to update recipes.');
-  var sql = `UPDATE recipes SET 
-    item = '${req.body.item}',
-    cook = '${req.body.cook}',
-    description = '${req.body.description}' 
-    WHERE id = '2' `;
-  connection.query(sql, 
-    function (err, result) {
-    if (err) throw err;
-    console.log(result.affectedRows + " record(s) updated");
-  });
-});
-*/
-
-
 // ===============================================================
 // LINK REACT ROUTER AND EXPRESS APP
 // Handles any requests that don't match the ones above
