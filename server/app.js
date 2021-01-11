@@ -437,6 +437,76 @@ app.get(`${serverRoute}`, (req, res) => {
   });
 });
 
+
+//STOP HERE: Next step is to ALTER TABLE to save all new recipe information. You can do this with all the info, instructions, and ingredients using a copy of app.post below. Then all that's left is to do it with image upload. 
+app.post(`${serverRoute}recipe-update`, (req, res) => {
+  //Check to see that user is logged in. 
+  res.send('Got a POST request to UPDATE recipe.');
+  console.log('req.session.username: ',req.session.username)
+  var sql = `UPDATE recipes SET
+  item = ?,
+  cook = ?, 
+  description = ?
+  WHERE id = ?
+  ;`;
+  connection.query(sql, [
+    req.body.item,
+    req.body.cook,
+    req.body.description,
+    req.body.id
+  ], function (err, result) {
+    if (err) throw err;
+    console.log(result.affectedRows + " record(s) updated");
+  });
+  // *******UPDATE TABLE FOR RECIPE INGREDIENTS********
+  const id = req.body.id;
+  let item = req.body.item;
+  item = replaceSqlCharacters(spacesToUnderscores(item).toLowerCase());
+  console.log('modified item: ', item)
+  // UPDATE INGREDIENTS TABLE
+  //STOP HERE next step fix ingredients
+  const sqlCreateIngredientsTable = `
+    CREATE TABLE recipe${id}_${item}_ingredients (
+      id INT NOT NULL AUTO_INCREMENT,
+      ingredient varchar(500) NOT NULL,
+      amount varchar(500) NOT NULL,
+      PRIMARY KEY (ID) 
+  );`;
+  connection.query(sqlCreateIngredientsTable, (err, result) => {
+    if (err) throw err; 
+  });
+  for (let i = 0; i < req.body.ingredients.length; i++) {
+    const sqlAddIngredient = 
+      `INSERT INTO recipe${id}_${item}_ingredients (ingredient, amount) VALUES (?, ?);`
+    ;
+    connection.query(sqlAddIngredient,[
+      req.body.ingredients[i],
+      req.body.amounts[i]
+    ], (err, result) => {
+      if (err) throw err; 
+    });
+  }
+  // CREATE INSTRUCTIONS TABLE
+  const sqlCreateInstructionsTable = `
+    CREATE TABLE recipe${id}_${item}_instructions (
+      id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+      instruction varchar(3000) NOT NULL
+  );`;
+  connection.query(sqlCreateInstructionsTable, (err, result) => {
+    if (err) throw err; 
+  });
+  for (let i = 0; i < req.body.instructions.length; i++) {
+    const sqlAddInstruction = 
+      `INSERT INTO recipe${id}_${item}_instructions (instruction) 
+      VALUES (?);`;
+    connection.query(sqlAddInstruction, [
+      req.body.instructions[i]
+    ], (err, result) => {
+      if (err) throw err; 
+    });
+  }
+});
+
 app.post(`${serverRoute}recipe-upload`, (req, res) => {
   //Check to see that user is logged in. 
   res.send('Got a POST request to upload recipe.');

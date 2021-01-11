@@ -22,6 +22,7 @@ const urlIngredients = `${url}getingredients`;
 const urlImages = `${url}get-images`;
 const urlImageDelete = `${url}image-delete`;
 const urlInstructions = `${url}get-instructions`;
+const urlSaveChanges = `${url}recipe-update`;
 // image1, image2, image3, image4, image5, image6
 const arr = [ image1, image2];
 
@@ -46,6 +47,7 @@ const Recipe = (props) => {
   const [handleRemoveImageSpinnerId, setHandleRemoveImageSpinnerId] = useState(null);
 
   const [imageData, setImageData] = useState();
+  const [recipeUser, setRecipeUser] = useState(null);
 
   const carouselItems = arr.map((x, i) => (
     <div key={i} className="edit-recipe-img-container">
@@ -105,8 +107,9 @@ const Recipe = (props) => {
       id: recipeId
     })
     .then(res => {
+      console.log('axios recipe data', res.data)
+      setRecipeUser(res.data[0].user)
       setRecipeName(res.data[0].item);
-      console.log('axios recipeName', res.data[0].item)
       setCook(res.data[0].cook);
       setDescription(res.data[0].description);
       return res;
@@ -268,8 +271,6 @@ const Recipe = (props) => {
       </Row>
     )) 
   }
-  //STOP HERE need to figure out a way to send both the original image names to the server, but also the new image names. 
-  //If we delete images, 
   function handleImageCrop(blobFile, index){
     const newImage = new File([blobFile], blobFile.name, {type: blobFile.type});
     console.log('handleImageCrop name',blobFile.name)
@@ -329,6 +330,16 @@ const Recipe = (props) => {
     console.log(imageData);
   }
   newImagesSubmit();
+  const saveChanges = () => {
+    if (recipeUser === props.loggedInUser) {
+      axios.post(urlSaveChanges, {
+        id: recipeId,
+        item: recipeName,
+        cook: cook,
+        description: description
+      })
+    }
+  }
   return(
     <>
       <Container className="edit-recipe-page-container">
