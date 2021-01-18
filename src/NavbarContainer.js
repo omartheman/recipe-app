@@ -69,9 +69,9 @@ const NavbarContainer = (props) => {
         <NavDropdown 
           title={`Hello, ${loggedInUser}!`} 
           id="basic-nav-dropdown" 
-          className={`${loggedInUser === null || loggedInUser === '' ? "hidden" : null} ml-auto`} 
+          className={`navbar-container-user-hello-dropdown ${loggedInUser === null || loggedInUser === '' ? "hidden" : null} ml-auto`} 
         >
-          <NavDropdown.Item onClick={handleClickLogout} href="#">Log Out</NavDropdown.Item>
+          <NavDropdown.Item id="navbar-container-log-out-dropdown" onClick={handleClickLogout} href="#">Log Out</NavDropdown.Item>
         </NavDropdown> 
         <div className={`${loggedInUser ? "hidden": null} ml-auto navbar-log-in-dropdown`}>
           <div 

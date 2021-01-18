@@ -7,9 +7,16 @@ nav {
   // height: var(--navHeight);
   // padding: 0 20px !important;
 }
+.navbar-container-user-hello-dropdown > div {
+  @media(max-width: 991px){
+    left: 0 !important;
+    right: auto !important;
+  }
+}
 #basic-nav-dropdown {
   font-weight: 600;
 }
+
 .dropdown:hover .dropdown-menu {
   /* Display navbar on hover, except it doesn't work because click activation interferes */
   display: block;
