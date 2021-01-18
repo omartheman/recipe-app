@@ -8,6 +8,7 @@ import global_url_variable from './global_url_variable';
 import axios from 'axios';
 import './Home.scss';
 import { Link } from 'react-router-dom';
+import LargeRecipesHome from './LargeRecipesHome';
 
 import image1 from './images/omar-3-profile.jpg';
 import image2 from './images/imageFile_dateVal_1607883271123_boat_on_lake.jpg';
@@ -32,14 +33,19 @@ const urlFeatured = `${url}get-featured-recipe`;
 //Add featured recipe route in app.js
 
 class Home extends React.Component {
-  state = {
-    images: null,
-    imageNames: [],
-    featuredRecipe: []
+  constructor(props){
+    super(props);
+    this.state = {
+      images: null,
+      imageNames: [],
+      featuredRecipe: [],
+      featuredRecipeId: null
+    }
+    this.setFeaturedRecipeId = this.setFeaturedRecipeId.bind(this);
   }
   componentDidMount(){
     //RETRIEVE IMAGES
-    if (url !== "http://localhost:4000/recipeapp/recipeapp-server/"){
+    if (true){
       axios.get(url)
       .then(res => {
         res.data.map(x => {
@@ -60,6 +66,9 @@ class Home extends React.Component {
       console.log('featured res', res);
       this.setState({featuredRecipe: res.data})
     })
+  }
+  setFeaturedRecipeId(featuredRecipeId){
+    this.setState({featuredRecipeId: featuredRecipeId})
   }
   render(){
     let images = this.state.imageNames.map((x, i) => {
@@ -121,9 +130,14 @@ class Home extends React.Component {
               <HomeMainCont />
             </Col>
             <Col lg>
-              <FeaturedRecipe />
+              <FeaturedRecipe 
+                setFeaturedRecipeId={this.setFeaturedRecipeId}
+              />
             </Col>
           </Row>
+          <LargeRecipesHome 
+            featuredRecipeId={this.state.featuredRecipeId}
+          />
         </Container>
       </div>
     );

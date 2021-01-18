@@ -107,9 +107,11 @@ app.get(`${serverRoute}get-featured-recipe`, (req, res) => {
     LIMIT 1;`;
     connection.query(sql, (err, result) => {
       if (err) throw err;
-      const imagePath = result[0].imageName;
-      res.send([id, imagePath, itemTitle, description, pastDayNum, todaysDayNum]);
-      console.log('Result GET images: ', result[0].imageName);
+      if (result[0]){
+        const imagePath = result[0].imageName;
+        res.send([id, imagePath, itemTitle, description, pastDayNum, todaysDayNum]);
+        console.log('Result GET images: ', result[0].imageName);
+      }
     })
   });
 })
@@ -123,8 +125,10 @@ app.post(`${serverRoute}get-images-home-carousel`, (req, res) => {
     LIMIT 1;`;
   connection.query(sql, (err, result) => {
     if (err) throw err;
-    res.send([req.body.id, result[0].imageName]);
-    console.log('Result GET images: ', result[0].imageName);
+    if (result[0]){
+      res.send([req.body.id, result[0].imageName]);
+      console.log('Result GET images: ', result[0].imageName);
+    }
   })
 })
 

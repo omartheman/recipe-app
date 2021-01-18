@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 const url = global_url_variable;
 const urlFeatured = `${url}get-featured-recipe`;
 
-class FeaturedRecipe extends React.Component{
+class LargeRecipesHome extends React.Component{
   state = {
     featuredRecipe: []
   }
@@ -16,13 +16,12 @@ class FeaturedRecipe extends React.Component{
     axios.get(urlFeatured)
     .then(res => {
       console.log('featured res', res);
-      this.setState({featuredRecipe: res.data});
-      this.props.setFeaturedRecipeId(res.data[0]);
-      console.log('featured res id', res.data[0]);
+      this.setState({featuredRecipe: res.data})
     })
   }
   render(){
     const {featuredRecipe} = this.state;
+    const {featuredRecipeId} = this.props;
     let featuredRecipeEl =
       <Container className="featured-recipe-container" as={Link} to={`/recipeapp/recipe/${featuredRecipe[0]}`}>
           <h3>Featured Recipe: {featuredRecipe[2]}</h3>
@@ -53,4 +52,4 @@ class FeaturedRecipe extends React.Component{
   }  
 }
 
-export default FeaturedRecipe; 
+export default LargeRecipesHome; 

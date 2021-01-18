@@ -63,7 +63,7 @@ CREATE TABLE recipe${id}_${item}_images (
 --delete test rows from accounts
 
 DELETE from accounts WHERE id BETWEEN 21 AND 40;
-DELETE from recipes WHERE id BETWEEN 2 AND 1000;
+DELETE from recipes WHERE id BETWEEN 255 AND 1000;
 
 ==========================
 
