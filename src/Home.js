@@ -68,7 +68,7 @@ class Home extends React.Component {
     })
   }
   setFeaturedRecipeId(featuredRecipeId){
-    this.setState({featuredRecipeId: featuredRecipeId})
+    this.setState({featuredRecipeId: featuredRecipeId}, () => console.log('new id', this.state.featuredRecipeId))
   }
   render(){
     let images = this.state.imageNames.map((x, i) => {

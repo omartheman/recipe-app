@@ -6,18 +6,32 @@ import global_url_variable from './global_url_variable';
 import { Link } from 'react-router-dom';
 
 const url = global_url_variable;
-const urlFeatured = `${url}get-featured-recipe`;
+const urlLarge = `${url}get-large-recipes`;
 
 class LargeRecipesHome extends React.Component{
   state = {
     featuredRecipe: []
   }
   componentDidMount(){
-    axios.get(urlFeatured)
+    axios.post(urlLarge, {
+      featuredRecipeId: this.props.featuredRecipeId
+    })
     .then(res => {
-      console.log('featured res', res);
+      console.log('Large recipes', res);
       this.setState({featuredRecipe: res.data})
     })
+  }
+  componentDidUpdate(prevProps){
+    if (prevProps.featuredRecipeId !== this.props.featuredRecipeId){
+      axios.post(urlLarge, {
+        featuredRecipeId: this.props.featuredRecipeId
+      })
+      .then(res => {
+        console.log('featured res', res);
+        this.setState({featuredRecipe: res.data})
+      })
+
+    }
   }
   render(){
     const {featuredRecipe} = this.state;

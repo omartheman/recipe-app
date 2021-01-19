@@ -79,6 +79,66 @@ const imageUpload = multer({storage: storage})
 
 let pastDayNum = 0;
 let randomRecipe = 0;
+
+app.post(`${serverRoute}get-large-recipes`, (req, res) => {
+  const featuredRecipeId = req.body.featuredRecipeId;
+  console.log('featured id', featuredRecipeId)
+  //get images for new recipe
+  connection.query("SELECT * FROM recipes", function (err, result) {
+    if (err) throw err;
+    console.log(result);
+    // let recipes = [];
+    let length = result.length;
+    const wait = new Promise ((resolve, reject) => {
+      let recipes = [];
+      result.map((recipe, index, array) => {
+        const id = recipe.id;
+        const item = replaceSqlCharacters(spacesToUnderscores(recipe.item).toLowerCase());
+        const itemTitle = recipe.item;
+        const description = recipe.description;
+        const recipes2 = [];
+        const sql = `
+        SELECT * FROM recipe${id}_${item}_images
+        ORDER BY RAND()
+        LIMIT 1;`;
+        const waitQuery = new Promise((resolve, reject) => {
+          connection.query(sql, (err, result) => {
+            if (err) throw err;
+            if (result[0]){
+              console.log('result for large recipes', result[0])
+              const imagePath = result[0].imageName;
+              console.log('info', [id, imagePath, itemTitle, description])
+              console.log('Result GET images: ', result[0].imageName);
+              console.log('arr', recipes);
+              recipes2.push([id, imagePath, itemTitle, description])
+              recipes.push([id, imagePath, itemTitle, description]);
+              resolve([id, imagePath, itemTitle, description]);
+            }
+          })
+        });
+        waitQuery.then(resp => {
+          console.log('recipes in waitQuery', recipes)
+          console.log('length', length)
+          console.log(recipes.length);
+          if (recipes.length === length -1){
+            // console.log('sending recipes')
+            // res.send(recipes);
+            resolve(recipes2);
+          }
+          return recipes2;
+        })
+        console.log('recipes2 outside waitQuery', recipes2)
+        if (index === array.length -1){resolve(recipes2)}
+      })
+    })
+    wait.then(res => {
+      console.log('waitfunc res', res)
+      console.log('recipes in waitfunc', recipes)
+      recipes = res;
+    })
+  });
+})
+
 app.get(`${serverRoute}get-featured-recipe`, (req, res) => {
   console.log(`Got a GET request to /get-featured-recipe;`);
   const todaysDayNum = Math.floor(Date.now()/1000/8640);
