@@ -80,62 +80,36 @@ const imageUpload = multer({storage: storage})
 let pastDayNum = 0;
 let randomRecipe = 0;
 
-app.post(`${serverRoute}get-large-recipes`, (req, res) => {
+app.post(`${serverRoute}get-large-recipes`, (req, responseMain) => {
   const featuredRecipeId = req.body.featuredRecipeId;
   console.log('featured id', featuredRecipeId)
   //get images for new recipe
   connection.query("SELECT * FROM recipes", function (err, result) {
     if (err) throw err;
     console.log(result);
-    // let recipes = [];
     let length = result.length;
-    const wait = new Promise ((resolve, reject) => {
-      let recipes = [];
-      result.map((recipe, index, array) => {
-        const id = recipe.id;
-        const item = replaceSqlCharacters(spacesToUnderscores(recipe.item).toLowerCase());
-        const itemTitle = recipe.item;
-        const description = recipe.description;
-        const recipes2 = [];
-        const sql = `
-        SELECT * FROM recipe${id}_${item}_images
-        ORDER BY RAND()
-        LIMIT 1;`;
-        const waitQuery = new Promise((resolve, reject) => {
-          connection.query(sql, (err, result) => {
-            if (err) throw err;
-            if (result[0]){
-              console.log('result for large recipes', result[0])
-              const imagePath = result[0].imageName;
-              console.log('info', [id, imagePath, itemTitle, description])
-              console.log('Result GET images: ', result[0].imageName);
-              console.log('arr', recipes);
-              recipes2.push([id, imagePath, itemTitle, description])
-              recipes.push([id, imagePath, itemTitle, description]);
-              resolve([id, imagePath, itemTitle, description]);
-            }
-          })
-        });
-        waitQuery.then(resp => {
-          console.log('recipes in waitQuery', recipes)
-          console.log('length', length)
-          console.log(recipes.length);
-          if (recipes.length === length -1){
-            // console.log('sending recipes')
-            // res.send(recipes);
-            resolve(recipes2);
-          }
-          return recipes2;
-        })
-        console.log('recipes2 outside waitQuery', recipes2)
-        if (index === array.length -1){resolve(recipes2)}
+    const recipes = [];
+    result.forEach((recipe, index, array) => {
+      const id = recipe.id;
+      const item = replaceSqlCharacters(spacesToUnderscores(recipe.item).toLowerCase());
+      const itemTitle = recipe.item;
+      const description = recipe.description;
+      const sql = `
+      SELECT * FROM recipe${id}_${item}_images
+      ORDER BY RAND()
+      LIMIT 1;`;
+      connection.query(sql, (err, result) => {
+        if (err) throw err;
+        if (result[0]){
+          const imagePath = result[0].imageName;
+          recipes.push([id, imagePath, itemTitle, description]);
+          if (recipes.length === length - 1){wait(recipes)}
+        }
       })
     })
-    wait.then(res => {
-      console.log('waitfunc res', res)
-      console.log('recipes in waitfunc', recipes)
-      recipes = res;
-    })
+    const wait = (recipes) => {
+      responseMain.send(recipes);
+    }
   });
 })
 
@@ -569,6 +543,7 @@ app.get('/recipeapp*', (req, res) =>{
 });
 
 const path = require('path');
+const { response } = require('express');
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, '../recipeapp')));
 

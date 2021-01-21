@@ -1,5 +1,6 @@
 import React from 'react';
 import './FeaturedRecipe.scss';
+import './LargeRecipesHome.scss';
 import { Container, Image } from 'react-bootstrap';
 import axios from 'axios';
 import global_url_variable from './global_url_variable';
@@ -10,7 +11,7 @@ const urlLarge = `${url}get-large-recipes`;
 
 class LargeRecipesHome extends React.Component{
   state = {
-    featuredRecipe: []
+    largeRecipes: []
   }
   componentDidMount(){
     axios.post(urlLarge, {
@@ -18,7 +19,7 @@ class LargeRecipesHome extends React.Component{
     })
     .then(res => {
       console.log('Large recipes', res);
-      this.setState({featuredRecipe: res.data})
+      this.setState({largeRecipes: res.data})
     })
   }
   componentDidUpdate(prevProps){
@@ -27,40 +28,43 @@ class LargeRecipesHome extends React.Component{
         featuredRecipeId: this.props.featuredRecipeId
       })
       .then(res => {
-        console.log('featured res', res);
-        this.setState({featuredRecipe: res.data})
+        this.setState({largeRecipes: res.data})
       })
-
     }
   }
   render(){
-    const {featuredRecipe} = this.state;
+    const {largeRecipes} = this.state;
     const {featuredRecipeId} = this.props;
-    let featuredRecipeEl =
-      <Container className="featured-recipe-container" as={Link} to={`/recipeapp/recipe/${featuredRecipe[0]}`}>
-          <h3>Featured Recipe: {featuredRecipe[2]}</h3>
+    let largeRecipeEl =
+    largeRecipes.map((x, i, a) => (
+      <div className="large-recipe-container" as={Link} to={`/recipeapp/recipe/${largeRecipes[i][0]}`}>
+          <h3>{largeRecipes[i][2]}</h3>
           <Image 
             className="featrd-rec-img" 
-            src={`https://brittanyjewellneal.com/uploaded_files/${featuredRecipe[1]}`}  
+            src={`https://brittanyjewellneal.com/uploaded_files/${largeRecipes[i][1]}`}  
             rounded fluid
           />
-          <p>{featuredRecipe[3]}</p>
-      </Container>
-    ;
+          <p>{largeRecipes[i][3]}</p>
+      </div>
+    ));
     if (url === "http://localhost:4000/recipeapp/recipeapp-server/") {
-      featuredRecipeEl = 
-      <>
-        <Container className="featured-recipe-container" as={Link} to={`/recipeapp/recipe/1`}>
-          <h3>Featured Recipe: Fried Eggs</h3>
-          <Image className="featrd-rec-img" src="https://images.unsplash.com/photo-1582169505937-b9992bd01ed9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=698&q=80" rounded fluid/>
-          <p>Lorem ipsum recipe shit</p>
-        </Container>
-      </>
+      largeRecipeEl = largeRecipes.map((x, i, a) => (
+        <>
+          <div className="large-recipe-container" as={Link} to={`/recipeapp/recipe/1`}>
+            <h3>Featured Recipe: Fried Eggs Recipe #{i+1}</h3>
+            <Image className="featrd-rec-img" src="https://images.unsplash.com/photo-1582169505937-b9992bd01ed9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=698&q=80" rounded fluid/>
+            <h4>Lorem ipsum recipe shit</h4>
+          </div>
+        </>
+      )) 
       ;
     }
     return(
       <>
-        {this.state.featuredRecipe.length > 0 ? featuredRecipeEl : null}
+        <h2 className="large-recipes-home-title">More Recipes</h2>
+        <div className="large-recipes-home-container">
+          {this.state.largeRecipes.length > 0 ? largeRecipeEl : null}
+        </div>
       </>
     );
   }  
