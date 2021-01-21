@@ -1,8 +1,8 @@
 const mode =
 
-"developmentOmar";
-/*
 "productionBritt";
+/*
+"developmentOmar";
 */
 
 const express = require('express');
@@ -84,7 +84,7 @@ app.post(`${serverRoute}get-large-recipes`, (req, responseMain) => {
   const featuredRecipeId = req.body.featuredRecipeId;
   console.log('featured id', featuredRecipeId)
   //get images for new recipe
-  connection.query("SELECT * FROM recipes", function (err, result) {
+  connection.query("SELECT * FROM recipes ORDER BY RAND()", function (err, result) {
     if (err) throw err;
     console.log(result);
     let length = result.length;

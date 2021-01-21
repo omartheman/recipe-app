@@ -37,24 +37,24 @@ class LargeRecipesHome extends React.Component{
     const {featuredRecipeId} = this.props;
     let largeRecipeEl =
     largeRecipes.map((x, i, a) => (
-      <div className="large-recipe-container" as={Link} to={`/recipeapp/recipe/${largeRecipes[i][0]}`}>
+      <Link className="large-recipe-container" as={Link} to={`/recipeapp/recipe/${largeRecipes[i][0]}`}>
           <h3>{largeRecipes[i][2]}</h3>
           <Image 
             className="featrd-rec-img" 
             src={`https://brittanyjewellneal.com/uploaded_files/${largeRecipes[i][1]}`}  
             rounded fluid
           />
-          <p>{largeRecipes[i][3]}</p>
-      </div>
+          <h4>{largeRecipes[i][3]}</h4>
+      </Link>
     ));
     if (url === "http://localhost:4000/recipeapp/recipeapp-server/") {
       largeRecipeEl = largeRecipes.map((x, i, a) => (
         <>
-          <div className="large-recipe-container" as={Link} to={`/recipeapp/recipe/1`}>
+          <Link className="large-recipe-container" to={`/recipeapp/recipe/1`}>
             <h3>Featured Recipe: Fried Eggs Recipe #{i+1}</h3>
             <Image className="featrd-rec-img" src="https://images.unsplash.com/photo-1582169505937-b9992bd01ed9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=698&q=80" rounded fluid/>
             <h4>Lorem ipsum recipe shit</h4>
-          </div>
+          </Link>
         </>
       )) 
       ;

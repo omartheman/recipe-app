@@ -80,7 +80,7 @@ const Recipe = (props) => {
         console.log(res.data);
         setInstructions(res.data.map((x, i) => (
           <ListGroup.Item key={i}>
-            {x.instruction}
+            { i + 1 }) {x.instruction}
           </ListGroup.Item>
         )));
       })
