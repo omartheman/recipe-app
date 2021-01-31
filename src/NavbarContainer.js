@@ -44,7 +44,12 @@ const NavbarContainer = (props) => {
     // outside click 
     // ... do whatever on click outside here ...
     if (e.target.className){
-      if (e.target.className.match('login-form-identifier')) {
+      if (
+        e.target.nodeName !== 'svg' 
+        && e.target.nodeName !== 'path' 
+        && e.target.nodeName !== 'tspan'
+        && e.target.nodeName !== 'line'
+        &&  e.target.className.match('login-form-identifier')) {
         return;
       }
     }

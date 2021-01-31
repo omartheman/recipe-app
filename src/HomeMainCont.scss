@@ -3,6 +3,8 @@
   margin: auto;
 }
 .welcome-text {
+  display: flex;
+  flex-direction: column;
   float: left;
 }
 .welcome-text h2, .welcome-text p {
