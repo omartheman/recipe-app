@@ -1,9 +1,12 @@
 import React from 'react';
 import './HomeMainCont.css';
+import {diet} from './images/diet.svg';
 
 const HomeMainCont = (props) => (
   <main className="container">
     <div className="welcome-text">
+
+      
       <h2>Welcome to The Recipe Cabinet</h2>
       <p>
         Stash your culinary creations here for later use. Never hunt for a recipe again. Store the memories of that delightful dish.

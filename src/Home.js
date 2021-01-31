@@ -122,10 +122,10 @@ class Home extends React.Component {
     }
     return(
       <div>
-        <Container id="home">
+        <div id="home">
           <h1>Home</h1>
           {carousel()} 
-          <Row>
+          <Row className="home-section-1">
             <Col lg>
               <HomeMainCont />
             </Col>
@@ -138,7 +138,7 @@ class Home extends React.Component {
           <LargeRecipesHome 
             featuredRecipeId={this.state.featuredRecipeId}
           />
-        </Container>
+        </div>
       </div>
     );
   }
