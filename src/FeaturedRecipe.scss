@@ -13,20 +13,17 @@
   }
   h3 {
     text-align: center;
+    background: white;
+    border-bottom: 5px solid #0a73e0;
+    margin-bottom: 0;
+    padding: 10px 0;
+    border-radius: 5px 5px 0 0;
   }
   img {
-    transition: transform 0.3s;
     opacity: 0;
     animation: fade_in 2s forwards;
-  }
-  img:hover {
-    transition: transform 0.3s;
-    transform: scale(0.95);
   }
 }
 .featured-recipe-container:hover {
   text-decoration: none;
-  h3 {
-    color: rgb(0, 0, 0);
-  }
 }
