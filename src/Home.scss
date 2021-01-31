@@ -1,14 +1,38 @@
-#home-h1 {
-  color: black;
+#home-banner {
   background: linear-gradient(rgb(253, 184, 94), rgb(255, 170, 73));
+  height: 300px;
+  width: 100vw;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+#home-h1-container {
+  color: black;
   margin-top: 0 !important;
-  padding: 20px 0;
+  padding: 0 0 20px;
+  position: relative;
+}
+#home-h1 {
+  margin: 0 !important;
+  width: fit-content;
+  margin-top: 0 !important;
+  margin-left: 80px !important;
+  @media(max-width: 991px){
+    margin-left: 10% !important;
+  }
+  padding: 10px 20px;
+  background: white;
+  border-radius: 0px 0px 5px 5px;
+  border-top: 5px solid rgb(57, 182, 255);
 }
 #home-carousel-container {
   padding: 20px 0 0;
 }
 .home-section-1 {
   background:  linear-gradient(rgb(224, 144, 38), rgb(207, 114, 78));
+  background:  linear-gradient(rgba(224, 144, 38, 0.8), rgba(207, 114, 78, 0.8));
+
   color: black;
   padding: 50px 100px;
   @media(max-width: 991px){
