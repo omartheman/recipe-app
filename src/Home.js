@@ -123,8 +123,11 @@ class Home extends React.Component {
     return(
       <div>
         <div id="home">
-          <h1>Home</h1>
-          {carousel()} 
+          
+          <h1 id="home-h1">Home</h1>
+          <div id="home-carousel-container">
+            {carousel()} 
+          </div>
           <Row className="home-section-1">
             <Col lg>
               <HomeMainCont />

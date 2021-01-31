@@ -1,7 +1,22 @@
-
+#home-h1 {
+  color: black;
+  background: linear-gradient(rgb(253, 184, 94), rgb(255, 170, 73));
+  margin-top: 0 !important;
+  padding: 20px 0;
+}
+#home-carousel-container {
+  padding: 20px 0 0;
+}
 .home-section-1 {
-  background: rgb(83, 83, 83);
-  color: white;
+  background:  linear-gradient(rgb(224, 144, 38), rgb(207, 114, 78));
+  color: black;
+  padding: 50px 100px;
+  @media(max-width: 991px){
+    padding: 50px 0px;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  margin-top: 50px;
 }
 .home-intro-text-center {
   text-align: center;

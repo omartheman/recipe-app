@@ -21,8 +21,13 @@
     text-align: center;
   }
   img {
+    transition: transform 0.3s;
     opacity: 0;
     animation: fade_in 2s forwards;
+  }
+  img:hover {
+    transition: transform 0.3s;
+    transform: scale(0.95);
   }
 }
 .large-recipe-container:hover {
