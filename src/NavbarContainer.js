@@ -59,9 +59,9 @@ const NavbarContainer = (props) => {
   <>
     <Navbar expand="lg">
       <Navbar.Brand as={Link} to="/recipeapp/" className="navbar-site-name">
-        <span>
+        <h1 id="navbar-container-title">
           The Recipe Cabinet 
-        </span>
+        </h1>
         <img src={avocadoTabIcon} alt="Avocado icon."/>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
