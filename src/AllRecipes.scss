@@ -1,3 +1,4 @@
+
 @mixin animateRecipeListFade {
   @for $i from 1 through 1000 {
     &:nth-child(#{$i}) {
@@ -7,17 +8,17 @@
     }
     &:hover:nth-child(#{$i}) {
       @if $i%6 == 1 {
-        background-color: rgba(209, 154, 154, 0.705);
+        background-color: rgba(236, 175, 175, 0.534);
       } @else if $i%6 == 0 {
-        background-color: rgba(192, 179, 212, 0.705);
+        background-color: rgba(203, 179, 240, 0.418);
       } @else if $i%6 == 5 {
-        background-color: rgba(179, 179, 214, 0.685);
+        background-color: rgba(171, 171, 240, 0.472);
       } @else if $i%6 == 4 {
-        background-color: rgba(160, 204, 165, 0.705);
+        background-color: rgba(167, 241, 175, 0.404);
       } @else if $i%6 == 3 {
-        background-color: rgba(200, 200, 162, 0.705);
+        background-color: rgba(255, 255, 71, 0.514);
       } @else if $i%6 == 2 {
-        background-color: rgba(197, 172, 151, 0.705);
+        background-color: rgba(251, 194, 146, 0.452);
       }
     }
   }

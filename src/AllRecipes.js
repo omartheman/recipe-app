@@ -67,7 +67,7 @@ const AllRecipes = (props) => {
                 {animationDelay: `${(ind/2+1 - (ind/2+1) / 2) * 0.1}s`}
             }
             key={ind} 
-            variant="secondary" 
+            variant="warning" 
             as={Link} 
             to={`/recipeapp/recipe/${x.id}`}
           >
@@ -98,7 +98,7 @@ const AllRecipes = (props) => {
                 {animationDelay: `${(ind/2+1 - (ind/2+1) / 2) * 0.1}s`}
             }
             key={ind} 
-            variant="secondary" 
+            variant="warning" 
             as={Link} 
             to={`/recipeapp/recipe/${x.id}`}
           >

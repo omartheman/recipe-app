@@ -1,5 +1,15 @@
+:root {
+  --wheatish: #ffe6cc
+}
 body {
   padding-bottom: 80px; 
+  background: #ffe6cc !important;
+}
+body, html {
+  height: 100%;
+}
+.navbar {
+  background: #ffd2a2;
 }
 h1 {
   text-align: center;
