@@ -121,7 +121,7 @@ function ToTry(props) {
   if (tryItems) {
     if (tryItems.length > 0) {
       tryList = tryItems.map((x, i) => 
-        <ListGroup.Item variant="secondary" key={i} className="to-try-item-row">
+        <ListGroup.Item variant="warning" key={i} className="to-try-item-row">
           <Row>
             <Col>
               <span className="to-try-col-titles-mobile">Item:</span> {x.item}
@@ -272,7 +272,7 @@ function ToTry(props) {
         }
         <ListGroup className="to-try-list-container">
           {(size.width >= 991 && props.loggedInUser && props.loggedInUser !== '') &&
-            <ListGroup.Item variant="secondary">
+            <ListGroup.Item variant="warning">
               <Row>
                 <Col>
                   <strong>Recipe</strong>
@@ -298,7 +298,7 @@ function ToTry(props) {
             </>
           }
           {url === 'http://localhost:4000/recipeapp/recipeapp-server/' &&
-            <ListGroup.Item variant="secondary" className="to-try-item-row">
+            <ListGroup.Item variant="warning" className="to-try-item-row">
               <Row>
                 <Col>
                   <span className="to-try-col-titles-mobile">Item:</span> Item
