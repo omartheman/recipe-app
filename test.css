@@ -1,0 +1,13 @@
+#wikiTable td:last-of-type {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 50%;
+  left: 25%;
+  right: 25%;
+}
+@media(max-width: 768px){
+  #wikiTable td:last-of-type {
+    width: 75%;
+  }
+}
