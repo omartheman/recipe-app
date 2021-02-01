@@ -28,7 +28,10 @@
     opacity: 0;
     animation: fade_in 2s forwards;
     border-top:  5px solid #39b6ff;
-    // max-height: 100%;
+    width: auto; //improves image from getting too large on zoom out
+    margin: auto;
+    display: block;
+    max-width: 500px;
   }
 }
 .featured-recipe-container:hover {
