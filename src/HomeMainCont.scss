@@ -1,6 +1,48 @@
+$foodIconTransition: transform 0.3s, opacity 0.3s, font-size 0.3s;
 .home-main-cont-food-icon {
-  width: 50%;
+  width: 75%;
   margin: auto;
+  transition: $foodIconTransition;
+}
+.home-main-cont-food-icon-container {
+  display: flex;
+  justify-content: center;
+  &:hover .home-main-cont-go-to-all-recipes-span  {
+    font-size: 1.2em;
+    opacity: 1;
+    transition: $foodIconTransition;
+  }
+  &:hover .home-main-cont-food-icon {
+    transition: $foodIconTransition;
+    opacity: 0.4;
+    transform: scale(0.95);
+  }
+}
+.home-main-cont-food-icon-container .home-main-cont-go-to-all-recipes-span {
+  display: flex;
+  transition: $foodIconTransition;
+}
+.home-main-cont-go-to-all-recipes-span {
+  background: #0a8a35;
+  &:hover {
+    background: #157736;
+  }
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  padding: 10px 40px !important;
+  font-size: 0.8em;
+  font-weight: 600 !important;
+  position: relative;
+    left: -50%;
+  opacity: 0;
+  margin: auto;
+  transition: $foodIconTransition;
+}
+.home-main-cont-go-to-all-recipes-span-wrapper {
+  position: absolute;
+  top: 45%;
+  left: 50%;
 }
 .welcome-text {
   display: flex;
