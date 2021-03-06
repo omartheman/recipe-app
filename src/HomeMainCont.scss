@@ -41,14 +41,14 @@ $foodIconTransition: transform 0.3s, opacity 0.3s, font-size 0.3s;
 }
 .home-main-cont-go-to-all-recipes-span-wrapper {
   position: absolute;
-  top: 45%;
+  top: 50%;
   left: 50%;
 }
 .welcome-text {
   display: flex;
   flex-direction: column;
   float: left;
-  background: var(--wheatish);
+  // background: var(--wheatish);
 }
 .welcome-text h2, .welcome-text p {
   text-align: center;
