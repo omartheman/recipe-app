@@ -1,8 +1,12 @@
+
+
 const mode =
+
 
 "developmentOmar";
 /*
 "productionBritt";
+"productionOmar"
 */
 
 const express = require('express');
@@ -32,7 +36,18 @@ if (mode === 'productionBritt') {
   });
   corsOrigin = 'https://brittanyjewellneal.com/recipeapp';
   imageUploadPath = '/home/britxbtx/public_html/uploaded_files';
-} else if (mode === 'developmentOmar') {
+} 
+else if (mode === 'productionOmar') {
+  connection = mysql.createConnection({
+    host: 'localhost', 
+    user: 'omarnaod_password_wordpress2222',
+    password: 'wordpress2222',
+    database: 'omarnaod_recipe_cabinet'
+  });
+  corsOrigin = 'https://omarshishani.com/projects/recipe-cabinet';
+  imageUploadPath = '/home/omarnaod/public_html/projects/recipe-cabinet/uploaded_files';
+} 
+else if (mode === 'developmentOmar') {
   connection = mysql.createConnection({
     host: 'localhost', 
     user: 'root',
