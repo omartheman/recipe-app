@@ -28,7 +28,7 @@ class FeaturedRecipe extends React.Component{
           <h3>Featured Recipe: {featuredRecipe[2]}</h3>
           <Image 
             className="featrd-rec-img" 
-            src={`https://brittanyjewellneal.com/uploaded_files/${featuredRecipe[1]}`}  
+            src={`https://omarshishani.com/uploaded_files/${featuredRecipe[1]}`}  
             rounded fluid
           />
           <h4>{featuredRecipe[3]}</h4>

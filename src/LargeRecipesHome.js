@@ -41,7 +41,7 @@ class LargeRecipesHome extends React.Component{
           <h3>{largeRecipes[i][2]}</h3>
           <Image 
             className="featrd-rec-img" 
-            src={`https://brittanyjewellneal.com/uploaded_files/${largeRecipes[i][1]}`}  
+            src={`https://omarshishani.com/uploaded_files/${largeRecipes[i][1]}`}  
             rounded fluid
           />
           <h4>{largeRecipes[i][3]}</h4>

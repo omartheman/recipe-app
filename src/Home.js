@@ -81,7 +81,7 @@ class Home extends React.Component {
                   <h3 className="carousel-title">{x[2]}</h3>
                   <img 
                     className="carousel-img" 
-                    src={`https://brittanyjewellneal.com/uploaded_files/${x[1]}`} 
+                    src={`https://omarshishani.com/uploaded_files/${x[1]}`} 
                     alt={x[1]} 
                   />
                 </Link>

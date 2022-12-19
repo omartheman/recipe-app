@@ -164,7 +164,7 @@ function ToTry(props) {
                     className="to-try-img"
                     src={
                       url !== 'http://localhost:4000/recipeapp/recipeapp-server/' ?
-                      `https://brittanyjewellneal.com/uploaded_files/${x.imageName}`
+                      `https://omarshishani.com/uploaded_files/${x.imageName}`
                       : 'https://images.unsplash.com/photo-1606851361443-fd99450eda8c?ixid=MXwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80'
                     } 
                     alt={x.imageName} 

@@ -56,7 +56,7 @@ class App extends React.Component{
       if (this.state.loggedInUserError === false) {
         console.log('Axios error. User logged out.')
         if (url !== 'http://localhost:4000/recipeapp/recipeapp-server/'){
-          alert("There was an error with the server. 🤬 Alert the Webmaster!");
+          // alert("There was an error with the server. 🤬 Alert the Webmaster!");
         }
         this.setState({loggedInUserError: true});
       }

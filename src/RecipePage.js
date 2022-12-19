@@ -112,7 +112,7 @@ const Recipe = (props) => {
             <div className="recipe-page-single-image-container">
               <Link to="#" className="carousel-link-home">
                 <SRLWrapper>
-                  <img className="recipe-page-single-image" src={`https://brittanyjewellneal.com/uploaded_files/${res.data[0].imageName}`} alt='Recipe image.' />
+                  <img className="recipe-page-single-image" src={`https://omarshishani.com/uploaded_files/${res.data[0].imageName}`} alt='Recipe image.' />
                 </SRLWrapper>
               </Link>
             </div>
@@ -122,7 +122,7 @@ const Recipe = (props) => {
             <div key={i} className="carousel-img-container">
               <Link to="#" className="carousel-link-home">
                 <SRLWrapper>
-                  <img className="carousel-img" src={`https://brittanyjewellneal.com/uploaded_files/${x.imageName}`} alt='Recipe image.' />
+                  <img className="carousel-img" src={`https://omarshishani.com/uploaded_files/${x.imageName}`} alt='Recipe image.' />
                 </SRLWrapper>
               </Link>
             </div>
